@@ -1,46 +1,32 @@
-import { RouteObject } from "react-router";
 import { RouteType } from "../main";
-
-const hostName = "http://localhost:5173";
-
-const getPathName = (url: string) => {
-  return url.split(hostName)[1];
-};
-
-const getRouteName = (path: RouteType["path"]) => {
-  let routeName = "";
-  switch (path) {
-    case "/":
-      routeName = "Home";
-      break;
-    case "/all-animals":
-      routeName = "Animals";
-      break;
-    default:
-      routeName = "";
-  }
-  return routeName;
-};
+import NavBtn from "./NavBtn";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { toggleIsAdmin } from "../redux/userSlice";
 
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
-  const thisUrl = getPathName(window.location.href);
+  const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
+  const dispatch = useDispatch();
+
   return (
     <header>
       <div className="bg-slate-300 p-5">
         <h1>AZIL ZA ŽIVOTINJE</h1>
+        <span className="mr-3">Admin</span>
+        <input
+          type="checkbox"
+          checked={isAdmin}
+          onChange={() => dispatch(toggleIsAdmin())}
+        />
       </div>
-      <nav className="bg-orange-400 p-5">
-        {props.routes.map((route) => (
-          <a
-            key={route.id}
-            href={route.path}
-            className={`${
-              route.path === thisUrl ? "bg-green-600" : "bg-slate-300"
-            }  p-3 rounded-md`}
-          >
-            {getRouteName(route.path)}
-          </a>
-        ))}
+      <nav className="bg-orange-400 p-5 flex flex-wrap gap-3">
+        {props.routes.map((route) => {
+          if (
+            route.path !== "/animal-registration-form" ||
+            (route.path === "/animal-registration-form" && isAdmin)
+          )
+            return <NavBtn key={route.path} path={route.path} />;
+        })}
       </nav>
     </header>
   );

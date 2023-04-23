@@ -8,9 +8,6 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 const animalsRef = collection(db, "animals");
 const q = query(animalsRef, where("name", "==", "tiger"));
 function App() {
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch();
-
   const getData = async () => {
     const data = await getDocs(q);
     const animal = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -21,7 +18,7 @@ function App() {
     getData();
   }, []);
 
-  return <div></div>;
+  return <div>Home</div>;
 }
 
 export default App;
