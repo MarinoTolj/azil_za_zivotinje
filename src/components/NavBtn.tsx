@@ -4,7 +4,7 @@ type PropType = {
   path: RouteType["path"];
 };
 
-const hostName = "http://localhost:5173";
+const hostName = "http://127.0.0.1:5173";
 
 const getPathName = (url: string) => {
   return url.split(hostName)[1];
@@ -21,7 +21,6 @@ const getRouteName = (path: RouteType["path"]) => {
       break;
     case "/animal-registration-form":
       routeName = "New Animal";
-      break;
       break;
     case "/donations":
       routeName = "Donations";
