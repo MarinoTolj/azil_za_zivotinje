@@ -14,8 +14,7 @@ import {
   UploadTask,
   StorageReference,
 } from "firebase/storage";
-
-type Species = "dog" | "cat" | "other" | "";
+import { IAnimal, Species } from "../helpers/types";
 
 const animalsRef = collection(db, "animals");
 const storage = getStorage();
@@ -28,7 +27,7 @@ const AnimalRegistrationForm = () => {
   const [age, setAge] = useState(0);
   const [description, setDescription] = useState("");
   const [chipped, setChipped] = useState(false);
-  const [lastChech, setLastCheck] = useState("");
+  const [lastCheck, setLastCheck] = useState("");
   const [image, setImage] = useState<Blob>();
 
   useEffect(() => {
@@ -66,16 +65,17 @@ const AnimalRegistrationForm = () => {
         (error) => console.error(error),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await addDoc(animalsRef, {
+            const data: Omit<IAnimal, "id"> = {
               name: animalName,
               species,
               age,
               description,
               adopted: false,
               chipped,
-              lastChech,
-              downloadURL,
-            });
+              lastCheck,
+              imageUrl: downloadURL,
+            };
+            await addDoc(animalsRef, data);
           });
         }
       );

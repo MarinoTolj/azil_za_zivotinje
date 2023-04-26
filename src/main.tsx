@@ -16,11 +16,13 @@ import AnimalRegistrationForm from "./routes/AnimalRegistrationForm";
 import Donations from "./routes/Donations";
 import Notifications from "./routes/Notifications";
 import { PersistGate } from "redux-persist/integration/react";
+import Animal from "./routes/Animal";
 
 export type RouteType = RouteObject & {
   path:
     | "/"
     | "/all-animals"
+    | "/all-animals/:name"
     | "/animal-registration-form"
     | "/donations"
     | "/notifications";
@@ -36,6 +38,10 @@ const routes: RouteType[] = [
   {
     path: "/all-animals",
     element: <AllAnimals />,
+  },
+  {
+    path: "/all-animals/:name",
+    element: <Animal />,
   },
   {
     path: "/donations",

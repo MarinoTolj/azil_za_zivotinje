@@ -4,10 +4,17 @@ type PropType<T> = {
   label: string;
   setValue: React.Dispatch<React.SetStateAction<T>>;
   textArea?: boolean;
+  inputClassname?: string;
   [key: string]: any;
 };
 
-export default function Input<T,>({ label, setValue, textArea, ...props }: PropType<T>) {
+export default function Input<T>({
+  label,
+  setValue,
+  textArea,
+  inputClassname,
+  ...props
+}: PropType<T>) {
   if (textArea)
     return (
       <div className="flex flex-col gap-1">
@@ -19,9 +26,9 @@ export default function Input<T,>({ label, setValue, textArea, ...props }: PropT
         />
       </div>
     );
-  
+
   return (
-    <div className="">
+    <div className={inputClassname}>
       <label htmlFor={label}>{label}</label>
       <input
         id={label}
