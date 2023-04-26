@@ -1,4 +1,12 @@
-export const species = ["dog", "cat", "other", ""] as const;
+export const species = [
+  "dog",
+  "cat",
+  "bird",
+  "rabbit",
+  "hamster",
+  "other",
+  "",
+] as const;
 
 export type Species = (typeof species)[number];
 

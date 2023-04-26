@@ -4,7 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        "text-overlay": "rgba(0, 0, 0, 0.5)",
+        "not-adopted": "rgba(255, 0, 0, 0.5)",
+        adopted: "rgba(0, 0, 200, 0.5)",
       },
     },
   },

@@ -15,6 +15,7 @@ import {
   StorageReference,
 } from "firebase/storage";
 import { IAnimal, Species } from "../helpers/types";
+import SpeciesList from "../components/SpeciesList";
 
 const animalsRef = collection(db, "animals");
 const storage = getStorage();
@@ -95,30 +96,7 @@ const AnimalRegistrationForm = () => {
 
         <div className="flex gap-2  flex-wrap justify-center">
           <label className="basis-full">Species:</label>
-          <Input
-            label="Dog"
-            name="species"
-            type="radio"
-            value="dog"
-            required
-            setValue={setSpecies}
-          />
-          <Input
-            label="Cat"
-            name="species"
-            type="radio"
-            value="cat"
-            required
-            setValue={setSpecies}
-          />
-          <Input
-            label="Other"
-            name="species"
-            type="radio"
-            value="other"
-            required
-            setValue={setSpecies}
-          />
+          <SpeciesList type="form" setValue={setSpecies} />
         </div>
         <Input
           type="number"
