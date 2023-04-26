@@ -23,21 +23,31 @@ const AllAnimals = () => {
   const [speciesFilter, setSpeciesFilter] = useState<Species | "All Species">(
     "All Species"
   );
+  const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     dispatch(fetchAllAnimals());
   }, []);
 
   useEffect(() => {
+    let searchRegex = /.*/;
+    if (searchTerm !== "") searchRegex = new RegExp(searchTerm, "i");
     if (speciesFilter === "All Species" && adoptedFilter === "All")
-      setFiltredAnimals(animals);
+      setFiltredAnimals(
+        animals.filter((animal) => searchRegex.test(animal.name))
+      );
     else if (adoptedFilter === "All")
       setFiltredAnimals(
-        animals.filter((animal) => animal.species === speciesFilter)
+        animals.filter(
+          (animal) =>
+            animal.species === speciesFilter && searchRegex.test(animal.name)
+        )
       );
     else if (speciesFilter === "All Species")
       setFiltredAnimals(
         animals.filter(
-          (animal) => animal.adopted === isStringBoolean(adoptedFilter)
+          (animal) =>
+            animal.adopted === isStringBoolean(adoptedFilter) &&
+            searchRegex.test(animal.name)
         )
       );
     else
@@ -45,14 +55,21 @@ const AllAnimals = () => {
         animals.filter(
           (animal) =>
             animal.adopted === isStringBoolean(adoptedFilter) &&
-            animal.species === speciesFilter
+            animal.species === speciesFilter &&
+            searchRegex.test(animal.name)
         )
       );
-  }, [speciesFilter, adoptedFilter, animals]);
+  }, [speciesFilter, adoptedFilter, animals, searchTerm]);
 
   return (
     <div className="md:flex md:gap-5 mt-5 md:ml-10">
       <div className="md:flex md:flex-col">
+        <Input
+          label="Search by name:"
+          setValue={setSearchTerm}
+          className="border-2 border-black rounded-sm mb-3 ml-2 md:ml-0"
+          inputClassname="md:flex md:flex-col"
+        />
         <h2 className="text-4xl">Filter: </h2>
         <div className="flex justify-center gap-2 my-5 md:flex-col">
           <h3>Adopted Status: </h3>
@@ -93,7 +110,7 @@ const AllAnimals = () => {
         </div>
       </div>
       <div
-        className={`w-3/4 gap-5 grid max-w-3xl m-auto grid-cols-2 md:grid-cols-3`}
+        className={`w-3/4 gap-5 grid max-w-3xl m-auto grid-rows-2 h-auto grid-cols-2 md:grid-cols-3`}
       >
         {filtredAnimals.map((animal) => {
           return <AnimalImage key={animal.id} animal={animal} />;

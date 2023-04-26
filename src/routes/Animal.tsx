@@ -1,18 +1,9 @@
-import {
-  collection,
-  getDoc,
-  updateDoc,
-  getDocs,
-  query,
-  where,
-  doc,
-} from "firebase/firestore";
 import { useParams } from "react-router";
-import { db } from "../firebase/db";
 import { IAnimal } from "../helpers/types";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
 import ErrorPage from "../components/ErrorPage";
+import { updateAnimal, getAnimal } from "../firebase/firestore";
 
 const Animal = () => {
   const params = useParams<"name">();
@@ -28,26 +19,19 @@ const Animal = () => {
     species: "",
   });
 
-  const getAnimal = async () => {
-    const data = await getDocs(
-      query(collection(db, "animals"), where("name", "==", params.name))
-    );
-
-    const animals = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    })) as IAnimal[];
-
-    setAnimal(animals[0]);
+  const handleAdoption = async () => {
+    await updateAnimal(animal.id, { adopted: true });
   };
 
-  const handleAdoption = async () => {
-    const animalRef = doc(db, "animals", animal.id);
-    await updateDoc(animalRef, { adopted: true });
+  const getAnimalByName = async () => {
+    if (params.name) {
+      const animal = await getAnimal("name", params.name);
+      setAnimal(animal);
+    }
   };
 
   useEffect(() => {
-    getAnimal();
+    getAnimalByName();
   }, [params]);
 
   console.log(params.name);

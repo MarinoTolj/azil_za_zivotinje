@@ -2,23 +2,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import ErrorPage from "../components/ErrorPage";
 import { useEffect, useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../firebase/db";
 import Input from "../components/Input";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  UploadMetadata,
-  UploadTask,
-  StorageReference,
-} from "firebase/storage";
-import { IAnimal, Species } from "../helpers/types";
-import SpeciesList from "../components/SpeciesList";
 
-const animalsRef = collection(db, "animals");
-const storage = getStorage();
+import { Species } from "../helpers/types";
+import SpeciesList from "../components/SpeciesList";
+import { uploadNewAnimal } from "../firebase/firestore";
+
 //Format: yyyy-mm-dd
 const todayInISOFormat = new Date().toISOString().split("T")[0];
 
@@ -44,43 +33,17 @@ const AnimalRegistrationForm = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let storageRef: StorageReference, uploadTask: UploadTask;
-    if (image) {
-      storageRef = ref(storage, `images/${image.name}`);
-
-      uploadTask = uploadBytesResumable(
-        storageRef,
-        image,
-        "data_url" as UploadMetadata
-      );
-      //TODO: Snapshot
-      /*(snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },*/
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => void 0,
-        (error) => console.error(error),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            const data: Omit<IAnimal, "id"> = {
-              name: animalName,
-              species,
-              age,
-              description,
-              adopted: false,
-              chipped,
-              lastCheck,
-              imageUrl: downloadURL,
-            };
-            await addDoc(animalsRef, data);
-          });
-        }
-      );
-    }
+    const data = {
+      name: animalName,
+      species,
+      age,
+      description,
+      adopted: false,
+      chipped,
+      lastCheck,
+    };
+    if (image) uploadNewAnimal(data, image);
+    else console.error("ERROR: Image not defined");
   };
 
   return (
