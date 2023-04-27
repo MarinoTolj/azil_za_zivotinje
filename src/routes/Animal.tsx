@@ -3,7 +3,7 @@ import { IAnimal } from "../helpers/types";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
 import ErrorPage from "../components/ErrorPage";
-import { updateAnimalById, getAnimalById } from "../firebase/firestore";
+import { firestore } from "../firebase/firestore";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Modal from "../components/Modal";
@@ -25,14 +25,13 @@ const Animal = () => {
   const [editMode, setEditMode] = useState(false);
 
   const handleAdoption = async () => {
-    await updateAnimalById(animal.id, { adopted: true });
+    //await updateAnimalById(animal.id, { adopted: true });
+    await firestore.UpdateDocumentById("animals", { adopted: true }, animal.id);
   };
 
   const fetchAnimalById = async () => {
-    if (params.id) {
-      const animal = await getAnimalById(params.id);
-      if (animal) setAnimal(animal);
-    }
+    if (params.id)
+      await firestore.GetDocumentById<IAnimal>("animals", params.id, setAnimal);
   };
 
   const handleOpenCloseModal = () => {

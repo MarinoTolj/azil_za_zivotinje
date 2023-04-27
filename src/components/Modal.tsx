@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "./Input";
 import { IAnimal } from "../helpers/types";
 import { todayInISOFormat } from "../routes/AnimalRegistrationForm";
-import { updateAnimalById } from "../firebase/firestore";
+import { firestore } from "../firebase/firestore";
 
 type PropsType = { open: boolean; openCloseModal: () => void; animal: IAnimal };
 
@@ -21,9 +21,15 @@ const Modal = (props: PropsType) => {
     if (e.target.files) setImage(e.target.files[0]);
   };
 
-  const updateAnimal = (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const updateAnimal = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateAnimalById(props.animal.id, updatedAnimal, image);
+    await firestore.UpdateDocumentById(
+      "animals",
+      updatedAnimal,
+      props.animal.id,
+      image
+    );
+    props.openCloseModal();
   };
   return (
     <dialog
@@ -81,6 +87,19 @@ const Modal = (props: PropsType) => {
               })
             }
           />
+          <Input
+            label="Adopted"
+            type="checkbox"
+            name="adopted"
+            checked={updatedAnimal.adopted}
+            className="ml-3"
+            setValue={changeAnimal}
+            onChange={() =>
+              setUpdatedAnimal((curr) => {
+                return { ...curr, adopted: !curr.adopted };
+              })
+            }
+          />
 
           <Input
             label="Last Check: "
@@ -89,6 +108,7 @@ const Modal = (props: PropsType) => {
             defaultValue={updatedAnimal.lastCheck}
             max={todayInISOFormat}
             setValue={changeAnimal}
+            onChange={changeAnimal}
           />
           <Input
             label="Upload Image"

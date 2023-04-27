@@ -1,18 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IAnimal } from "../helpers/types";
-import { collection, getDocs, query } from "firebase/firestore";
-import { db } from "../firebase/db";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
+import { firestore } from "../firebase/firestore";
 
 export const fetchAllAnimals = createAsyncThunk(
   "animals/fetchAll",
   async () => {
-    const data = await getDocs(query(collection(db, "animals")));
-    const animals = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    })) as IAnimal[];
+    const animals = await firestore.GetCollectionByName<IAnimal[]>("animals");
     return animals;
   }
 );
@@ -27,7 +20,7 @@ const animalsSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchAllAnimals.fulfilled, (state, action) => {
-      state.animals = action.payload;
+      state.animals = action.payload as any;
     });
   },
 });

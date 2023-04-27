@@ -4,9 +4,10 @@ import ErrorPage from "../components/ErrorPage";
 import { useEffect, useState } from "react";
 import Input from "../components/Input";
 
-import { Species } from "../helpers/types";
+import { IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
-import { uploadNewAnimal } from "../firebase/firestore";
+import { firestore } from "../firebase/firestore";
+import { useNavigate } from "react-router";
 
 /***
  * Format: yyyy-mm-dd
@@ -21,6 +22,7 @@ const AnimalRegistrationForm = () => {
   const [chipped, setChipped] = useState(false);
   const [lastCheck, setLastCheck] = useState("");
   const [image, setImage] = useState<Blob>();
+  const navigate = useNavigate();
 
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
   if (!isAdmin) return <ErrorPage />;
@@ -40,8 +42,10 @@ const AnimalRegistrationForm = () => {
       chipped,
       lastCheck,
     };
-    if (image) uploadNewAnimal(data, image);
-    else console.error("ERROR: Image not defined");
+    if (image) {
+      await firestore.AddDocument("animals", data, image);
+      navigate("/all-animals");
+    } else console.error("ERROR: Image not defined");
   };
   //TODO: custom error if not selected
 

@@ -10,6 +10,13 @@ export const species = [
 
 export type Species = (typeof species)[number];
 
+export interface INotification {
+  id: string;
+  title: string;
+  important: boolean;
+  date: string;
+  body: string;
+}
 export interface IAnimal {
   name: string;
   id: string;
