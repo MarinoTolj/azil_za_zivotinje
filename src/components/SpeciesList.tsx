@@ -1,5 +1,5 @@
 import { Species, species } from "../helpers/types";
-import Input from "./Input";
+import Radio from "./Radio";
 
 type PropType =
   | {
@@ -21,17 +21,43 @@ const SpeciesList: React.FC<PropType> = (props) => {
       {species.map((species) => {
         if (species === "") return null;
         return (
-          <Input
-            key={species}
-            type="radio"
-            name="species"
-            label={firstLetterToUppercase(species)}
-            value={species}
-            required
-            setValue={props.setValue}
-          />
+          <div className="hidden md:block" key={species}>
+            <Radio
+              label={firstLetterToUppercase(species)}
+              name="species"
+              value={species}
+              setValue={props.setValue}
+            />
+          </div>
         );
       })}
+      <div className="md:hidden">
+        <select
+          name="species"
+          id="species"
+          onChange={(e) => props.setValue(e.currentTarget.value as any)}
+          required
+        >
+          {props.type === "filter" ? (
+            <option value="All Species" selected>
+              All Species
+            </option>
+          ) : (
+            <option selected disabled>
+              Select Species
+            </option>
+          )}
+
+          {species.map((species) => {
+            if (species === "") return null;
+            return (
+              <option key={species} value={species}>
+                {firstLetterToUppercase(species)}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     </>
   );
 };

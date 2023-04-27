@@ -23,7 +23,7 @@ export type RouteType = RouteObject & {
   path:
     | "/"
     | "/all-animals"
-    | "/all-animals/:name"
+    | "/all-animals/:id"
     | "/animal-registration-form"
     | "/donations"
     | "/notifications";
@@ -41,7 +41,7 @@ const routes: RouteType[] = [
     element: <AllAnimals />,
   },
   {
-    path: "/all-animals/:name",
+    path: "/all-animals/:id",
     element: <Animal />,
   },
   {

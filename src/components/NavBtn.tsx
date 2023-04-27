@@ -36,7 +36,7 @@ const getRouteName = (path: RouteType["path"]) => {
 
 const NavBtn: React.FC<PropType> = (props) => {
   const thisUrl = getPathName(window.location.href);
-  if (props.path === "/all-animals/:name") return null;
+  if (props.path === "/all-animals/:id") return null;
   return (
     <a
       href={props.path}

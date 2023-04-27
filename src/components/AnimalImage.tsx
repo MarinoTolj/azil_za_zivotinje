@@ -8,7 +8,7 @@ const AnimalImage: React.FC<PropType> = (props) => {
   const { animal } = props;
   return (
     <div className={`h-full relative`}>
-      <a href={`/all-animals/${animal.name}`}>
+      <a href={`/all-animals/${animal.id}`}>
         <img
           src={animal.imageUrl}
           alt="animal image"

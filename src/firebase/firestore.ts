@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   updateDoc,
@@ -51,19 +52,47 @@ const uploadNewAnimal = (
   );
 };
 
-const getAnimal = async (by: "name" | "id", value: string) => {
-  const data = await getDocs(query(animalsRef, where(by, "==", value)));
-
-  const animals = data.docs.map((doc) => ({
-    ...doc.data(),
-    id: doc.id,
-  })) as IAnimal[];
-  return animals[0];
-};
-
-const updateAnimal = async (id: string, data: Partial<IAnimal>) => {
+const getAnimalById = async (id: string) => {
   const animalRef = doc(db, "animals", id);
-  await updateDoc(animalRef, data);
+  const animalDoc = await getDoc(animalRef);
+  const animal = { ...animalDoc.data(), id: animalDoc.id } as IAnimal;
+  return animal;
 };
 
-export { uploadNewAnimal, getAnimal, updateAnimal };
+const updateAnimalById = async (
+  id: string,
+  data: Partial<IAnimal>,
+  image?: Blob
+) => {
+  const animalRef = doc(db, "animals", id);
+  if (!image) {
+    await updateDoc(animalRef, data);
+  } else {
+    const storageRef = ref(storage, `images/${image.name}`);
+
+    const uploadTask = uploadBytesResumable(
+      storageRef,
+      image,
+      "data_url" as UploadMetadata
+    );
+    //TODO: Snapshot
+    /*(snapshot) => {
+            const progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setProgress(progress);
+          },*/
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => void 0,
+      (error) => console.error(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          await updateDoc(animalRef, { ...data, imageUrl: downloadURL });
+        });
+      }
+    );
+  }
+};
+
+export { uploadNewAnimal, getAnimalById, updateAnimalById };

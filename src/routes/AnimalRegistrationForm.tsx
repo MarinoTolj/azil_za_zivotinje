@@ -8,8 +8,10 @@ import { Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
 import { uploadNewAnimal } from "../firebase/firestore";
 
-//Format: yyyy-mm-dd
-const todayInISOFormat = new Date().toISOString().split("T")[0];
+/***
+ * Format: yyyy-mm-dd
+ * */
+export const todayInISOFormat = new Date().toISOString().split("T")[0];
 
 const AnimalRegistrationForm = () => {
   const [animalName, setAnimalName] = useState("");
@@ -19,10 +21,6 @@ const AnimalRegistrationForm = () => {
   const [chipped, setChipped] = useState(false);
   const [lastCheck, setLastCheck] = useState("");
   const [image, setImage] = useState<Blob>();
-
-  useEffect(() => {
-    console.log(chipped);
-  }, [chipped]);
 
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
   if (!isAdmin) return <ErrorPage />;
@@ -45,13 +43,16 @@ const AnimalRegistrationForm = () => {
     if (image) uploadNewAnimal(data, image);
     else console.error("ERROR: Image not defined");
   };
+  //TODO: custom error if not selected
 
   return (
-    <div className="text-center w-60 m-auto mt-3">
-      <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+    <div className="text-center w-full m-auto mt-3">
+      <form
+        className="flex flex-col gap-5 w-fit m-auto"
+        onSubmit={handleSubmit}
+      >
         <Input
           placeholder="Type animal name"
-          className="border-2 border-black rounded-sm"
           label="Animal Name"
           required
           setValue={setAnimalName}
@@ -59,12 +60,13 @@ const AnimalRegistrationForm = () => {
 
         <div className="flex gap-2  flex-wrap justify-center">
           <label className="basis-full">Species:</label>
-          <SpeciesList type="form" setValue={setSpecies} />
+          <div className="flex gap-4">
+            <SpeciesList type="form" setValue={setSpecies} />
+          </div>
         </div>
         <Input
           type="number"
           label="Animal age"
-          className="border-2 border-black rounded-sm"
           placeholder="Type animal age"
           setValue={setAge}
           required
@@ -74,7 +76,6 @@ const AnimalRegistrationForm = () => {
           label="Description"
           textArea
           setValue={setDescription}
-          className="border-2 border-black rounded-sm"
           placeholder="Enter description"
         />
         <Input
@@ -85,10 +86,10 @@ const AnimalRegistrationForm = () => {
           setValue={setChipped}
           onChange={() => setChipped(!chipped)}
         />
+
         <Input
           label="Last Check: "
           type="date"
-          className="border-2 border-black rounded-md"
           max={todayInISOFormat}
           required
           setValue={setLastCheck}
@@ -99,6 +100,7 @@ const AnimalRegistrationForm = () => {
           required
           setValue={setImage}
           onChange={handleImageUpload}
+          className=""
         />
         <button
           type="submit"
