@@ -5,8 +5,8 @@ import { firestore } from "../firebase/firestore";
 export const fetchAllAnimals = createAsyncThunk(
   "animals/fetchAll",
   async () => {
-    const animals = await firestore.GetCollectionByName<IAnimal[]>("animals");
-    return animals;
+    /* const animals = await firestore.GetCollectionByName<IAnimal[]>("animals");
+    return animals; */
   }
 );
 

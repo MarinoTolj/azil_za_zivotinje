@@ -41,25 +41,30 @@ class FiresStore {
 
   async GetCollectionByName<T>(
     collectionName: Collections,
-    setterFunction?: React.Dispatch<React.SetStateAction<T>>
+    setterFunction: React.Dispatch<React.SetStateAction<T[]>>
   ) {
-    /* const q = query(this.collections[collectionName]);
+    const q = query(this.collections[collectionName]);
+
+    let tempData: T[] = [];
 
     const unsub = onSnapshot(q, (querySnapshot) => {
+      console.log("hello");
       querySnapshot.forEach((doc) => {
-        const data = { ...doc.data(), id: doc.id };
-        setterFunction((curr) => [...(curr as T[]), data] as T);
+        const data = { ...doc.data(), id: doc.id } as T;
+        tempData.push(data);
       });
+      setterFunction(tempData);
+      tempData = [];
     });
-    return unsub; */
-    const collectionData = await getDocs(
+    return unsub;
+    /* const collectionData = await getDocs(
       query(this.collections[collectionName])
     );
     const data = collectionData.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     })) as T;
-    return data;
+    return data; */
   }
 
   async GetDocumentById<T>(

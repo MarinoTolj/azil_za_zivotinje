@@ -4,9 +4,10 @@ import { fetchAllAnimals } from "../redux/animalsSlice";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
 import Input from "../components/Input";
-import { Species } from "../helpers/types";
+import { IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
 import Radio from "../components/Radio";
+import { firestore } from "../firebase/firestore";
 
 const isStringBoolean = (string: string) => {
   if (string === "true") return true;
@@ -15,7 +16,8 @@ const isStringBoolean = (string: string) => {
 };
 
 const AllAnimals = () => {
-  const animals = useSelector((state: RootState) => state.animals.animals);
+  //const animals = useSelector((state: RootState) => state.animals.animals);
+  const [animals, setAnimals] = useState<IAnimal[]>([]);
   const [filtredAnimals, setFiltredAnimals] = useState(animals);
   const dispatch = useDispatch<AppDispatch>();
   const [adoptedFilter, setAdoptedFilter] = useState<"All" | "true" | "false">(
@@ -25,8 +27,13 @@ const AllAnimals = () => {
     "All Species"
   );
   const [searchTerm, setSearchTerm] = useState("");
+
+  const getAnimals = async () => {
+    await firestore.GetCollectionByName("animals", setAnimals);
+  };
+
   useEffect(() => {
-    dispatch(fetchAllAnimals());
+    getAnimals();
   }, []);
 
   useEffect(() => {
