@@ -7,6 +7,7 @@ import { firestore } from "../firebase/firestore";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Modal from "../components/Modal";
+import UpdateAnimal from "../components/UpdateAnimal";
 
 const Animal = () => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
@@ -88,11 +89,9 @@ const Animal = () => {
         </div>
       </div>
 
-      <Modal
-        open={editMode}
-        openCloseModal={handleOpenCloseModal}
-        animal={animal}
-      />
+      <Modal open={editMode} openCloseModal={handleOpenCloseModal}>
+        <UpdateAnimal animal={animal} openCloseModal={handleOpenCloseModal} />
+      </Modal>
     </div>
   );
 };

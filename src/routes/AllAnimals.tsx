@@ -3,10 +3,10 @@ import { AppDispatch, RootState } from "../redux/store";
 import { fetchAllAnimals } from "../redux/animalsSlice";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
-import Input from "../components/Input";
+import Input from "../components/FormComponents/Input";
 import { IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
-import Radio from "../components/Radio";
+import Radio from "../components/FormComponents/Radio";
 import { firestore } from "../firebase/firestore";
 
 const isStringBoolean = (string: string) => {
@@ -26,6 +26,7 @@ const AllAnimals = () => {
   const [speciesFilter, setSpeciesFilter] = useState<Species | "All Species">(
     "All Species"
   );
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const getAnimals = async () => {
@@ -75,7 +76,7 @@ const AllAnimals = () => {
       <div className="md:flex md:flex-col">
         <Input
           label="Search by name:"
-          setValue={setSearchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="border-2 border-black rounded-sm mb-3 ml-2 md:ml-0"
         />
         <h2 className="text-4xl">Filter: </h2>

@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import ErrorPage from "../components/ErrorPage";
-import { useEffect, useState } from "react";
-import Input from "../components/Input";
+import { useState } from "react";
+import Input from "../components/FormComponents/Input";
 
-import { IAnimal, Species } from "../helpers/types";
+import { Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
 import { firestore } from "../firebase/firestore";
 import { useNavigate } from "react-router";
+import TextArea from "../components/FormComponents/TextArea";
 
 /***
  * Format: yyyy-mm-dd
@@ -44,7 +45,8 @@ const AnimalRegistrationForm = () => {
     };
     if (image) {
       await firestore.AddDocument("animals", data, image);
-      navigate("/all-animals");
+      //TODO: decide what to do when form is submitted. It goes to all-animals, all-animals/:id, or it stays on same page with form input reseted
+      //navigate("/all-animals");
     } else console.error("ERROR: Image not defined");
   };
   //TODO: custom error if not selected
@@ -59,7 +61,7 @@ const AnimalRegistrationForm = () => {
           placeholder="Type animal name"
           label="Animal Name"
           required
-          setValue={setAnimalName}
+          onChange={(e) => setAnimalName(e.target.value)}
         />
 
         <div className="flex gap-2  flex-wrap justify-center">
@@ -72,22 +74,19 @@ const AnimalRegistrationForm = () => {
           type="number"
           label="Animal age"
           placeholder="Type animal age"
-          setValue={setAge}
+          onChange={(e) => setAge(parseFloat(e.target.value))}
           required
         />
 
-        <Input
-          label="Description"
-          textArea
-          setValue={setDescription}
-          placeholder="Enter description"
+        <TextArea
+          label="Description:"
+          onChange={(e) => setDescription(e.currentTarget.value)}
         />
         <Input
           label="Chipped?"
           type="checkbox"
           checked={chipped}
           className="ml-3"
-          setValue={setChipped}
           onChange={() => setChipped(!chipped)}
         />
 
@@ -96,13 +95,12 @@ const AnimalRegistrationForm = () => {
           type="date"
           max={todayInISOFormat}
           required
-          setValue={setLastCheck}
+          onChange={(e) => setLastCheck(e.target.value)}
         />
         <Input
           label="Upload Image"
           type="file"
           required
-          setValue={setImage}
           onChange={handleImageUpload}
           className=""
         />

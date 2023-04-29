@@ -4,13 +4,12 @@ const firstLetterToUppercase = (string: string) => {
   return string[0].toUpperCase() + string.slice(1);
 };
 
-type PropType = {
+interface RadioPropType extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   setValue: React.Dispatch<React.SetStateAction<any>>;
   inputClassname?: string;
   name: string;
-  [key: string]: any;
-};
+}
 
 export default function Radio({
   label,
@@ -18,7 +17,7 @@ export default function Radio({
   name,
   inputClassname,
   ...props
-}: PropType) {
+}: RadioPropType) {
   return (
     <>
       <input

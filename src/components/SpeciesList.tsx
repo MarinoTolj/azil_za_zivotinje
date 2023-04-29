@@ -1,5 +1,5 @@
 import { Species, species } from "../helpers/types";
-import Radio from "./Radio";
+import Radio from "./FormComponents/Radio";
 
 type PropType =
   | {
