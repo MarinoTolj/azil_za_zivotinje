@@ -3,6 +3,7 @@ import {
   DocumentData,
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -154,6 +155,11 @@ class FiresStore {
     } else {
       await updateDoc(documentRef, data);
     }
+  }
+
+  async DeleteDocumentById(collectionName: Collections, id: string) {
+    const documentRef = doc(db, collectionName, id);
+    await deleteDoc(documentRef);
   }
 }
 

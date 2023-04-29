@@ -12,7 +12,7 @@ const Modal = (props: PropsType) => {
       className="w-full h-full z-20 bg-modal-transparent"
       open={props.open}
     >
-      <div className="w-1/2 h-fit py-5 m-auto bg-white rounded-md">
+      <div className="w-5/6 max-w-xl h-fit m-auto bg-white rounded-md">
         <span
           className="text-red-500 -mt-2 float-right text-3xl font-bold cursor-pointer"
           onClick={props.openCloseModal}

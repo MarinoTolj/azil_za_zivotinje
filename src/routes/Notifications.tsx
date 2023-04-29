@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import { INotification } from "../helpers/types";
@@ -8,6 +8,7 @@ import Input from "../components/FormComponents/Input";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import TextArea from "../components/FormComponents/TextArea";
+import Notification from "../components/Notification";
 
 const Notifications = () => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
@@ -15,6 +16,15 @@ const Notifications = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [important, setImportant] = useState(false);
+  const [notifications, setNotifications] = useState<INotification[]>([]);
+
+  const fetchAllNotifications = async () => {
+    await firestore.GetCollectionByName("notifications", setNotifications);
+  };
+
+  useEffect(() => {
+    fetchAllNotifications();
+  }, []);
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,7 +49,7 @@ const Notifications = () => {
     <div>
       <Button onClick={openCloseModal}>New Notification</Button>
       <Modal open={openModal} openCloseModal={openCloseModal}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="">
           <Input
             label="Title: "
             onChange={(e) => setTitle(e.target.value)}
@@ -63,6 +73,12 @@ const Notifications = () => {
           <Button>Save</Button>
         </form>
       </Modal>
+      <h2 className="text-red-600 text-3xl">Notifications: </h2>
+      <div className="flex flex-col gap-5 w-fit m-auto mt-5">
+        {notifications.map((notification) => (
+          <Notification notification={notification} />
+        ))}
+      </div>
     </div>
   );
 };
