@@ -1,19 +1,16 @@
 import React from "react";
-
-const firstLetterToUppercase = (string: string) => {
-  return string[0].toUpperCase() + string.slice(1);
-};
+import { firstLetterToUppercase } from "../../helpers/functions";
 
 interface RadioPropType extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  setValue: React.Dispatch<React.SetStateAction<any>>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputClassname?: string;
   name: string;
 }
 
 export default function Radio({
   label,
-  setValue,
+  onChange,
   name,
   inputClassname,
   ...props
@@ -24,7 +21,7 @@ export default function Radio({
         id={label}
         type="radio"
         name={name}
-        onChange={(e) => setValue(e.currentTarget.value)}
+        onChange={onChange}
         className="cursor-pointer"
         required
         {...props}

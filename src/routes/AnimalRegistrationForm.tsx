@@ -67,7 +67,10 @@ const AnimalRegistrationForm = () => {
         <div className="flex gap-2  flex-wrap justify-center">
           <label className="basis-full">Species:</label>
           <div className="flex gap-4">
-            <SpeciesList type="form" setValue={setSpecies} />
+            <SpeciesList
+              type="form"
+              onChange={(e) => setSpecies(e.target.value as Species)}
+            />
           </div>
         </div>
         <Input

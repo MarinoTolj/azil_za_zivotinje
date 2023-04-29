@@ -27,7 +27,7 @@ const Animal = () => {
 
   const handleAdoption = async () => {
     //await updateAnimalById(animal.id, { adopted: true });
-    await firestore.UpdateDocumentById("animals", { adopted: true }, animal.id);
+    await firestore.UpdateDocumentById("animals", animal.id, { adopted: true });
   };
 
   const fetchAnimalById = async () => {

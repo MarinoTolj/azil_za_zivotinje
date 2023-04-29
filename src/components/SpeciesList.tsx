@@ -1,19 +1,24 @@
-import { Species, species } from "../helpers/types";
+import { firstLetterToUppercase } from "../helpers/functions";
+import { species } from "../helpers/types";
 import Radio from "./FormComponents/Radio";
 
 type PropType =
   | {
       type: "form";
-      setValue: React.Dispatch<React.SetStateAction<Species>>;
+      onChange: (
+        e:
+          | React.ChangeEvent<HTMLInputElement>
+          | React.ChangeEvent<HTMLSelectElement>
+      ) => void;
     }
   | {
       type: "filter";
-      setValue: React.Dispatch<React.SetStateAction<Species | "All Species">>;
+      onChange: (
+        e:
+          | React.ChangeEvent<HTMLInputElement>
+          | React.ChangeEvent<HTMLSelectElement>
+      ) => void;
     };
-
-const firstLetterToUppercase = (string: string) => {
-  return string[0].toUpperCase() + string.slice(1);
-};
 
 const SpeciesList: React.FC<PropType> = (props) => {
   return (
@@ -26,18 +31,13 @@ const SpeciesList: React.FC<PropType> = (props) => {
               label={firstLetterToUppercase(species)}
               name="species"
               value={species}
-              setValue={props.setValue}
+              onChange={props.onChange}
             />
           </div>
         );
       })}
       <div className="md:hidden">
-        <select
-          name="species"
-          id="species"
-          onChange={(e) => props.setValue(e.currentTarget.value as any)}
-          required
-        >
+        <select name="species" id="species" onChange={props.onChange} required>
           {props.type === "filter" ? (
             <option value="All Species" selected>
               All Species

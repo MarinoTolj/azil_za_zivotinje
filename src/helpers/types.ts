@@ -10,6 +10,19 @@ export const species = [
 
 export type Species = (typeof species)[number];
 
+export const donationCategory = ["looking", "offering", "donated"] as const;
+export type DonationCategoryType = (typeof donationCategory)[number];
+
+export const donationType = ["food", "medicine", "toys", "vet costs"] as const;
+
+export type DonationType = (typeof donationType)[number];
+export interface IDonation {
+  id: string;
+  category: DonationCategoryType;
+  type: DonationType;
+  amount: number;
+  description: string;
+}
 export interface INotification {
   id: string;
   title: string;

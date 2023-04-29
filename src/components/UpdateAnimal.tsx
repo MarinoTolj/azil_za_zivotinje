@@ -33,8 +33,8 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
     e.preventDefault();
     await firestore.UpdateDocumentById(
       "animals",
-      updatedAnimal,
       props.animal.id,
+      updatedAnimal,
       image
     );
     props.openCloseModal();

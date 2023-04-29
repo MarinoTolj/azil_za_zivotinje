@@ -22,12 +22,13 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { IAnimal, INotification } from "../helpers/types";
+import { IAnimal, IDonation, INotification } from "../helpers/types";
 
 type Collections = "animals" | "notifications" | "donations";
 type PossibleDataType =
   | Omit<IAnimal, "id" | "imageUrl">
-  | Omit<INotification, "id">;
+  | Omit<INotification, "id">
+  | Omit<IDonation, "id">;
 class FiresStore {
   collections: { [key in Collections]: CollectionReference<DocumentData> } = {
     animals: collection(db, "animals"),
@@ -35,10 +36,6 @@ class FiresStore {
     donations: collection(db, "donations"),
   };
   storage = getStorage();
-
-  /* constructor() {
-
-  } */
 
   async GetCollectionByName<T>(
     collectionName: Collections,
@@ -118,10 +115,10 @@ class FiresStore {
     }
   }
 
-  async UpdateDocumentById(
+  async UpdateDocumentById<T>(
     collectionName: Collections,
-    data: Partial<PossibleDataType>,
     id: string,
+    data: Partial<PossibleDataType>,
     image?: Blob
   ) {
     const documentRef = doc(db, collectionName, id);

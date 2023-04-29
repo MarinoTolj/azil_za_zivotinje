@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import TextArea from "../components/FormComponents/TextArea";
 import Notification from "../components/Notification";
+import { z } from "zod";
 
 const Notifications = () => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
@@ -55,12 +56,15 @@ const Notifications = () => {
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             required
+            maxLength={20}
           />
           <TextArea
             label="Body: "
             onChange={(e) => setBody(e.target.value)}
             value={body}
             required
+            minLength={20}
+            maxLength={200}
           />
           {isAdmin && (
             <Input
@@ -76,7 +80,7 @@ const Notifications = () => {
       <h2 className="text-red-600 text-3xl">Notifications: </h2>
       <div className="flex flex-col gap-5 w-fit m-auto mt-5">
         {notifications.map((notification) => (
-          <Notification notification={notification} />
+          <Notification key={notification.id} notification={notification} />
         ))}
       </div>
     </div>

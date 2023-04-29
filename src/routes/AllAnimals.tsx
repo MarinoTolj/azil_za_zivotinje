@@ -15,14 +15,14 @@ const isStringBoolean = (string: string) => {
   return undefined;
 };
 
+type AdoptedType = "All" | "true" | "false";
+
 const AllAnimals = () => {
   //const animals = useSelector((state: RootState) => state.animals.animals);
   const [animals, setAnimals] = useState<IAnimal[]>([]);
   const [filtredAnimals, setFiltredAnimals] = useState(animals);
   const dispatch = useDispatch<AppDispatch>();
-  const [adoptedFilter, setAdoptedFilter] = useState<"All" | "true" | "false">(
-    "All"
-  );
+  const [adoptedFilter, setAdoptedFilter] = useState<AdoptedType>("All");
   const [speciesFilter, setSpeciesFilter] = useState<Species | "All Species">(
     "All Species"
   );
@@ -88,7 +88,7 @@ const AllAnimals = () => {
               label="All"
               value="All"
               checked={adoptedFilter === "All"}
-              setValue={setAdoptedFilter}
+              onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
             />
           </div>
           <div>
@@ -96,7 +96,7 @@ const AllAnimals = () => {
               name="adopted"
               label="Adopted"
               value="true"
-              setValue={setAdoptedFilter}
+              onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
             />
           </div>
           <div>
@@ -104,7 +104,7 @@ const AllAnimals = () => {
               name="adopted"
               label="Not Adopted"
               value="false"
-              setValue={setAdoptedFilter}
+              onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
             />
           </div>
         </div>
@@ -117,11 +117,14 @@ const AllAnimals = () => {
               label="All species"
               value="All Species"
               checked={speciesFilter === "All Species"}
-              setValue={setSpeciesFilter}
+              onChange={(e) => setSpeciesFilter(e.target.value as Species)}
             />
           </div>
 
-          <SpeciesList type="filter" setValue={setSpeciesFilter} />
+          <SpeciesList
+            type="filter"
+            onChange={(e) => setSpeciesFilter(e.target.value as Species)}
+          />
         </div>
       </div>
 
