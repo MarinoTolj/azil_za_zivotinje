@@ -129,7 +129,7 @@ const AllAnimals = () => {
       </div>
 
       <div
-        className={`w-3/4 gap-5 grid max-w-3xl m-auto grid-rows-2 h-auto grid-cols-1 md:grid-cols-3`}
+        className={`w-3/4 mb-5 gap-5 grid max-w-3xl m-auto grid-rows-2 h-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3`}
       >
         {filtredAnimals.map((animal) => {
           return <AnimalImage key={animal.id} animal={animal} />;

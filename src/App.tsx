@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "./redux/store";
-import { increment } from "./redux/counterSlice";
-import { db } from "./firebase/db";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+
+const containerStyle = {
+  width: "400px",
+  height: "400px",
+};
+
+const center = {
+  lat: -3.745,
+  lng: -38.523,
+};
 
 function App() {
   return <div> Home</div>;

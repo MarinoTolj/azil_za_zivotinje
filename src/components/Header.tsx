@@ -7,10 +7,10 @@ import { toggleIsAdmin } from "../redux/userSlice";
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
   const dispatch = useDispatch();
-    
+
   return (
     <header>
-      <div className="bg-slate-300 p-5">
+      <div className="bg-slate-300 p-5 border-b-2 border-black">
         <h1>AZIL ZA ŽIVOTINJE</h1>
         <span className="mr-3">Admin</span>
         <input

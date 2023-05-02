@@ -67,7 +67,7 @@ const Animal = () => {
         <p>Description:</p>
         <textarea
           disabled
-          defaultValue={animal.description}
+          value={animal.description}
           className="border-2 border-black rounded-md mt-2"
         />
         <div className="flex gap-5 justify-between mt-8">
