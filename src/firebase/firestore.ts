@@ -46,7 +46,6 @@ class FiresStore {
     let tempData: T[] = [];
 
     const unsub = onSnapshot(q, (querySnapshot) => {
-      console.log("hello");
       querySnapshot.forEach((doc) => {
         const data = { ...doc.data(), id: doc.id } as T;
         tempData.push(data);

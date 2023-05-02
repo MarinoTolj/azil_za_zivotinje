@@ -9,7 +9,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import TextArea from "../components/FormComponents/TextArea";
 import Notification from "../components/Notification";
-import { z } from "zod";
+
+function SortByDates(array: INotification[]) {
+  return array.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+}
 
 const Notifications = () => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
@@ -79,7 +84,7 @@ const Notifications = () => {
       </Modal>
       <h2 className="text-red-600 text-3xl">Notifications: </h2>
       <div className="flex flex-col gap-5 w-fit m-auto mt-5">
-        {notifications.map((notification) => (
+        {SortByDates(notifications).map((notification) => (
           <Notification key={notification.id} notification={notification} />
         ))}
       </div>
