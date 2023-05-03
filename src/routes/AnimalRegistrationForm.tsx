@@ -9,6 +9,7 @@ import SpeciesList from "../components/SpeciesList";
 import { firestore } from "../firebase/firestore";
 import { useNavigate } from "react-router";
 import TextArea from "../components/FormComponents/TextArea";
+import Button from "../components/Button";
 
 /***
  * Format: yyyy-mm-dd
@@ -107,12 +108,9 @@ const AnimalRegistrationForm = () => {
           onChange={handleImageUpload}
           className=""
         />
-        <button
-          type="submit"
-          className="bg-green-600 w-fit p-3 rounded-md m-auto"
-        >
+        <Button type="submit" className="mb-5">
           Submit
-        </button>
+        </Button>
       </form>
     </div>
   );

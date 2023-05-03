@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.paragraph {
+  @apply max-w-2xl sm:m-auto mx-3 mt-5 sm:mt-5;
+}
+
 body {
   margin: 0;
   min-width: 320px;

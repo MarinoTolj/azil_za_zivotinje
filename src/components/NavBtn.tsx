@@ -41,7 +41,7 @@ const NavBtn: React.FC<PropType> = (props) => {
     <a
       href={props.path}
       className={`${
-        props.path === thisUrl ? "bg-green-600" : "bg-slate-300"
+        props.path === thisUrl ? "bg-green-600 text-white" : "bg-slate-300"
       }  p-3 rounded-md`}
     >
       {getRouteName(props.path)}
