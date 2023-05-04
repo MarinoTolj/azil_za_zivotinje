@@ -52,8 +52,7 @@ const Notifications = () => {
   };
 
   return (
-    <div>
-      <Button onClick={openCloseModal}>New Notification</Button>
+    <div className="w-fit m-auto">
       <Modal open={openModal} openCloseModal={openCloseModal}>
         <form onSubmit={handleSubmit} className="">
           <Input
@@ -79,11 +78,15 @@ const Notifications = () => {
               onChange={() => setImportant(!important)}
             />
           )}
-          <Button>Save</Button>
+          <Button className="mb-3">Save</Button>
         </form>
       </Modal>
-      <h2 className="text-red-600 text-3xl">Notifications: </h2>
-      <div className="flex flex-col gap-5 w-fit m-auto mt-5">
+      <Button onClick={openCloseModal} className="mt-3 mb-5">
+        New Notification
+      </Button>
+
+      <h2 className="text-red-600 text-3xl ">Notifications: </h2>
+      <div className="flex flex-col gap-4 w-fit m-auto mb-5">
         {SortByDates(notifications).map((notification) => (
           <Notification key={notification.id} notification={notification} />
         ))}

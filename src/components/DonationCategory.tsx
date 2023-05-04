@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { firstLetterToUppercase } from "../helpers/functions";
+import { Capitalize } from "../helpers/functions";
 import { DonationCategoryType, IDonation } from "../helpers/types";
 import Button from "./Button";
 import { RootState } from "../redux/store";
@@ -71,9 +71,7 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
 const DonationCategory: React.FC<PropType> = (props) => {
   return (
     <div className="mb-9 max-w-xl m-auto">
-      <h2 className="text-3xl text-red-600">
-        {firstLetterToUppercase(props.category)}:
-      </h2>
+      <h2 className="text-3xl text-red-600">{Capitalize(props.category)}:</h2>
       <table className="w-full">
         <thead className="border-b-2 border-black">
           <tr>

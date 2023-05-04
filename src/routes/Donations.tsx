@@ -51,8 +51,10 @@ const Donations = () => {
   };
 
   return (
-    <div>
-      <Button onClick={openCloseModal}>New Donation</Button>
+    <div className="flex flex-col w-fit m-auto">
+      <Button onClick={openCloseModal} className="my-3">
+        New Donation
+      </Button>
       <Modal open={openModal} openCloseModal={openCloseModal}>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col">
@@ -89,12 +91,14 @@ const Donations = () => {
             value={donation.description}
             maxLength={30}
           />
-          <Button>Submit</Button>
+          <Button className="mb-3">Submit</Button>
         </form>
       </Modal>
-      <DonationCategory category="looking" donations={donations} />
-      <DonationCategory category="offering" donations={donations} />
-      <DonationCategory category="donated" donations={donations} />
+      <div className="mx-3">
+        <DonationCategory category="looking" donations={donations} />
+        <DonationCategory category="offering" donations={donations} />
+        <DonationCategory category="donated" donations={donations} />
+      </div>
     </div>
   );
 };

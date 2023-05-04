@@ -8,6 +8,7 @@ import { IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
 import Radio from "../components/FormComponents/Radio";
 import { firestore } from "../firebase/firestore";
+import LoadingSpinner from "../components/Icons/LoadingSpinner";
 
 const isStringBoolean = (string: string) => {
   if (string === "true") return true;
@@ -18,10 +19,8 @@ const isStringBoolean = (string: string) => {
 type AdoptedType = "All" | "true" | "false";
 
 const AllAnimals = () => {
-  //const animals = useSelector((state: RootState) => state.animals.animals);
   const [animals, setAnimals] = useState<IAnimal[]>([]);
   const [filtredAnimals, setFiltredAnimals] = useState(animals);
-  const dispatch = useDispatch<AppDispatch>();
   const [adoptedFilter, setAdoptedFilter] = useState<AdoptedType>("All");
   const [speciesFilter, setSpeciesFilter] = useState<Species | "All Species">(
     "All Species"
@@ -70,6 +69,8 @@ const AllAnimals = () => {
         )
       );
   }, [speciesFilter, adoptedFilter, animals, searchTerm]);
+
+  if (animals === null) return <LoadingSpinner />;
 
   return (
     <div className="md:flex md:gap-5 mt-5 md:ml-10">

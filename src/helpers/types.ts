@@ -30,6 +30,9 @@ export interface INotification {
   date: string;
   body: string;
 }
+
+//TODO: implement foster status for adoption
+export type AdoptedStatus = "adopted" | "not adopted" | "fostered";
 export interface IAnimal {
   name: string;
   id: string;

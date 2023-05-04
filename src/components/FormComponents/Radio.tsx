@@ -1,5 +1,5 @@
 import React from "react";
-import { firstLetterToUppercase } from "../../helpers/functions";
+import { Capitalize } from "../../helpers/functions";
 
 interface RadioPropType extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -27,7 +27,7 @@ export default function Radio({
         {...props}
       />
       <label htmlFor={label} className="ml-1 cursor-pointer">
-        {firstLetterToUppercase(label)}
+        {Capitalize(label)}
       </label>
     </>
   );

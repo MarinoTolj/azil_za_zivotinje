@@ -1,4 +1,4 @@
-import { firstLetterToUppercase } from "../helpers/functions";
+import { Capitalize } from "../helpers/functions";
 import { species } from "../helpers/types";
 import Radio from "./FormComponents/Radio";
 
@@ -28,7 +28,7 @@ const SpeciesList: React.FC<PropType> = (props) => {
         return (
           <div className="hidden md:block" key={species}>
             <Radio
-              label={firstLetterToUppercase(species)}
+              label={Capitalize(species)}
               name="species"
               value={species}
               onChange={props.onChange}
@@ -52,7 +52,7 @@ const SpeciesList: React.FC<PropType> = (props) => {
             if (species === "") return null;
             return (
               <option key={species} value={species}>
-                {firstLetterToUppercase(species)}
+                {Capitalize(species)}
               </option>
             );
           })}

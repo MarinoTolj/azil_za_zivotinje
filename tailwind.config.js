@@ -7,6 +7,7 @@ export default {
         "not-adopted": "rgba(255, 0, 0, 0.5)",
         adopted: "rgba(0, 0, 200, 0.5)",
         "modal-transparent": "rgba(0, 0, 0, 0.5)",
+        "main-orange": "#fb923c",
       },
     },
   },

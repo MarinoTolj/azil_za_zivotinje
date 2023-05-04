@@ -4,6 +4,7 @@ import { IAnimal } from "../helpers/types";
 import { firestore } from "../firebase/firestore";
 import { todayInISOFormat } from "../routes/AnimalRegistrationForm";
 import TextArea from "./FormComponents/TextArea";
+import Button from "./Button";
 
 type PropType = {
   animal: IAnimal;
@@ -106,12 +107,9 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
         name="image"
         onChange={handleImageUpload}
       />
-      <button
-        type="submit"
-        className="bg-green-600 w-fit p-3 rounded-md m-auto"
-      >
+      <Button type="submit" className="my-3">
         Submit
-      </button>
+      </Button>
     </form>
   );
 };

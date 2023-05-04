@@ -12,7 +12,7 @@ const AnimalImage: React.FC<PropType> = (props) => {
         <img
           src={animal.imageUrl}
           alt="animal image"
-          className={`h-full w-full rounded-2xl`}
+          className={`h-full w-full rounded-2xl `}
         />
         <div
           className={`absolute bottom-0 z-10 ${

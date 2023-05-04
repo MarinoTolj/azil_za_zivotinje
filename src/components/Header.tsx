@@ -3,23 +3,23 @@ import NavBtn from "./NavBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { toggleIsAdmin } from "../redux/userSlice";
+import ToggleSwitch from "./Icons/ToggleSwitch";
 
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
-  const dispatch = useDispatch();
 
   return (
     <header>
-      <div className="bg-slate-300 p-5 border-b-2 border-black">
-        <h1>AZIL ZA ŽIVOTINJE</h1>
-        <span className="mr-3">Admin</span>
-        <input
-          type="checkbox"
-          checked={isAdmin}
-          onChange={() => dispatch(toggleIsAdmin())}
-        />
+      <div className="flex items-center justify-between bg-slate-300 p-5 border-b-2 border-black">
+        <h1 className="text-xl align-middle font-bold md:text-5xl">
+          AZIL ZA ŽIVOTINJE
+        </h1>
+        <div className="flex items-center">
+          <span className="mr-2">Admin</span>
+          <ToggleSwitch />
+        </div>
       </div>
-      <nav className="bg-orange-400 p-5 flex flex-wrap gap-3">
+      <nav className="bg-main-orange p-5 flex flex-wrap gap-3">
         {props.routes.map((route) => {
           if (
             route.path !== "/animal-registration-form" ||

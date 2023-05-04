@@ -13,8 +13,10 @@ export default function Input({
   ...props
 }: InputPropType) {
   return (
-    <div className="flex flex-col w-full">
-      <label htmlFor={label}>{label}</label>
+    <div className="flex flex-col w-full ">
+      <label htmlFor={label} className="cursor-pointer">
+        {label}
+      </label>
       <input
         id={label}
         onChange={onChange}

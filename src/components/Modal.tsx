@@ -19,7 +19,7 @@ const Modal = (props: PropsType) => {
         >
           &times;
         </span>
-        {props.children}
+        <div className="m-3">{props.children}</div>
       </div>
     </dialog>
   );

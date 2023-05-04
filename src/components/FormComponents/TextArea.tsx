@@ -7,7 +7,9 @@ interface TextAreaProps
 const TextArea: React.FC<TextAreaProps> = ({ label, onChange, ...props }) => {
   return (
     <div className="flex flex-col gap-1 w-full h-full">
-      <label htmlFor={label}>{label}</label>
+      <label htmlFor={label} className="cursor-pointer">
+        {label}
+      </label>
       <textarea
         id={label}
         onChange={onChange}
