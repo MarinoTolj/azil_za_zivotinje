@@ -1,8 +1,7 @@
 import { RouteType } from "../main";
 import NavBtn from "./NavBtn";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { toggleIsAdmin } from "../redux/userSlice";
 import ToggleSwitch from "./Icons/ToggleSwitch";
 
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {

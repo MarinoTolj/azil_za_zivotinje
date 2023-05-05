@@ -1,4 +1,3 @@
-import React, { Component, useState } from "react";
 import Icon from "@mdi/react";
 import { mdiToggleSwitch, mdiToggleSwitchOff } from "@mdi/js";
 import { toggleIsAdmin } from "../../redux/userSlice";

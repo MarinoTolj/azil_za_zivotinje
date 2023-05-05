@@ -5,17 +5,13 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDoc,
-  getDocs,
   onSnapshot,
   query,
   updateDoc,
-  where,
 } from "firebase/firestore";
 import { db } from "../firebase/db";
 
 import {
-  FirebaseStorage,
   UploadMetadata,
   getDownloadURL,
   getStorage,
@@ -98,7 +94,7 @@ class FiresStore {
           },*/
       uploadTask.on(
         "state_changed",
-        (snapshot) => void 0,
+        () => void 0,
         (error) => console.error(error),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -114,7 +110,7 @@ class FiresStore {
     }
   }
 
-  async UpdateDocumentById<T>(
+  async UpdateDocumentById(
     collectionName: Collections,
     id: string,
     data: Partial<PossibleDataType>,
@@ -137,7 +133,7 @@ class FiresStore {
           },*/
       uploadTask.on(
         "state_changed",
-        (snapshot) => void 0,
+        () => void 0,
         (error) => console.error(error),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -160,35 +156,5 @@ class FiresStore {
 }
 
 const firestore = new FiresStore();
-
-const updateAnimalById = async (
-  id: string,
-  data: Partial<IAnimal>,
-  image?: Blob
-) => {
-  const animalRef = doc(db, "animals", id);
-  /* if (!image) {
-    await updateDoc(animalRef, data);
-  } else {
-    const storageRef = ref(storage, `images/${image.name}`);
-
-    const uploadTask = uploadBytesResumable(
-      storageRef,
-      image,
-      "data_url" as UploadMetadata
-    );
-    
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => void 0,
-      (error) => console.error(error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          await updateDoc(animalRef, { ...data, imageUrl: downloadURL });
-        });
-      }
-    );
-  } */
-};
 
 export { firestore };

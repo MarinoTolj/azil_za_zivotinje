@@ -1,6 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store";
-import { fetchAllAnimals } from "../redux/animalsSlice";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
 import Input from "../components/FormComponents/Input";
@@ -10,12 +7,6 @@ import Radio from "../components/FormComponents/Radio";
 import { firestore } from "../firebase/firestore";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
 import CheckBox from "../components/Icons/CheckBox";
-
-const isStringBoolean = (string: string) => {
-  if (string === "true") return true;
-  else if (string === "false") return false;
-  return undefined;
-};
 
 type AdoptedType = AdoptedStatus | "All";
 

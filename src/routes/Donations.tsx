@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Input from "../components/FormComponents/Input";
-import { IDonation, donationCategory, donationType } from "../helpers/types";
+import { IDonation, donationType } from "../helpers/types";
 import Radio from "../components/FormComponents/Radio";
 import { firestore } from "../firebase/firestore";
 import { useSelector } from "react-redux";

@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { firestore } from "../firebase/firestore";
 import { INotification } from "../helpers/types";
-import TextArea from "./FormComponents/TextArea";
 import TrashIcon from "./Icons/TrashIcon";
 import { RootState } from "../redux/store";
 

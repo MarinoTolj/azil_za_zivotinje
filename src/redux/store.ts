@@ -4,7 +4,6 @@ import userSlice from "./userSlice";
 //@ts-ignore
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-import animalsSlice from "./animalsSlice";
 
 const persistConfig = {
   key: "root",
@@ -12,12 +11,10 @@ const persistConfig = {
 };
 
 const userPersistedReducer = persistReducer(persistConfig, userSlice);
-const animalsPersistedReducer = persistReducer(persistConfig, animalsSlice);
 
 export const store = configureStore({
   reducer: {
     user: userPersistedReducer,
-    animals: animalsPersistedReducer,
   },
   devTools: true,
 });
