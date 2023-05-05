@@ -4,7 +4,7 @@ import ErrorPage from "../components/ErrorPage";
 import { useState } from "react";
 import Input from "../components/FormComponents/Input";
 
-import { Species } from "../helpers/types";
+import { IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
 import { firestore } from "../firebase/firestore";
 import { useNavigate } from "react-router";
@@ -35,19 +35,19 @@ const AnimalRegistrationForm = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = {
+    const data: Omit<IAnimal, "id" | "imageUrl"> = {
       name: animalName,
       species,
       age,
       description,
-      adopted: false,
+      adopted: "not adopted",
       chipped,
       lastCheck,
     };
     if (image) {
       await firestore.AddDocument("animals", data, image);
       //TODO: decide what to do when form is submitted. It goes to all-animals, all-animals/:id, or it stays on same page with form input reseted
-      //navigate("/all-animals");
+      navigate("/all-animals");
     } else console.error("ERROR: Image not defined");
   };
   //TODO: custom error if not selected

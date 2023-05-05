@@ -5,6 +5,7 @@ import { firestore } from "../firebase/firestore";
 import { todayInISOFormat } from "../routes/AnimalRegistrationForm";
 import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
+import Radio from "./FormComponents/Radio";
 
 type PropType = {
   animal: IAnimal;
@@ -80,17 +81,26 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
           })
         }
       />
-      <Input
+      <Radio
         label="Adopted"
-        type="checkbox"
+        checked={updatedAnimal.adopted === "adopted"}
         name="adopted"
-        checked={updatedAnimal.adopted}
-        className="ml-3"
-        onChange={() =>
-          setUpdatedAnimal((curr) => {
-            return { ...curr, adopted: !curr.adopted };
-          })
-        }
+        value="adopted"
+        onChange={changeAnimal}
+      />
+      <Radio
+        label="Not Adopted"
+        name="adopted"
+        checked={updatedAnimal.adopted === "not adopted"}
+        value="not adopted"
+        onChange={changeAnimal}
+      />
+      <Radio
+        label="Fostered"
+        name="adopted"
+        checked={updatedAnimal.adopted === "fostered"}
+        value="fostered"
+        onChange={changeAnimal}
       />
 
       <Input

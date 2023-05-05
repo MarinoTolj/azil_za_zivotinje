@@ -39,7 +39,7 @@ export interface IAnimal {
   age: number;
   species: Species;
   description: string;
-  adopted: boolean;
+  adopted: AdoptedStatus;
   chipped: boolean;
   lastCheck: string;
   imageUrl: string;

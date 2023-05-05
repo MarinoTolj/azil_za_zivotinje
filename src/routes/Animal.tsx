@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { IAnimal } from "../helpers/types";
+import { AdoptedStatus, IAnimal } from "../helpers/types";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
 import ErrorPage from "../components/ErrorPage";
@@ -32,7 +32,7 @@ const Animal = () => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
   const params = useParams<"id">();
   const [animal, setAnimal] = useState<IAnimal>({
-    adopted: false,
+    adopted: "not adopted",
     age: 0,
     chipped: false,
     description: "",
@@ -44,8 +44,10 @@ const Animal = () => {
   });
   const [editMode, setEditMode] = useState(false);
 
-  const handleAdoption = async () => {
-    await firestore.UpdateDocumentById("animals", animal.id, { adopted: true });
+  const handleAdoption = async (status: AdoptedStatus) => {
+    await firestore.UpdateDocumentById("animals", animal.id, {
+      adopted: status,
+    });
   };
 
   const fetchAnimalById = async () => {
@@ -79,7 +81,11 @@ const Animal = () => {
           </AnimalInfo>
           <AnimalInfo title="Species:">{Capitalize(animal.species)}</AnimalInfo>
           <AnimalInfo title="Status:">
-            {animal.adopted ? "Adopted" : "Not Adopted"}
+            {animal.adopted === "adopted"
+              ? "Adopted"
+              : animal.adopted === "fostered"
+              ? "Fostered"
+              : "Not Adopted"}
           </AnimalInfo>
         </div>
       </div>
@@ -92,8 +98,17 @@ const Animal = () => {
           className="border-2 border-black rounded-md mt-2"
         />
         <div className="flex gap-5 justify-between mt-8">
-          <Button onClick={handleAdoption} hidden={animal.adopted}>
+          <Button
+            onClick={() => handleAdoption("adopted")}
+            hidden={animal.adopted !== "not adopted"}
+          >
             Adopt
+          </Button>
+          <Button
+            onClick={() => handleAdoption("fostered")}
+            hidden={animal.adopted !== "not adopted"}
+          >
+            Foster
           </Button>
 
           <button

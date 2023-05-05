@@ -16,7 +16,11 @@ const AnimalImage: React.FC<PropType> = (props) => {
         />
         <div
           className={`absolute bottom-0 z-10 ${
-            animal.adopted ? "bg-adopted" : "bg-not-adopted"
+            animal.adopted === "adopted"
+              ? "bg-adopted"
+              : animal.adopted === "fostered"
+              ? "bg-fostered"
+              : "bg-not-adopted"
           }  text-white text-center  min-w-full w-fit rounded-br-2xl rounded-bl-2xl text-2xl`}
         >
           {animal.name}

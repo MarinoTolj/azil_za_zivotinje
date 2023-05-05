@@ -4,11 +4,12 @@ import { fetchAllAnimals } from "../redux/animalsSlice";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
 import Input from "../components/FormComponents/Input";
-import { IAnimal, Species } from "../helpers/types";
+import { AdoptedStatus, IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
 import Radio from "../components/FormComponents/Radio";
 import { firestore } from "../firebase/firestore";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
+import CheckBox from "../components/Icons/CheckBox";
 
 const isStringBoolean = (string: string) => {
   if (string === "true") return true;
@@ -16,7 +17,7 @@ const isStringBoolean = (string: string) => {
   return undefined;
 };
 
-type AdoptedType = "All" | "true" | "false";
+type AdoptedType = AdoptedStatus | "All";
 
 const AllAnimals = () => {
   const [animals, setAnimals] = useState<IAnimal[]>([]);
@@ -55,15 +56,14 @@ const AllAnimals = () => {
       setFiltredAnimals(
         animals.filter(
           (animal) =>
-            animal.adopted === isStringBoolean(adoptedFilter) &&
-            searchRegex.test(animal.name)
+            animal.adopted === adoptedFilter && searchRegex.test(animal.name)
         )
       );
     else
       setFiltredAnimals(
         animals.filter(
           (animal) =>
-            animal.adopted === isStringBoolean(adoptedFilter) &&
+            animal.adopted === adoptedFilter &&
             animal.species === speciesFilter &&
             searchRegex.test(animal.name)
         )
@@ -73,7 +73,7 @@ const AllAnimals = () => {
   if (animals === null) return <LoadingSpinner />;
 
   return (
-    <div className="md:flex md:gap-5 mt-5 md:ml-10">
+    <div className="flex flex-col items-center md:flex-row md:gap-5 mt-5 md:ml-10">
       <div className="md:flex md:flex-col">
         <Input
           label="Search by name:"
@@ -81,6 +81,26 @@ const AllAnimals = () => {
           className="border-2 border-black rounded-sm mb-3 ml-2 md:ml-0"
         />
         <h2 className="text-4xl">Filter: </h2>
+        <div className="flex gap-3 md:flex-col">
+          <div className="flex">
+            <span>
+              <CheckBox className="text-adopted" />
+            </span>
+            <p>Adopted</p>
+          </div>
+          <div className="flex">
+            <span>
+              <CheckBox className="text-fostered" />
+            </span>
+            <p>Fostered</p>
+          </div>
+          <div className="flex">
+            <span>
+              <CheckBox className="text-not-adopted" />
+            </span>
+            <p>Not Adopted</p>
+          </div>
+        </div>
         <div className="flex justify-center gap-2 my-5 md:flex-col">
           <h3>Adopted Status: </h3>
           <div>
@@ -96,7 +116,7 @@ const AllAnimals = () => {
             <Radio
               name="adopted"
               label="Adopted"
-              value="true"
+              value="adopted"
               onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
             />
           </div>
@@ -104,7 +124,15 @@ const AllAnimals = () => {
             <Radio
               name="adopted"
               label="Not Adopted"
-              value="false"
+              value="not adopted"
+              onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
+            />
+          </div>
+          <div>
+            <Radio
+              name="adopted"
+              label="Fostered"
+              value="fostered"
               onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
             />
           </div>
@@ -130,7 +158,7 @@ const AllAnimals = () => {
       </div>
 
       <div
-        className={`w-3/4 mb-5 gap-5 grid max-w-3xl m-auto grid-rows-2 h-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3`}
+        className={`mb-5 gap-5 grid max-w-5xl md:self-start md:flex-grow grid-cols-1 sm:grid-cols-2 md:grid-cols-3`}
       >
         {filtredAnimals.map((animal) => {
           return <AnimalImage key={animal.id} animal={animal} />;
