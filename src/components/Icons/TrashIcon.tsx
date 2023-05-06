@@ -1,4 +1,4 @@
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { mdiTrashCanOutline } from "@mdi/js";
 
 const TrashIcon = () => {

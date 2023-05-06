@@ -1,4 +1,4 @@
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { mdiCheckCircleOutline, mdiCloseCircleOutline } from "@mdi/js";
 
 const checkSize = 1.5;

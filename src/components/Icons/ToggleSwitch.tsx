@@ -1,4 +1,4 @@
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { mdiToggleSwitch, mdiToggleSwitchOff } from "@mdi/js";
 import { toggleIsAdmin } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
