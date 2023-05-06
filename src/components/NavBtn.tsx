@@ -4,9 +4,13 @@ type PropType = {
   path: RouteType["path"];
 };
 
-const hostName = "http://127.0.0.1:5173";
+const hostName =
+  process.env.NODE_ENV === "development"
+    ? "http://127.0.0.1:5173"
+    : "https://azil-za-zivotinje.vercel.app";
 
 const getPathName = (url: string) => {
+  console.log({ url, hostName });
   return url.split(hostName)[1];
 };
 
@@ -34,8 +38,8 @@ const getRouteName = (path: RouteType["path"]) => {
   return routeName;
 };
 
+const thisUrl = getPathName(window.location.href);
 const NavBtn: React.FC<PropType> = (props) => {
-  const thisUrl = getPathName(window.location.href);
   if (props.path === "/all-animals/:id") return null;
   return (
     <a
