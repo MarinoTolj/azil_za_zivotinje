@@ -5,7 +5,6 @@ import { firestore } from "../firebase/firestore";
 import { todayInISOFormat } from "../routes/AnimalRegistrationForm";
 import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
-import Radio from "./FormComponents/Radio";
 import CheckBox from "./FormComponents/CheckBox";
 import AdoptedList from "./FormComponents/AdoptedList";
 
