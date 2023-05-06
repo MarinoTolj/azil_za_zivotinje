@@ -6,6 +6,8 @@ import { todayInISOFormat } from "../routes/AnimalRegistrationForm";
 import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
 import Radio from "./FormComponents/Radio";
+import CheckBox from "./FormComponents/CheckBox";
+import AdoptedList from "./FormComponents/AdoptedList";
 
 type PropType = {
   animal: IAnimal;
@@ -69,9 +71,8 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
         placeholder="Enter description"
         onChange={changeAnimal}
       />
-      <Input
+      <CheckBox
         label="Chipped?"
-        type="checkbox"
         name="chipped"
         checked={updatedAnimal.chipped}
         className="ml-3"
@@ -81,28 +82,11 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
           })
         }
       />
-      <Radio
-        label="Adopted"
-        checked={updatedAnimal.adopted === "adopted"}
-        name="adopted"
-        value="adopted"
-        onChange={changeAnimal}
-      />
-      <Radio
-        label="Not Adopted"
-        name="adopted"
-        checked={updatedAnimal.adopted === "not adopted"}
-        value="not adopted"
-        onChange={changeAnimal}
-      />
-      <Radio
-        label="Fostered"
-        name="adopted"
-        checked={updatedAnimal.adopted === "fostered"}
-        value="fostered"
-        onChange={changeAnimal}
-      />
 
+      <AdoptedList
+        defaultCheck={updatedAnimal.adopted}
+        setterFunction={changeAnimal}
+      />
       <Input
         label="Last Check: "
         type="date"

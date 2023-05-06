@@ -35,7 +35,7 @@ class FiresStore {
 
   async GetCollectionByName<T>(
     collectionName: Collections,
-    setterFunction: React.Dispatch<React.SetStateAction<T[]>>
+    setterFunction: React.Dispatch<React.SetStateAction<T[] | undefined>>
   ) {
     const q = query(this.collections[collectionName]);
 
@@ -50,14 +50,6 @@ class FiresStore {
       tempData = [];
     });
     return unsub;
-    /* const collectionData = await getDocs(
-      query(this.collections[collectionName])
-    );
-    const data = collectionData.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    })) as T;
-    return data; */
   }
 
   async GetDocumentById<T>(

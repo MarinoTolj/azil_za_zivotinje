@@ -10,7 +10,6 @@ const hostName =
     : "https://azil-za-zivotinje.vercel.app/";
 
 const getPathName = (url: string) => {
-  console.log({ url, hostName });
   return url.split(hostName)[1];
 };
 

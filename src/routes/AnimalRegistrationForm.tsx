@@ -3,6 +3,7 @@ import { RootState } from "../redux/store";
 import ErrorPage from "../components/ErrorPage";
 import { useState } from "react";
 import Input from "../components/FormComponents/Input";
+import CheckBox from "../components/FormComponents/CheckBox";
 
 import { IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
@@ -86,9 +87,9 @@ const AnimalRegistrationForm = () => {
           label="Description:"
           onChange={(e) => setDescription(e.currentTarget.value)}
         />
-        <Input
+
+        <CheckBox
           label="Chipped?"
-          type="checkbox"
           checked={chipped}
           className="ml-3"
           onChange={() => setChipped(!chipped)}

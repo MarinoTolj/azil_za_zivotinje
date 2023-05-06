@@ -8,7 +8,9 @@ import Input from "../components/FormComponents/Input";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import TextArea from "../components/FormComponents/TextArea";
+import CheckBox from "../components/FormComponents/CheckBox";
 import Notification from "../components/Notification";
+import LoadingSpinner from "../components/Icons/LoadingSpinner";
 
 function SortByDates(array: INotification[]) {
   return array.sort(
@@ -22,7 +24,7 @@ const Notifications = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [important, setImportant] = useState(false);
-  const [notifications, setNotifications] = useState<INotification[]>([]);
+  const [notifications, setNotifications] = useState<INotification[]>();
 
   const fetchAllNotifications = async () => {
     await firestore.GetCollectionByName("notifications", setNotifications);
@@ -51,10 +53,12 @@ const Notifications = () => {
     setOpenModal(!openModal);
   };
 
+  if (notifications === undefined) return <LoadingSpinner />;
+
   return (
     <div className="w-fit m-auto">
       <Modal open={openModal} openCloseModal={openCloseModal}>
-        <form onSubmit={handleSubmit} className="">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <Input
             label="Title: "
             onChange={(e) => setTitle(e.target.value)}
@@ -71,8 +75,7 @@ const Notifications = () => {
             maxLength={200}
           />
           {isAdmin && (
-            <Input
-              type="checkbox"
+            <CheckBox
               label="Important: "
               checked={important}
               onChange={() => setImportant(!important)}

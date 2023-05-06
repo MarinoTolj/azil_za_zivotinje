@@ -6,12 +6,13 @@ import SpeciesList from "../components/SpeciesList";
 import Radio from "../components/FormComponents/Radio";
 import { firestore } from "../firebase/firestore";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
-import CheckBox from "../components/Icons/CheckBox";
+import Legend from "../components/Icons/Legend";
+import AdoptedList from "../components/FormComponents/AdoptedList";
 
 type AdoptedType = AdoptedStatus | "All";
 
 const AllAnimals = () => {
-  const [animals, setAnimals] = useState<IAnimal[]>([]);
+  const [animals, setAnimals] = useState<IAnimal[]>();
   const [filtredAnimals, setFiltredAnimals] = useState(animals);
   const [adoptedFilter, setAdoptedFilter] = useState<AdoptedType>("All");
   const [speciesFilter, setSpeciesFilter] = useState<Species | "All Species">(
@@ -29,9 +30,9 @@ const AllAnimals = () => {
   }, []);
 
   useEffect(() => {
+    if (animals === undefined) return;
     let searchRegex = /.*/;
     if (searchTerm !== "") searchRegex = new RegExp(searchTerm, "i");
-
     if (speciesFilter === "All Species" && adoptedFilter === "All")
       setFiltredAnimals(
         animals.filter((animal) => searchRegex.test(animal.name))
@@ -61,7 +62,8 @@ const AllAnimals = () => {
       );
   }, [speciesFilter, adoptedFilter, animals, searchTerm]);
 
-  if (animals === null) return <LoadingSpinner />;
+  if (animals === undefined || filtredAnimals === undefined)
+    return <LoadingSpinner />;
 
   return (
     <div className="flex flex-col items-center md:flex-row md:gap-5 mt-5 md:ml-10">
@@ -69,30 +71,30 @@ const AllAnimals = () => {
         <Input
           label="Search by name:"
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border-2 border-black rounded-sm mb-3 ml-2 md:ml-0"
+          className="border-2 border-black rounded-sm mb-3"
         />
         <h2 className="text-4xl">Filter: </h2>
         <div className="flex gap-3 md:flex-col">
           <div className="flex">
             <span>
-              <CheckBox className="text-adopted" />
+              <Legend className="text-adopted" />
             </span>
             <p>Adopted</p>
           </div>
           <div className="flex">
             <span>
-              <CheckBox className="text-fostered" />
+              <Legend className="text-fostered" />
             </span>
             <p>Fostered</p>
           </div>
           <div className="flex">
             <span>
-              <CheckBox className="text-not-adopted" />
+              <Legend className="text-not-adopted" />
             </span>
             <p>Not Adopted</p>
           </div>
         </div>
-        <div className="flex justify-center gap-2 my-5 md:flex-col">
+        <div className="flex flex-col justify-center my-5 md:flex-col">
           <h3>Adopted Status: </h3>
           <div>
             <Radio
@@ -103,30 +105,13 @@ const AllAnimals = () => {
               onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
             />
           </div>
-          <div>
-            <Radio
-              name="adopted"
-              label="Adopted"
-              value="adopted"
-              onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
-            />
-          </div>
-          <div>
-            <Radio
-              name="adopted"
-              label="Not Adopted"
-              value="not adopted"
-              onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
-            />
-          </div>
-          <div>
-            <Radio
-              name="adopted"
-              label="Fostered"
-              value="fostered"
-              onChange={(e) => setAdoptedFilter(e.target.value as AdoptedType)}
-            />
-          </div>
+
+          <AdoptedList
+            setterFunction={(e) =>
+              setAdoptedFilter(e.target.value as AdoptedType)
+            }
+            defaultCheck={adoptedFilter}
+          />
         </div>
         <div className="flex justify-center gap-2 my-5 md:flex-col">
           <h3>Species: </h3>

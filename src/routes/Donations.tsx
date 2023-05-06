@@ -8,6 +8,7 @@ import { firestore } from "../firebase/firestore";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import DonationCategory from "../components/DonationCategory";
+import LoadingSpinner from "../components/Icons/LoadingSpinner";
 
 const Donations = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -17,7 +18,7 @@ const Donations = () => {
     description: "",
     type: "food",
   });
-  const [donations, setDonations] = useState<IDonation[]>([]);
+  const [donations, setDonations] = useState<IDonation[]>();
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
 
   const changeDonation = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +50,7 @@ const Donations = () => {
     await firestore.AddDocument("donations", donationData);
     openCloseModal();
   };
+  if (donations === undefined) return <LoadingSpinner />;
 
   return (
     <div className="flex flex-col w-fit m-auto">
