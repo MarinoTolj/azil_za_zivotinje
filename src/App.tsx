@@ -4,7 +4,7 @@ import Button from "./components/Button";
 import Map from "./components/Map";
 import Link from "./components/Link";
 import Radio from "./components/FormComponents/Radio";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { FormType, InputType } from "./helpers/types";
 
 function App() {
