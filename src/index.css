@@ -6,6 +6,10 @@
   @apply max-w-2xl sm:m-auto mx-3 mt-5 sm:mt-5;
 }
 
+.input {
+  @apply border-2 border-gray-500 rounded-md p-1;
+}
+
 body {
   margin: 0;
   min-width: 320px;

@@ -64,10 +64,11 @@ const AnimalRegistrationForm = () => {
           label="Animal Name"
           required
           onChange={(e) => setAnimalName(e.target.value)}
+          maxLength={20}
         />
 
-        <div className="flex gap-2  flex-wrap justify-center">
-          <label className="basis-full">Species:</label>
+        <div className="flex gap-1  flex-wrap justify-center">
+          <label className="basis-full">Species</label>
           <div className="flex gap-4">
             <SpeciesList
               type="form"
@@ -80,23 +81,25 @@ const AnimalRegistrationForm = () => {
           label="Animal age"
           placeholder="Type animal age"
           onChange={(e) => setAge(parseFloat(e.target.value))}
+          step={0.1}
+          min={0}
           required
         />
 
         <TextArea
-          label="Description:"
+          label="Description"
           onChange={(e) => setDescription(e.currentTarget.value)}
         />
 
         <CheckBox
           label="Chipped?"
           checked={chipped}
-          className="ml-3"
+          className="ml-2"
           onChange={() => setChipped(!chipped)}
         />
 
         <Input
-          label="Last Check: "
+          label="Last Check"
           type="date"
           max={todayInISOFormat}
           required
@@ -109,7 +112,7 @@ const AnimalRegistrationForm = () => {
           onChange={handleImageUpload}
           className=""
         />
-        <Button type="submit" className="mb-5">
+        <Button type="submit" className="mb-5 w-3/4 mt-3">
           Submit
         </Button>
       </form>

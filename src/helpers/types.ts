@@ -31,7 +31,6 @@ export interface INotification {
   body: string;
 }
 
-//TODO: implement foster status for adoption
 export type AdoptedStatus = "adopted" | "not adopted" | "fostered";
 export interface IAnimal {
   name: string;
@@ -44,3 +43,9 @@ export interface IAnimal {
   lastCheck: string;
   imageUrl: string;
 }
+
+export type InputType = React.ChangeEvent<
+  HTMLInputElement | HTMLTextAreaElement
+>;
+
+export type FormType = React.ChangeEvent<HTMLFormElement>;

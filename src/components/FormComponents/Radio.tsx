@@ -3,7 +3,7 @@ import { Capitalize } from "../../helpers/functions";
 
 interface RadioPropType extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputClassname?: string;
   name: string;
 }
@@ -22,7 +22,7 @@ export default function Radio({
         type="radio"
         name={name}
         onChange={onChange}
-        className="cursor-pointer"
+        className="cursor-pointer accent-green-600"
         required
         {...props}
       />

@@ -3,13 +3,13 @@ import React from "react";
 interface InputPropType extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputClassname?: string;
+  className?: string;
 }
 
-export default function Input({
+export default function CheckBox({
   label,
   onChange,
-  inputClassname,
+  className,
   ...props
 }: InputPropType) {
   return (
@@ -21,7 +21,7 @@ export default function Input({
         id={label}
         onChange={onChange}
         type="checkbox"
-        className="border-2 border-black rounded-sm"
+        className={`accent-green-600 ${className}`}
         {...props}
       />
     </div>

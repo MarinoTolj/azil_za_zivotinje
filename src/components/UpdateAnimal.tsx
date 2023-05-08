@@ -45,14 +45,13 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
 
   return (
     <form
-      className="w-5/6 m-auto h-full flex items-center flex-col"
+      className="w-5/6 m-auto h-full flex items-center flex-col gap-3 pt-3"
       onSubmit={updateAnimal}
     >
       <Input
-        label="Change Name: "
+        label="Change Name"
         name="name"
         defaultValue={updatedAnimal.name}
-        className="border-2 border-black rounded-sm"
         onChange={changeAnimal}
       />
       <Input
@@ -64,7 +63,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
         onChange={changeAnimal}
       />
       <TextArea
-        label="Description:"
+        label="Description"
         name="description"
         defaultValue={updatedAnimal.description}
         placeholder="Enter description"
@@ -81,13 +80,15 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
           })
         }
       />
-
-      <AdoptedList
-        defaultCheck={updatedAnimal.adopted}
-        setterFunction={changeAnimal}
-      />
+      <div>
+        <label className="mb-1">Adoption Status:</label>
+        <AdoptedList
+          defaultCheck={updatedAnimal.adopted}
+          setterFunction={changeAnimal}
+        />
+      </div>
       <Input
-        label="Last Check: "
+        label="Last Check"
         type="date"
         name="lastCheck"
         defaultValue={updatedAnimal.lastCheck}
@@ -98,9 +99,10 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
         label="Upload Image"
         type="file"
         name="image"
+        className=" "
         onChange={handleImageUpload}
       />
-      <Button type="submit" className="my-3">
+      <Button type="submit" className="mb-3 mt-5">
         Submit
       </Button>
     </form>

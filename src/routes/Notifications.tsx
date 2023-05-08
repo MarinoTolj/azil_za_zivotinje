@@ -58,12 +58,13 @@ const Notifications = () => {
   return (
     <div className="w-fit m-auto">
       <Modal open={openModal} openCloseModal={openCloseModal}>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2 pt-2 ">
           <Input
             label="Title: "
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             required
+            placeholder="Enter title"
             maxLength={20}
           />
           <TextArea
@@ -71,6 +72,7 @@ const Notifications = () => {
             onChange={(e) => setBody(e.target.value)}
             value={body}
             required
+            placeholder="Enter content"
             minLength={20}
             maxLength={200}
           />
@@ -78,10 +80,11 @@ const Notifications = () => {
             <CheckBox
               label="Important: "
               checked={important}
+              className="ml-2"
               onChange={() => setImportant(!important)}
             />
           )}
-          <Button className="mb-3">Save</Button>
+          <Button className="mb-3 mt-4 w-3/4">Save</Button>
         </form>
       </Modal>
       <Button onClick={openCloseModal} className="mt-3 mb-5">

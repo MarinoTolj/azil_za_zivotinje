@@ -4,10 +4,38 @@ import Button from "./components/Button";
 import Map from "./components/Map";
 import Link from "./components/Link";
 import Radio from "./components/FormComponents/Radio";
+import { useRef, useState } from "react";
+import { FormType, InputType } from "./helpers/types";
 
 function App() {
-  const handleChange = () => {
-    /*  */
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    inquiry: "",
+    survey: "",
+    message: "",
+  });
+
+  const handleChange = (e: InputType) => {
+    const name = e.currentTarget.name;
+    const value = e.currentTarget.value;
+
+    setContactForm((curr) => {
+      return { ...curr, [name]: value };
+    });
+  };
+
+  const sentContactForm = (e: FormType) => {
+    e.preventDefault();
+    setContactForm({
+      name: "",
+      email: "",
+      phoneNumber: "",
+      inquiry: "",
+      survey: "",
+      message: "",
+    });
   };
 
   return (
@@ -41,18 +69,25 @@ function App() {
           possible.
         </p>
       </div>
-      <form className="w-2/5 max-w-lg min-w-fit m-auto mt-10 flex flex-col gap-5 mb-6">
+      <form
+        className="w-2/5 max-w-lg min-w-fit m-auto mt-10 flex flex-col gap-5 mb-6"
+        onSubmit={sentContactForm}
+      >
         <Input
-          label="Name: "
+          label="Name"
           onChange={handleChange}
           placeholder="Type your name"
+          name="name"
+          value={contactForm.name}
           required
         />
         <Input
-          label="Email: "
-          type="emai"
+          label="Email"
+          type="email"
           onChange={handleChange}
           placeholder="Type your email"
+          name="email"
+          value={contactForm.email}
           required
         />
         {/*TODO: pattern for phone number */}
@@ -60,21 +95,43 @@ function App() {
           label="Phone: "
           type="tel"
           onChange={handleChange}
+          name="phoneNumber"
+          value={contactForm.phoneNumber}
           placeholder="Enter your phone number"
         />
         <div>
           <label htmlFor="">Please select the reason for your inquiry:</label>
           <div>
-            <Radio label="Adoption" onChange={handleChange} name="inquiry" />
+            <Radio
+              label="Adoption"
+              onChange={handleChange}
+              name="inquiry"
+              value={contactForm.inquiry}
+            />
           </div>
           <div>
-            <Radio label="Fostering" onChange={handleChange} name="inquiry" />
+            <Radio
+              label="Fostering"
+              onChange={handleChange}
+              name="inquiry"
+              value={contactForm.inquiry}
+            />
           </div>
           <div>
-            <Radio label="Donations" onChange={handleChange} name="inquiry" />
+            <Radio
+              label="Donations"
+              onChange={handleChange}
+              name="inquiry"
+              value={contactForm.inquiry}
+            />
           </div>
           <div>
-            <Radio label="Other" onChange={handleChange} name="inquiry" />
+            <Radio
+              label="Other"
+              onChange={handleChange}
+              name="inquiry"
+              value={contactForm.inquiry}
+            />
           </div>
         </div>
         <div>
@@ -82,22 +139,44 @@ function App() {
             Please let us know how you found out about us:
           </label>
           <div>
-            <Radio label="Website" onChange={handleChange} name="survey" />
+            <Radio
+              label="Website"
+              onChange={handleChange}
+              name="survey"
+              value={contactForm.survey}
+            />
           </div>
           <div>
-            <Radio label="Social Media" onChange={handleChange} name="survey" />
+            <Radio
+              label="Social Media"
+              onChange={handleChange}
+              name="survey"
+              value={contactForm.survey}
+            />
           </div>
           <div>
-            <Radio label="Event" onChange={handleChange} name="survey" />
+            <Radio
+              label="Event"
+              onChange={handleChange}
+              name="survey"
+              value={contactForm.survey}
+            />
           </div>
           <div>
-            <Radio label="Other" onChange={handleChange} name="survey" />
+            <Radio
+              label="Other"
+              onChange={handleChange}
+              name="survey"
+              value={contactForm.survey}
+            />
           </div>
         </div>
         <TextArea
           label="Message: "
           onChange={handleChange}
           placeholder="Send a message"
+          name="message"
+          value={contactForm.message}
           required
         />
         <Button>Submit</Button>

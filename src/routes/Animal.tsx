@@ -68,61 +68,68 @@ const Animal = () => {
 
   if (animal.name === "") return <LoadingSpinner />;
   return (
-    <div className="w-fit max-w-2xl m-auto mb-8">
-      <div className="flex flex-col items-start w-fit gap-4 mt-5 md:flex-row md:flex-wrap md:justify-center">
-        <AnimalImage animal={animal} />
-        <div className="flex flex-col gap-1">
-          <AnimalInfo title="Name:">{animal.name}</AnimalInfo>
-          <AnimalInfo title="Age:">{animal.age}</AnimalInfo>
-          <AnimalInfo title="Chipped:">
-            {<CheckMark check={animal.chipped} />}
-          </AnimalInfo>
-          <AnimalInfo title="Last Check:">
-            <input type="date" value={animal.lastCheck} />
-          </AnimalInfo>
-          <AnimalInfo title="Species:">{Capitalize(animal.species)}</AnimalInfo>
-          <AnimalInfo title="Status:">
-            {animal.adopted === "adopted"
-              ? "Adopted"
-              : animal.adopted === "fostered"
-              ? "Fostered"
-              : "Not Adopted"}
-          </AnimalInfo>
-        </div>
-
-        <div className="flex flex-col min-w-fit basis-3/5">
-          <TextArea label="Description:" value={animal.description} disabled />
-          <div className="flex gap-4 justify-start mt-2">
-            <Button
-              onClick={() => handleAdoption("adopted")}
-              hidden={animal.adopted !== "not adopted"}
-              className="m-0"
-            >
-              Adopt
-            </Button>
-            <Button
-              onClick={() => handleAdoption("fostered")}
-              hidden={animal.adopted !== "not adopted"}
-              className="m-0"
-            >
-              Foster
-            </Button>
-
-            <Button
-              onClick={handleOpenCloseModal}
-              hidden={!isAdmin}
-              className="bg-main-orange m-0"
-            >
-              Edit
-            </Button>
-          </div>
-        </div>
-      </div>
-
+    <>
       <Modal open={editMode} openCloseModal={handleOpenCloseModal}>
         <UpdateAnimal animal={animal} openCloseModal={handleOpenCloseModal} />
       </Modal>
-    </div>
+      <div className="w-fit max-w-2xl m-auto mb-8">
+        <div className="flex flex-col items-start w-fit gap-4 mt-5 md:flex-row md:flex-wrap md:justify-center">
+          <AnimalImage animal={animal} />
+          <div className="flex flex-col gap-1">
+            <AnimalInfo title="Name:">{animal.name}</AnimalInfo>
+            <AnimalInfo title="Age:">{animal.age}</AnimalInfo>
+            <AnimalInfo title="Chipped:">
+              {<CheckMark check={animal.chipped} />}
+            </AnimalInfo>
+            <AnimalInfo title="Last Check:">
+              <input type="date" value={animal.lastCheck} />
+            </AnimalInfo>
+            <AnimalInfo title="Species:">
+              {Capitalize(animal.species)}
+            </AnimalInfo>
+            <AnimalInfo title="Status:">
+              {animal.adopted === "adopted"
+                ? "Adopted"
+                : animal.adopted === "fostered"
+                ? "Fostered"
+                : "Not Adopted"}
+            </AnimalInfo>
+          </div>
+
+          <div className="flex flex-col min-w-fit basis-3/5">
+            <TextArea
+              label="Description:"
+              value={animal.description}
+              disabled
+            />
+            <div className="flex gap-4 justify-start mt-2">
+              <Button
+                onClick={() => handleAdoption("adopted")}
+                hidden={animal.adopted !== "not adopted"}
+                className="m-0 px-3"
+              >
+                Adopt
+              </Button>
+              <Button
+                onClick={() => handleAdoption("fostered")}
+                hidden={animal.adopted !== "not adopted"}
+                className="m-0 px-3"
+              >
+                Foster
+              </Button>
+
+              <Button
+                onClick={handleOpenCloseModal}
+                hidden={!isAdmin}
+                className="bg-main-orange m-0 px-3"
+              >
+                Edit
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 export default Animal;

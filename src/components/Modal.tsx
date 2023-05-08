@@ -9,7 +9,7 @@ type PropsType = {
 const Modal = (props: PropsType) => {
   return (
     <dialog
-      className="w-full h-full z-20 bg-modal-transparent"
+      className="w-full h-screen z-20 bg-modal-transparent"
       open={props.open}
     >
       <div className="w-5/6 max-w-xl h-fit m-auto bg-white rounded-md">

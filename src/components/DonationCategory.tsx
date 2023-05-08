@@ -41,11 +41,17 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         {isAdmin ? (
           <>
             {donation.category === "donated" ? (
-              <Button className="p-1 mr-1" onClick={repeatDonation}>
+              <Button
+                className="p-1 mr-1 text-base min-w-0"
+                onClick={repeatDonation}
+              >
                 Repeat Donation
               </Button>
             ) : (
-              <Button className="p-1 mr-1" onClick={updateDonation}>
+              <Button
+                className="p-1 mr-1 text-base min-w-0"
+                onClick={updateDonation}
+              >
                 {donation.category === "looking" ? "Mark as Donated" : "Accept"}
               </Button>
             )}
@@ -59,7 +65,9 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         ) : (
           <>
             {donation.category === "looking" && (
-              <Button onClick={updateDonation}>Donate</Button>
+              <Button onClick={updateDonation} className="text-base p-2">
+                Donate
+              </Button>
             )}
           </>
         )}

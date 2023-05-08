@@ -10,12 +10,7 @@ const TextArea: React.FC<TextAreaProps> = ({ label, onChange, ...props }) => {
       <label htmlFor={label} className="cursor-pointer">
         {label}
       </label>
-      <textarea
-        id={label}
-        onChange={onChange}
-        className="border-2 border-black rounded-sm"
-        {...props}
-      />
+      <textarea id={label} onChange={onChange} className="input" {...props} />
     </div>
   );
 };
