@@ -12,6 +12,7 @@ import LoadingSpinner from "../components/Icons/LoadingSpinner";
 import Button from "../components/Button";
 import CheckMark from "../components/Icons/CheckMark";
 import { Capitalize } from "../helpers/functions";
+import TextArea from "../components/FormComponents/TextArea";
 
 const AnimalInfo = ({
   title,
@@ -21,9 +22,9 @@ const AnimalInfo = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div>
-      <p className="underline italic">{title}</p>
-      <p className="font-bold text-xl text-slate-600">{children}</p>
+    <div className="flex gap-2">
+      <p className="text-lg break-words break-normal">{title}</p>
+      <p className="font-bold text-lg text-slate-600">{children}</p>
     </div>
   );
 };
@@ -67,8 +68,8 @@ const Animal = () => {
 
   if (animal.name === "") return <LoadingSpinner />;
   return (
-    <div className="flex flex-col max-w-sm m-auto">
-      <div className="flex justify-center gap-3 mt-5 mx-3">
+    <div className="w-fit max-w-2xl m-auto mb-8">
+      <div className="flex flex-col items-start w-fit gap-4 mt-5 md:flex-row md:flex-wrap md:justify-center">
         <AnimalImage animal={animal} />
         <div className="flex flex-col gap-1">
           <AnimalInfo title="Name:">{animal.name}</AnimalInfo>
@@ -88,36 +89,33 @@ const Animal = () => {
               : "Not Adopted"}
           </AnimalInfo>
         </div>
-      </div>
 
-      <div className="flex flex-col my-5 mx-3">
-        <p>Description:</p>
-        <textarea
-          disabled
-          value={animal.description}
-          className="border-2 border-black rounded-md mt-2"
-        />
-        <div className="flex gap-5 justify-between mt-8">
-          <Button
-            onClick={() => handleAdoption("adopted")}
-            hidden={animal.adopted !== "not adopted"}
-          >
-            Adopt
-          </Button>
-          <Button
-            onClick={() => handleAdoption("fostered")}
-            hidden={animal.adopted !== "not adopted"}
-          >
-            Foster
-          </Button>
+        <div className="flex flex-col min-w-fit basis-3/5">
+          <TextArea label="Description:" value={animal.description} disabled />
+          <div className="flex gap-4 justify-start mt-2">
+            <Button
+              onClick={() => handleAdoption("adopted")}
+              hidden={animal.adopted !== "not adopted"}
+              className="m-0"
+            >
+              Adopt
+            </Button>
+            <Button
+              onClick={() => handleAdoption("fostered")}
+              hidden={animal.adopted !== "not adopted"}
+              className="m-0"
+            >
+              Foster
+            </Button>
 
-          <button
-            onClick={handleOpenCloseModal}
-            hidden={!isAdmin}
-            className="bg-main-orange text-white w-fit p-3 rounded-md m-auto"
-          >
-            Edit
-          </button>
+            <Button
+              onClick={handleOpenCloseModal}
+              hidden={!isAdmin}
+              className="bg-main-orange m-0"
+            >
+              Edit
+            </Button>
+          </div>
         </div>
       </div>
 
