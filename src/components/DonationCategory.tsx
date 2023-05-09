@@ -41,17 +41,11 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         {isAdmin ? (
           <>
             {donation.category === "donated" ? (
-              <Button
-                className="p-1 mr-1 text-base min-w-0"
-                onClick={repeatDonation}
-              >
+              <Button className="mr-1" onClick={repeatDonation}>
                 Repeat Donation
               </Button>
             ) : (
-              <Button
-                className="p-1 mr-1 text-base min-w-0"
-                onClick={updateDonation}
-              >
+              <Button className="mr-1 p-1" onClick={updateDonation}>
                 {donation.category === "looking" ? "Mark as Donated" : "Accept"}
               </Button>
             )}
@@ -65,8 +59,8 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         ) : (
           <>
             {donation.category === "looking" && (
-              <Button onClick={updateDonation} className="text-base p-2">
-                Donate
+              <Button onClick={updateDonation} className="min-w-fit px-3">
+                {"Donate"}
               </Button>
             )}
           </>
@@ -78,7 +72,7 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
 
 const DonationCategory: React.FC<PropType> = (props) => {
   return (
-    <div className="mb-9 max-w-xl m-auto">
+    <div className="mb-9 m-auto">
       <h2 className="text-3xl text-red-600">{Capitalize(props.category)}:</h2>
       <table className="w-full">
         <thead className="border-b-2 border-black">

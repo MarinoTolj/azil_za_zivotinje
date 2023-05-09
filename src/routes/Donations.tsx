@@ -54,7 +54,17 @@ const Donations = () => {
 
   return (
     <>
-      <Modal open={openModal} openCloseModal={openCloseModal}>
+      <div className="w-full max-w-3xl m-auto">
+        <div className="mx-3">
+          <Button onClick={openCloseModal} className="my-3 self-start max-w-xs">
+            New Donation
+          </Button>
+          <DonationCategory category="looking" donations={donations} />
+          <DonationCategory category="offering" donations={donations} />
+          <DonationCategory category="donated" donations={donations} />
+        </div>
+      </div>
+      <Modal isOpen={openModal} openCloseModal={openCloseModal}>
         <form onSubmit={handleSubmit} className="flex flex-col pt-2 gap-4">
           <div className="flex flex-col">
             <label htmlFor="">Type:</label>
@@ -94,17 +104,6 @@ const Donations = () => {
           <Button className="mt-3 mb-5">Submit</Button>
         </form>
       </Modal>
-      <div className="w-fit m-auto">
-        <Button onClick={openCloseModal} className="my-3 ml-3 self-start">
-          New Donation
-        </Button>
-
-        <div className="mx-3">
-          <DonationCategory category="looking" donations={donations} />
-          <DonationCategory category="offering" donations={donations} />
-          <DonationCategory category="donated" donations={donations} />
-        </div>
-      </div>
     </>
   );
 };

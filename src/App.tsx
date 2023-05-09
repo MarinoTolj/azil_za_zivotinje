@@ -42,31 +42,25 @@ function App() {
     <div>
       <div className="paragraph">
         <h2 className="mb-3 underline text-2xl text-center">
-          Welcome to Animal Haven
+          Welcome to Animal Shelter
         </h2>
-        <p>
-          Animal Haven is an animal shelter that provides a safe and loving
-          temporary home to animals in need. Our mission is to rescue,
-          rehabilitate, and rehome abandoned, abused, or neglected animals, and
-          to promote responsible pet ownership and humane treatment of animals
-          in the community.
-        </p>
-
-        <p className="mt-3">
-          We offer a wide range of services to our customers, including{" "}
-          <Link path="/all-animals">adoption</Link>, fostering, volunteering,
-          and <Link path="/donations">donations</Link>.
-        </p>
+        <p>Address - Ul. Ruđera Boškovića 32, 21000, Split</p>
       </div>
       <p className="paragraph text-lg -mb-8 sm:-mb-8">Found Us Here:</p>
       <Map />
+      <p className="mt-3">
+        We offer a wide range of services to our customers, including{" "}
+        <Link path="/all-animals">adoption</Link>,{" "}
+        <Link path="/all-animals">fostering</Link>, volunteering, and{" "}
+        <Link path="/donations">donations</Link>.
+      </p>
       <div className="paragraph">
         <h3 className="mb-3 underline text-xl text-center">Contact Us</h3>
         <p>
-          Thank you for your interest in Animal Haven! Please use the form below
-          to get in touch with us regarding any questions, comments, or concerns
-          you may have. We will do our best to get back to you as soon as
-          possible.
+          Thank you for your interest in Animal Shelter! Please use the form
+          below to get in touch with us regarding any questions, comments, or
+          concerns you may have. We will do our best to get back to you as soon
+          as possible.
         </p>
       </div>
       <form

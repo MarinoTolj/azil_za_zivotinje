@@ -66,7 +66,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <PersistGate persistor={persistor}>
         <Header routes={routes} />
         <RouterProvider router={router} />
-        <Footer />
+        {/* <Footer /> */}
       </PersistGate>
     </Provider>
   </React.StrictMode>

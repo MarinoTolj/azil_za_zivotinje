@@ -69,14 +69,9 @@ const Animal = () => {
   if (animal.name === "") return <LoadingSpinner />;
   return (
     <>
-      <Modal open={editMode} openCloseModal={handleOpenCloseModal}>
-        <UpdateAnimal animal={animal} openCloseModal={handleOpenCloseModal} />
-      </Modal>
-      <div className="w-fit max-w-2xl m-auto mb-8">
+      <div className="w-fit max-w-2xl m-auto  px-3">
         <div className="flex flex-col items-start w-fit gap-4 mt-5 md:flex-row md:flex-wrap md:justify-center">
-          <div className="mx-2">
-            <AnimalImage animal={animal} />
-          </div>
+          <AnimalImage animal={animal} />
           <div className="flex flex-col gap-1">
             <AnimalInfo title="Name:">{animal.name}</AnimalInfo>
             <AnimalInfo title="Age:">{animal.age}</AnimalInfo>
@@ -131,6 +126,9 @@ const Animal = () => {
           </div>
         </div>
       </div>
+      <Modal isOpen={editMode} openCloseModal={handleOpenCloseModal}>
+        <UpdateAnimal animal={animal} openCloseModal={handleOpenCloseModal} />
+      </Modal>
     </>
   );
 };

@@ -56,8 +56,8 @@ const Notifications = () => {
   if (notifications === undefined) return <LoadingSpinner />;
 
   return (
-    <div className="w-fit m-auto">
-      <Modal open={openModal} openCloseModal={openCloseModal}>
+    <>
+      <Modal isOpen={openModal} openCloseModal={openCloseModal}>
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 pt-2 ">
           <Input
             label="Title: "
@@ -87,17 +87,19 @@ const Notifications = () => {
           <Button className="mb-3 mt-4 w-3/4">Save</Button>
         </form>
       </Modal>
-      <Button onClick={openCloseModal} className="mt-3 mb-5">
-        New Notification
-      </Button>
+      <div className="w-fit m-auto">
+        <Button onClick={openCloseModal} className="mt-3 mb-5">
+          New Notification
+        </Button>
 
-      <h2 className="text-red-600 text-3xl ">Notifications: </h2>
-      <div className="flex flex-col gap-4 w-fit m-auto mb-5">
-        {SortByDates(notifications).map((notification) => (
-          <Notification key={notification.id} notification={notification} />
-        ))}
+        <h2 className="text-red-600 text-3xl ">Notifications: </h2>
+        <div className="flex flex-col gap-4 w-fit m-auto mb-5">
+          {SortByDates(notifications).map((notification) => (
+            <Notification key={notification.id} notification={notification} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

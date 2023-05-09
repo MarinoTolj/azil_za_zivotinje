@@ -11,7 +11,7 @@ export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
     <header>
       <div className="flex items-center justify-between bg-slate-300 p-5 border-b-2 border-black">
         <h1 className="text-xl align-middle font-bold md:text-5xl">
-          <a href="/">AZIL ZA ŽIVOTINJE</a>
+          <a href="/">ANIMAL SHELTER</a>
         </h1>
         <div className="flex items-center">
           <span className="mr-2">Admin</span>

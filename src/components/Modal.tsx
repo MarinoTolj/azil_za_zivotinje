@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 type PropsType = {
-  open: boolean;
+  isOpen: boolean;
   openCloseModal: () => void;
   children: React.ReactNode;
 };
 
 const Modal = (props: PropsType) => {
+  useEffect(() => {
+    if (props.isOpen) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "unset";
+  }, [props.isOpen]);
+
   return (
     <dialog
-      className="w-full h-full m-0 p-0 z-20 bg-modal-transparent"
-      open={props.open}
+      className="w-full h-screen m-0 p-0 z-20 bg-modal-transparent"
+      open={props.isOpen}
     >
-      <div className="w-5/6 max-w-xl h-auto m-auto bg-white rounded-md">
+      <div className="w-5/6 max-w-xl m-auto mt-20 bg-white rounded-md">
         <span
           className="text-red-500 -mt-2 float-right text-3xl font-bold cursor-pointer"
           onClick={props.openCloseModal}
