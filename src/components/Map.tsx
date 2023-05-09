@@ -1,8 +1,6 @@
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet/dist/images/marker-shadow.png";
-import "leaflet/dist/images/marker-icon.png";
-import "leaflet/dist/images/marker-icon-2x.png";
+import { icon } from "leaflet";
 
 /**
  * Pics
@@ -25,7 +23,15 @@ const Map = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={center} />
+        <Marker
+          position={center}
+          icon={icon({
+            iconUrl:
+              "https://unpkg.com/leaflet@1.6/dist/images/marker-icon.png ",
+            shadowUrl:
+              "https://unpkg.com/leaflet@1.6/dist/images/marker-shadow.png",
+          })}
+        />
       </MapContainer>
     </>
   );

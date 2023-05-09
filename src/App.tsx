@@ -6,9 +6,6 @@ import Link from "./components/Link";
 import Radio from "./components/FormComponents/Radio";
 import { useState } from "react";
 import { FormType, InputType } from "./helpers/types";
-import "leaflet/dist/images/marker-shadow.png";
-import "leaflet/dist/images/marker-icon.png";
-import "leaflet/dist/images/marker-icon-2x.png";
 
 function App() {
   const [contactForm, setContactForm] = useState({

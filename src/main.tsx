@@ -18,9 +18,6 @@ import Notifications from "./routes/Notifications";
 import { PersistGate } from "redux-persist/integration/react";
 import Animal from "./routes/Animal";
 import Footer from "./components/Footer";
-import "leaflet/dist/images/marker-shadow.png";
-import "leaflet/dist/images/marker-icon.png";
-import "leaflet/dist/images/marker-icon-2x.png";
 
 export type RouteType = RouteObject & {
   path:
