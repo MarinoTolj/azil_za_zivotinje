@@ -5,12 +5,13 @@ import { useState } from "react";
 import Input from "../components/FormComponents/Input";
 import CheckBox from "../components/FormComponents/CheckBox";
 
-import { IAnimal, Species } from "../helpers/types";
+import { GenderType, IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
 import { firestore } from "../firebase/firestore";
 import { useNavigate } from "react-router";
 import TextArea from "../components/FormComponents/TextArea";
 import Button from "../components/Button";
+import Radio from "../components/FormComponents/Radio";
 
 /***
  * Format: yyyy-mm-dd
@@ -22,6 +23,7 @@ const AnimalRegistrationForm = () => {
   const [species, setSpecies] = useState<Species>("");
   const [age, setAge] = useState(0);
   const [description, setDescription] = useState("");
+  const [gender, setGender] = useState<GenderType>("female");
   const [chipped, setChipped] = useState(false);
   const [lastCheck, setLastCheck] = useState("");
   const [image, setImage] = useState<Blob>();
@@ -40,6 +42,7 @@ const AnimalRegistrationForm = () => {
       name: animalName,
       species,
       age,
+      gender,
       description,
       adopted: "not adopted",
       chipped,
@@ -68,7 +71,7 @@ const AnimalRegistrationForm = () => {
         />
 
         <div className="flex gap-1  flex-wrap justify-center">
-          <label className="basis-full">Species</label>
+          <label className="basis-full">Species:</label>
           <div className="flex gap-4">
             <SpeciesList
               type="form"
@@ -85,6 +88,25 @@ const AnimalRegistrationForm = () => {
           min={0}
           required
         />
+        <div className="flex gap-3 m-auto">
+          <label htmlFor="">Select Gender:</label>
+          <div>
+            <Radio
+              label="Male"
+              value="male"
+              onChange={(e) => setGender(e.target.value as GenderType)}
+              name="gender"
+            />
+          </div>
+          <div>
+            <Radio
+              label="Female"
+              value="female"
+              onChange={(e) => setGender(e.target.value as GenderType)}
+              name="gender"
+            />
+          </div>
+        </div>
 
         <TextArea
           label="Description"

@@ -32,10 +32,12 @@ export interface INotification {
 }
 
 export type AdoptedStatus = "adopted" | "not adopted" | "fostered";
+export type GenderType = "male" | "female";
 export interface IAnimal {
   name: string;
   id: string;
   age: number;
+  gender: GenderType;
   species: Species;
   description: string;
   adopted: AdoptedStatus;

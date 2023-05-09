@@ -36,6 +36,7 @@ const Animal = () => {
     adopted: "not adopted",
     age: 0,
     chipped: false,
+    gender: "female",
     description: "",
     id: "",
     imageUrl: "",
@@ -75,6 +76,7 @@ const Animal = () => {
           <div className="flex flex-col gap-1">
             <AnimalInfo title="Name:">{animal.name}</AnimalInfo>
             <AnimalInfo title="Age:">{animal.age}</AnimalInfo>
+            <AnimalInfo title="Gender:">{Capitalize(animal.gender)}</AnimalInfo>
             <AnimalInfo title="Chipped:">
               {<CheckMark check={animal.chipped} />}
             </AnimalInfo>

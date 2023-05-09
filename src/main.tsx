@@ -17,7 +17,7 @@ import Donations from "./routes/Donations";
 import Notifications from "./routes/Notifications";
 import { PersistGate } from "redux-persist/integration/react";
 import Animal from "./routes/Animal";
-import Footer from "./components/Footer";
+//import Footer from "./components/Footer";
 
 export type RouteType = RouteObject & {
   path:
