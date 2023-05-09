@@ -106,7 +106,8 @@ function App() {
               label="Adoption"
               onChange={handleChange}
               name="inquiry"
-              value={contactForm.inquiry}
+              value={"adoption"}
+              checked={contactForm.inquiry === "adoption"}
             />
           </div>
           <div>
@@ -114,7 +115,8 @@ function App() {
               label="Fostering"
               onChange={handleChange}
               name="inquiry"
-              value={contactForm.inquiry}
+              value={"fostering"}
+              checked={contactForm.inquiry === "fostering"}
             />
           </div>
           <div>
@@ -122,7 +124,8 @@ function App() {
               label="Donations"
               onChange={handleChange}
               name="inquiry"
-              value={contactForm.inquiry}
+              value={"donations"}
+              checked={contactForm.inquiry === "donations"}
             />
           </div>
           <div>
@@ -130,7 +133,8 @@ function App() {
               label="Other"
               onChange={handleChange}
               name="inquiry"
-              value={contactForm.inquiry}
+              value={"other"}
+              checked={contactForm.inquiry === "other"}
             />
           </div>
         </div>
@@ -143,7 +147,8 @@ function App() {
               label="Website"
               onChange={handleChange}
               name="survey"
-              value={contactForm.survey}
+              value={"website"}
+              checked={contactForm.survey === "website"}
             />
           </div>
           <div>
@@ -151,7 +156,8 @@ function App() {
               label="Social Media"
               onChange={handleChange}
               name="survey"
-              value={contactForm.survey}
+              value={"social media"}
+              checked={contactForm.survey === "social media"}
             />
           </div>
           <div>
@@ -159,7 +165,8 @@ function App() {
               label="Event"
               onChange={handleChange}
               name="survey"
-              value={contactForm.survey}
+              value={"event"}
+              checked={contactForm.survey === "event"}
             />
           </div>
           <div>
@@ -167,7 +174,8 @@ function App() {
               label="Other"
               onChange={handleChange}
               name="survey"
-              value={contactForm.survey}
+              value={"other"}
+              checked={contactForm.survey === "other"}
             />
           </div>
         </div>

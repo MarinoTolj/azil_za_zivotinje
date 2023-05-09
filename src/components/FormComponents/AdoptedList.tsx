@@ -1,9 +1,9 @@
-import { AdoptedStatus } from "../../helpers/types";
+import { AdoptedStatus, InputType } from "../../helpers/types";
 import Radio from "./Radio";
 
 type PropType = {
   defaultCheck: AdoptedStatus | "All";
-  setterFunction: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setterFunction: (e: InputType) => void;
 };
 
 const AdoptedList: React.FC<PropType> = (props) => {

@@ -67,14 +67,21 @@ const AllAnimals = () => {
 
   return (
     <div className="flex flex-col items-center md:flex-row md:gap-5 mt-5 md:ml-10">
-      <div className="md:flex md:flex-col">
-        <Input
-          label="Search by name:"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="border-2 border-black rounded-sm mb-3"
-        />
-        <h2 className="text-4xl">Filter: </h2>
-        <div className="flex gap-3 md:flex-col">
+      <div className="md:flex md:flex-col gap-3">
+        <div className="relative">
+          <Input
+            label="Search by name:"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <span
+            className="text-red-500 absolute right-0 top-1/3  text-3xl font-bold cursor-pointer"
+            onClick={() => setSearchTerm("")}
+          >
+            &times;
+          </span>
+        </div>
+        <div className="flex gap-3 my-5 md:flex-col">
           <div className="flex">
             <span>
               <Legend className="text-adopted" />
@@ -94,7 +101,8 @@ const AllAnimals = () => {
             <p>Not Adopted</p>
           </div>
         </div>
-        <div className="flex flex-col justify-center my-5 md:flex-col">
+        <h2 className="text-4xl">Filter: </h2>
+        <div className="flex flex-col justify-center mb-5 md:flex-col">
           <h3>Adopted Status: </h3>
           <div>
             <Radio
@@ -134,7 +142,7 @@ const AllAnimals = () => {
       </div>
 
       <div
-        className={`mb-5 gap-5 grid max-w-5xl md:self-start md:flex-grow grid-cols-1 sm:grid-cols-2 md:grid-cols-3`}
+        className={`grid mb-5 gap-5 mx-2  max-w-5xl md:self-start md:flex-grow grid-cols-1 sm:grid-cols-2 md:grid-cols-3`}
       >
         {filtredAnimals.map((animal) => {
           return <AnimalImage key={animal.id} animal={animal} />;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Input from "../components/FormComponents/Input";
-import { IDonation, donationType } from "../helpers/types";
+import { IDonation, InputType, donationType } from "../helpers/types";
 import Radio from "../components/FormComponents/Radio";
 import { firestore } from "../firebase/firestore";
 import { useSelector } from "react-redux";
@@ -21,7 +21,7 @@ const Donations = () => {
   const [donations, setDonations] = useState<IDonation[]>();
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
 
-  const changeDonation = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeDonation = (e: InputType) => {
     const name = e.target.name;
     const value = e.target.value;
     setDonation((curr) => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Input from "./FormComponents/Input";
-import { IAnimal } from "../helpers/types";
+import { FormType, IAnimal, InputType } from "../helpers/types";
 import { firestore } from "../firebase/firestore";
 import { todayInISOFormat } from "../routes/AnimalRegistrationForm";
 import TextArea from "./FormComponents/TextArea";
@@ -17,11 +17,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
   const [updatedAnimal, setUpdatedAnimal] = useState(props.animal);
   const [image, setImage] = useState<Blob>();
 
-  const changeAnimal = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const changeAnimal = (e: InputType) => {
     const propety = e.currentTarget.name;
     const value = e.currentTarget.value;
     setUpdatedAnimal((curr) => {
@@ -32,7 +28,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
     if (e.target.files) setImage(e.target.files[0]);
   };
 
-  const updateAnimal = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const updateAnimal = async (e: FormType) => {
     e.preventDefault();
     await firestore.UpdateDocumentById(
       "animals",

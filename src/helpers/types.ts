@@ -45,7 +45,7 @@ export interface IAnimal {
 }
 
 export type InputType = React.ChangeEvent<
-  HTMLInputElement | HTMLTextAreaElement
+  HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
 >;
 
 export type FormType = React.ChangeEvent<HTMLFormElement>;

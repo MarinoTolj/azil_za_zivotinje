@@ -1,23 +1,15 @@
 import { Capitalize } from "../helpers/functions";
-import { species } from "../helpers/types";
+import { InputType, species } from "../helpers/types";
 import Radio from "./FormComponents/Radio";
 
 type PropType =
   | {
       type: "form";
-      onChange: (
-        e:
-          | React.ChangeEvent<HTMLInputElement>
-          | React.ChangeEvent<HTMLSelectElement>
-      ) => void;
+      onChange: (e: InputType) => void;
     }
   | {
       type: "filter";
-      onChange: (
-        e:
-          | React.ChangeEvent<HTMLInputElement>
-          | React.ChangeEvent<HTMLSelectElement>
-      ) => void;
+      onChange: (e: InputType) => void;
     };
 
 const SpeciesList: React.FC<PropType> = (props) => {

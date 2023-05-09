@@ -74,7 +74,9 @@ const Animal = () => {
       </Modal>
       <div className="w-fit max-w-2xl m-auto mb-8">
         <div className="flex flex-col items-start w-fit gap-4 mt-5 md:flex-row md:flex-wrap md:justify-center">
-          <AnimalImage animal={animal} />
+          <div className="mx-2">
+            <AnimalImage animal={animal} />
+          </div>
           <div className="flex flex-col gap-1">
             <AnimalInfo title="Name:">{animal.name}</AnimalInfo>
             <AnimalInfo title="Age:">{animal.age}</AnimalInfo>
