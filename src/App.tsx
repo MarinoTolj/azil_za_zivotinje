@@ -41,14 +41,16 @@ function App() {
   return (
     <div>
       <div className="paragraph">
-        <h2 className="mb-3 underline text-2xl text-center">
+        <h2 className="mb-3 underline text-4xl text-center">
           Welcome to Animal Shelter
         </h2>
-        <p>Address - Ul. Ruđera Boškovića 32, 21000, Split</p>
+        <p className="mt-10 -mb-4">
+          Address - Ul. Ruđera Boškovića 32, 21000, Split
+        </p>
       </div>
-      <p className="paragraph text-lg -mb-8 sm:-mb-8">Found Us Here:</p>
+      <p className="paragraph text-lg">Found Us Here:</p>
       <Map />
-      <p className="mt-3">
+      <p className="paragraph mt-3">
         We offer a wide range of services to our customers, including{" "}
         <Link path="/all-animals">adoption</Link>,{" "}
         <Link path="/all-animals">fostering</Link>, volunteering, and{" "}
