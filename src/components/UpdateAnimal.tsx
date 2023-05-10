@@ -2,11 +2,11 @@ import { useState } from "react";
 import Input from "./FormComponents/Input";
 import { FormType, IAnimal, InputType } from "../helpers/types";
 import { firestore } from "../firebase/firestore";
-import { todayInISOFormat } from "../routes/AnimalRegistrationForm";
 import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
 import CheckBox from "./FormComponents/CheckBox";
 import AdoptedList from "./FormComponents/AdoptedList";
+import { SuccessMessage, todayInISOFormat } from "../helpers/functions";
 
 type PropType = {
   animal: IAnimal;
@@ -14,7 +14,7 @@ type PropType = {
 };
 
 const UpdateAnimal: React.FC<PropType> = (props) => {
-  const [updatedAnimal, setUpdatedAnimal] = useState(props.animal);
+  const [updatedAnimal, setUpdatedAnimal] = useState({ ...props.animal });
   const [image, setImage] = useState<Blob>();
 
   const changeAnimal = (e: InputType) => {
@@ -37,6 +37,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
       image
     );
     props.openCloseModal();
+    SuccessMessage(`${updatedAnimal.name} was successfully changed`);
   };
 
   return (

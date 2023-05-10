@@ -12,11 +12,11 @@ import { useNavigate } from "react-router";
 import TextArea from "../components/FormComponents/TextArea";
 import Button from "../components/Button";
 import Radio from "../components/FormComponents/Radio";
-
-/***
- * Format: yyyy-mm-dd
- * */
-export const todayInISOFormat = new Date().toISOString().split("T")[0];
+import {
+  ErrorMessage,
+  SuccessMessage,
+  todayInISOFormat,
+} from "../helpers/functions";
 
 const AnimalRegistrationForm = () => {
   const [animalName, setAnimalName] = useState("");
@@ -50,11 +50,10 @@ const AnimalRegistrationForm = () => {
     };
     if (image) {
       await firestore.AddDocument("animals", data, image);
-      //TODO: decide what to do when form is submitted. It goes to all-animals, all-animals/:id, or it stays on same page with form input reseted
+      SuccessMessage("New Animal Successfuly Added");
       navigate("/all-animals");
-    } else console.error("ERROR: Image not defined");
+    } else ErrorMessage("ERROR: something went wrong. Try again");
   };
-  //TODO: custom error if not selected
 
   return (
     <div className="text-center w-full m-auto mt-3">

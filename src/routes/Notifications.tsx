@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import { INotification } from "../helpers/types";
-import { todayInISOFormat } from "./AnimalRegistrationForm";
 import { firestore } from "../firebase/firestore";
 import Input from "../components/FormComponents/Input";
 import { useSelector } from "react-redux";
@@ -11,7 +10,11 @@ import TextArea from "../components/FormComponents/TextArea";
 import CheckBox from "../components/FormComponents/CheckBox";
 import Notification from "../components/Notification";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
-import { SortByDates } from "../helpers/functions";
+import {
+  SortByDates,
+  SuccessMessage,
+  todayInISOFormat,
+} from "../helpers/functions";
 
 const Notifications = () => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
@@ -20,6 +23,8 @@ const Notifications = () => {
   const [body, setBody] = useState("");
   const [important, setImportant] = useState(false);
   const [notifications, setNotifications] = useState<INotification[]>();
+  const [showImportant, setShowImportant] = useState(false);
+
   const fetchAllNotifications = async () => {
     await firestore.GetCollectionByName("notifications", setNotifications);
   };
@@ -41,6 +46,7 @@ const Notifications = () => {
     setBody("");
     setImportant(false);
     openCloseModal();
+    SuccessMessage("New Notification Successfully Added");
   };
 
   const openCloseModal = () => {
@@ -81,16 +87,34 @@ const Notifications = () => {
           <Button className="mb-3 mt-4 w-3/4">Save</Button>
         </form>
       </Modal>
-      <div className="m-auto mt-5">
-        <Button onClick={openCloseModal} className="mb-5">
+      <div className="m-auto mt-5 w-full max-w-2xl">
+        <Button onClick={openCloseModal} className="mb-5 max-w-xs">
           New Notification
         </Button>
 
-        <h2 className="text-red-600 text-4xl mb-2">Notifications: </h2>
-        <div className="flex flex-col gap-4 w-fit m-auto mb-5">
-          {SortByDates(notifications).map((notification) => (
-            <Notification key={notification.id} notification={notification} />
-          ))}
+        <h2 className="text-red-600 text-4xl">Notifications: </h2>
+        <CheckBox
+          label="Only Show Important"
+          onChange={() => setShowImportant(!showImportant)}
+          className="ml-3 mb-5"
+        />
+
+        <div className="flex flex-col gap-4 m-auto mb-5">
+          {showImportant
+            ? SortByDates(notifications)
+                .filter((notification) => notification.important)
+                .map((notification) => (
+                  <Notification
+                    key={notification.id}
+                    notification={notification}
+                  />
+                ))
+            : SortByDates(notifications).map((notification) => (
+                <Notification
+                  key={notification.id}
+                  notification={notification}
+                />
+              ))}
         </div>
       </div>
     </>

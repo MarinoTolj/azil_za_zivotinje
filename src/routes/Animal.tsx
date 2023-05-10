@@ -11,7 +11,7 @@ import UpdateAnimal from "../components/UpdateAnimal";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
 import Button from "../components/Button";
 import CheckMark from "../components/Icons/CheckMark";
-import { Capitalize } from "../helpers/functions";
+import { Capitalize, SuccessMessage } from "../helpers/functions";
 import TextArea from "../components/FormComponents/TextArea";
 
 const AnimalInfo = ({
@@ -50,6 +50,8 @@ const Animal = () => {
     await firestore.UpdateDocumentById("animals", animal.id, {
       adopted: status,
     });
+    setAnimal({ ...animal, adopted: status });
+    SuccessMessage("Adoption Status Successfully Changed");
   };
 
   const fetchAnimalById = async () => {
@@ -98,7 +100,8 @@ const Animal = () => {
           <div className="flex flex-col min-w-fit basis-3/5">
             <TextArea
               label="Description:"
-              value={animal.description}
+              defaultValue={animal.description}
+              readOnly
               disabled
             />
             <div className="flex gap-4 justify-start mt-2">

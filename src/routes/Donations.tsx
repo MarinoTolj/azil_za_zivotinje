@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import DonationCategory from "../components/DonationCategory";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
+import { SuccessMessage } from "../helpers/functions";
 
 const Donations = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -49,6 +50,7 @@ const Donations = () => {
 
     await firestore.AddDocument("donations", donationData);
     openCloseModal();
+    SuccessMessage("New Donation Successfully Added");
   };
   if (donations === undefined) return <LoadingSpinner />;
 

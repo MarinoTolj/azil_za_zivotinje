@@ -18,6 +18,8 @@ import Notifications from "./routes/Notifications";
 import { PersistGate } from "redux-persist/integration/react";
 import Animal from "./routes/Animal";
 //import Footer from "./components/Footer";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 export type RouteType = RouteObject & {
   path:
@@ -66,6 +68,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <PersistGate persistor={persistor}>
         <Header routes={routes} />
         <RouterProvider router={router} />
+        <ToastContainer />
+
         {/* <Footer /> */}
       </PersistGate>
     </Provider>

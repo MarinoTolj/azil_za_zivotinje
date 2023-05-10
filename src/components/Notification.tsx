@@ -17,20 +17,24 @@ const Notification: React.FC<PropType> = (props) => {
   };
 
   return (
-    <div className="">
+    <div className="md:max-w-5xl">
       <div
         className={`${
           notification.important ? "bg-red-600" : "bg-green-600"
         } text-white flex gap-5 justify-between p-2 rounded-md rounded-br-none rounded-bl-none`}
       >
         <p>{notification.title}</p>
-        {notification.important ? <p>Important!</p> : null}
+        {notification.important ? (
+          <p className="font-semibold">IMPORTANT!</p>
+        ) : null}
         <p>{notification.date}</p>
       </div>
       <div className="flex flex-col border-2 border-gray-500 rounded-md rounded-t-none">
-        <textarea disabled className="w-full pl-1">
-          {notification.body}
-        </textarea>
+        <textarea
+          disabled
+          className="w-full pl-1 h-24"
+          defaultValue={notification.body}
+        />
         {isAdmin && (
           <button onClick={deleteNotification} className="w-fit self-end">
             <TrashIcon />

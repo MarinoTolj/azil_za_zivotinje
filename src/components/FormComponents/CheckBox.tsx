@@ -22,7 +22,7 @@ export default function CheckBox({
         id={label}
         onChange={onChange}
         type="checkbox"
-        className={`accent-green-600 ${className}`}
+        className={`accent-green-600 ${className} cursor-pointer`}
         {...props}
       />
     </div>
