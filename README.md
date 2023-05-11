@@ -8,7 +8,9 @@
 
 ## Introduction
 
-The app allows users to view and adopt pets, donate to the shelter, and receive notifications about adoption events and other updates. The app is build with:
+The app allows users to view and adopt pets, donate to the shelter, and receive notifications about adoption events and other updates.
+You can view the App here: [azil-za-zivotinje.vercel.app](https://azil-za-zivotinje.vercel.app/).
+The app is build with:
 
 - [React](https://github.com/facebook/react)
 - [Vite](https://github.com/vitejs/vite)
@@ -17,6 +19,7 @@ The app allows users to view and adopt pets, donate to the shelter, and receive 
 - [Redux Toolkit](https://github.com/reduxjs/redux-toolkit)
 - [React Router](https://github.com/remix-run/react-router)
 - [Firebase](https://firebase.google.com/)
+- The app is hosted with [Vercel](https://vercel.com)
 
 ### Setup
 
