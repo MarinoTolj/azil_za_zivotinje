@@ -38,7 +38,7 @@ const NavBtn: React.FC<PropType> = (props) => {
       to={props.path}
       className={`${
         props.path === location.pathname
-          ? "bg-green-600 text-white"
+          ? "bg-green-700 text-slate-200"
           : "bg-slate-300"
       }  p-3 rounded-md`}
     >

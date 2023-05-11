@@ -11,21 +11,11 @@ const ToggleSwitch = () => {
   const dispatch = useDispatch();
 
   return (
-    <button onClick={() => dispatch(toggleIsAdmin())}>
+    <button onClick={() => dispatch(toggleIsAdmin())} className="fit">
       {isAdmin ? (
-        <Icon
-          path={mdiToggleSwitch}
-          size={toggleSize}
-          color="green"
-          className=""
-        />
+        <Icon path={mdiToggleSwitch} size={toggleSize} color="green" />
       ) : (
-        <Icon
-          path={mdiToggleSwitchOff}
-          size={toggleSize}
-          color="red"
-          className=""
-        />
+        <Icon path={mdiToggleSwitchOff} size={toggleSize} color="red" />
       )}
     </button>
   );

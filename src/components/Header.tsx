@@ -3,18 +3,19 @@ import NavBtn from "./NavBtn";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import ToggleSwitch from "./Icons/ToggleSwitch";
+import { Link } from "react-router-dom";
 
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
 
   return (
     <header>
-      <div className="flex items-center justify-between bg-slate-300 p-5 border-b-2 border-black">
-        <h1 className="text-xl align-middle font-bold md:text-5xl">
-          <a href="/">ANIMAL SHELTER</a>
+      <div className="flex items-center justify-between bg-main-orange p-5">
+        <h1 className="text-xl align-middle text-slate-300 font-bold md:text-5xl">
+          <Link to="/">ANIMAL SHELTER</Link>
         </h1>
         <div className="flex items-center">
-          <span className="mr-2">Admin</span>
+          <span className="mr-2 text-slate-800">Admin</span>
           <ToggleSwitch />
         </div>
       </div>
