@@ -1,16 +1,8 @@
+import { Link, useLocation } from "react-router-dom";
 import { RouteType } from "../main";
 
 type PropType = {
   path: RouteType["path"];
-};
-
-const hostName =
-  process.env.NODE_ENV === "development"
-    ? "http://127.0.0.1:5173"
-    : "https://azil-za-zivotinje.vercel.app/";
-
-const getPathName = (url: string) => {
-  return url.split(hostName)[1];
 };
 
 const getRouteName = (path: RouteType["path"]) => {
@@ -37,18 +29,21 @@ const getRouteName = (path: RouteType["path"]) => {
   return routeName;
 };
 
-const thisUrl = getPathName(window.location.href);
 const NavBtn: React.FC<PropType> = (props) => {
+  const location = useLocation();
+
   if (props.path === "/all-animals/:id") return null;
   return (
-    <a
-      href={props.path}
+    <Link
+      to={props.path}
       className={`${
-        props.path === thisUrl ? "bg-green-600 text-white" : "bg-slate-300"
+        props.path === location.pathname
+          ? "bg-green-600 text-white"
+          : "bg-slate-300"
       }  p-3 rounded-md`}
     >
       {getRouteName(props.path)}
-    </a>
+    </Link>
   );
 };
 export default NavBtn;

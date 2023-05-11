@@ -15,7 +15,13 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
 
   const deleteDonation = async () => {
-    await firestore.DeleteDocumentById("donations", donation.id);
+    const response = confirm(
+      "Are you sure you want to remove this donation?\n- " +
+        donation.description
+    );
+    if (response) {
+      await firestore.DeleteDocumentById("donations", donation.id);
+    }
   };
 
   const updateDonation = async () => {

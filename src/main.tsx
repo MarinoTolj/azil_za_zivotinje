@@ -11,15 +11,15 @@ import {
 } from "react-router-dom";
 import AllAnimals from "./routes/AllAnimals";
 import ErrorPage from "./components/ErrorPage";
-import { Header } from "./components/Header";
 import AnimalRegistrationForm from "./routes/AnimalRegistrationForm";
 import Donations from "./routes/Donations";
 import Notifications from "./routes/Notifications";
 import { PersistGate } from "redux-persist/integration/react";
 import Animal from "./routes/Animal";
-//import Footer from "./components/Footer";
+
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+
+import Layout from "./routes/Layout";
 
 export type RouteType = RouteObject & {
   path:
@@ -31,32 +31,56 @@ export type RouteType = RouteObject & {
     | "/notifications";
 };
 
-const routes: RouteType[] = [
+export const routes: RouteType[] = [
   {
     path: "/",
-    element: <App />,
+    element: (
+      <Layout>
+        <App />
+      </Layout>
+    ),
     errorElement: <ErrorPage />,
   },
 
   {
     path: "/all-animals",
-    element: <AllAnimals />,
+    element: (
+      <Layout>
+        <AllAnimals />
+      </Layout>
+    ),
   },
   {
     path: "/all-animals/:id",
-    element: <Animal />,
+    element: (
+      <Layout>
+        <Animal />
+      </Layout>
+    ),
   },
   {
     path: "/donations",
-    element: <Donations />,
+    element: (
+      <Layout>
+        <Donations />
+      </Layout>
+    ),
   },
   {
     path: "/notifications",
-    element: <Notifications />,
+    element: (
+      <Layout>
+        <Notifications />
+      </Layout>
+    ),
   },
   {
     path: "/animal-registration-form",
-    element: <AnimalRegistrationForm />,
+    element: (
+      <Layout>
+        <AnimalRegistrationForm />
+      </Layout>
+    ),
   },
 ];
 
@@ -66,11 +90,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Header routes={routes} />
         <RouterProvider router={router} />
-        <ToastContainer />
-
-        {/* <Footer /> */}
       </PersistGate>
     </Provider>
   </React.StrictMode>

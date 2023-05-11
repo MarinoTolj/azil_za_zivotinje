@@ -13,7 +13,12 @@ const Notification: React.FC<PropType> = (props) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
 
   const deleteNotification = async () => {
-    await firestore.DeleteDocumentById("notifications", notification.id);
+    const response = confirm(
+      "Are you sure you want to remove?\n- " + notification.title
+    );
+    if (response) {
+      await firestore.DeleteDocumentById("notifications", notification.id);
+    }
   };
 
   return (

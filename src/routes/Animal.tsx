@@ -104,7 +104,7 @@ const Animal = () => {
               readOnly
               disabled
             />
-            <div className="flex gap-4 justify-start mt-2">
+            <div className="flex gap-4 justify-start mt-2 mb-5">
               <Button
                 onClick={() => handleAdoption("adopted")}
                 hidden={animal.adopted !== "not adopted"}

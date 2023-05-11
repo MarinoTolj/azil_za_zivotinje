@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 type PropsType = {
   isOpen: boolean;
@@ -7,17 +7,12 @@ type PropsType = {
 };
 
 const Modal = (props: PropsType) => {
-  useEffect(() => {
-    if (props.isOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "unset";
-  }, [props.isOpen]);
-
   return (
     <dialog
-      className="w-full h-screen m-0 p-0 z-20 bg-modal-transparent"
+      className="fixed top-0 w-full h-screen m-0 p-0 z-20 bg-modal-transparent"
       open={props.isOpen}
     >
-      <div className="w-5/6 max-w-xl m-auto mt-5 overflow-y-auto max-h-full bg-white rounded-md">
+      <div className="w-5/6 max-w-xl m-auto mt-10 bg-white rounded-md">
         <span
           className="text-red-500 -mt-2 float-right text-3xl font-bold cursor-pointer"
           onClick={props.openCloseModal}

@@ -45,7 +45,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
 
   const deleteAnimal = async () => {
     const response = confirm(
-      "Are you sure you want to remove: " + props.animal.name
+      "Are you sure you want to remove?\n- " + props.animal.name
     );
     if (response) {
       await firestore.DeleteDocumentById("animals", props.animal.id);
@@ -55,7 +55,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
 
   return (
     <form
-      className="w-5/6 m-auto h-full flex items-center flex-col gap-3 pt-3"
+      className="w-5/6 m-auto h-full flex items-center flex-col gap-3 py-3"
       onSubmit={updateAnimal}
     >
       <Input
@@ -133,12 +133,18 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
         className=" "
         onChange={handleImageUpload}
       />
-      <Button type="submit" className="mb-3 mt-5">
-        Submit
-      </Button>
-      <Button type="button" onClick={deleteAnimal} className="mb-3 bg-red-600">
-        Remove animal from database
-      </Button>
+      <div className="flex gap-3 w-full">
+        <Button
+          type="button"
+          onClick={deleteAnimal}
+          className="bg-red-600 whitespace-nowrap px-3"
+        >
+          Delete
+        </Button>
+        <Button type="submit" className="">
+          Edit
+        </Button>
+      </div>
     </form>
   );
 };
