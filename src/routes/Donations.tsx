@@ -51,6 +51,12 @@ const Donations = () => {
     await firestore.AddDocument("donations", donationData);
     openCloseModal();
     SuccessMessage("New Donation Successfully Added");
+    setDonation({
+      amount: 0,
+      category: "donated",
+      description: "",
+      type: "food",
+    });
   };
   if (donations === undefined) return <LoadingSpinner />;
 
@@ -98,10 +104,11 @@ const Donations = () => {
 
           <Input
             label="Description: "
+            placeholder="Type short description (max 40 characters)."
             name={"description"}
             onChange={changeDonation}
             value={donation.description}
-            maxLength={30}
+            maxLength={40}
           />
           <Button className="mt-3 mb-5">Submit</Button>
         </form>
