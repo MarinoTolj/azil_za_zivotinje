@@ -100,7 +100,7 @@ const Animal = () => {
           <div className="flex flex-col min-w-fit basis-3/5">
             <TextArea
               label="Description:"
-              defaultValue={animal.description}
+              value={animal.description}
               readOnly
               disabled
             />
