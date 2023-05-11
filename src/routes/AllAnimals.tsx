@@ -4,7 +4,7 @@ import Input from "../components/FormComponents/Input";
 import { AdoptedStatus, IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
 import Radio from "../components/FormComponents/Radio";
-import { firestore } from "../firebase/firestore";
+import { firestoreUtils } from "../firebase/firestoreUtils";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
 import Legend from "../components/Icons/Legend";
 import AdoptedList from "../components/FormComponents/AdoptedList";
@@ -22,7 +22,7 @@ const AllAnimals = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const getAnimals = async () => {
-    await firestore.GetCollectionByName("animals", setAnimals);
+    await firestoreUtils.GetCollectionByName("animals", setAnimals);
   };
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const AllAnimals = () => {
     return <LoadingSpinner />;
 
   return (
-    <div className="flex flex-col items-center md:flex-row md:gap-5 mt-5 md:ml-10">
+    <div className="flex flex-col my-10 items-center md:flex-row md:gap-5 md:ml-10">
       <div className="md:flex md:flex-col gap-3">
         <div className="relative">
           <Input
@@ -121,7 +121,7 @@ const AllAnimals = () => {
             defaultCheck={adoptedFilter}
           />
         </div>
-        <div className="flex justify-center gap-2 my-5 md:flex-col">
+        <div className="flex justify-center gap-2 md:flex-col">
           <h3>Species: </h3>
 
           <div className="hidden md:block">
@@ -142,7 +142,7 @@ const AllAnimals = () => {
       </div>
 
       <div
-        className={`grid mb-5 gap-5 mx-2  max-w-5xl md:self-start md:flex-grow grid-cols-1 sm:grid-cols-2 md:grid-cols-3`}
+        className={`grid gap-5 mx-2  max-w-5xl md:self-start md:flex-grow grid-cols-1 sm:grid-cols-2 md:grid-cols-3`}
       >
         {filtredAnimals.map((animal) => {
           return <AnimalImage key={animal.id} animal={animal} />;

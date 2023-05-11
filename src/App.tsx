@@ -1,6 +1,6 @@
 import Map from "./components/Map";
-import Link from "./components/Link";
 import ContactUsForm from "./components/ContactUsForm";
+import { Link } from "react-router-dom";
 
 function App() {
   return (
@@ -17,9 +17,18 @@ function App() {
       <Map />
       <p className="paragraph mt-3">
         We offer a wide range of services to our customers, including{" "}
-        <Link path="/all-animals">adoption</Link>,{" "}
-        <Link path="/all-animals">fostering</Link>, volunteering, and{" "}
-        <Link path="/donations">donations</Link>.
+        <Link to="/all-animals" className="underline text-blue-700">
+          adoption
+        </Link>
+        ,{" "}
+        <Link to="/all-animals" className="underline text-blue-700">
+          fostering
+        </Link>
+        , volunteering, and{" "}
+        <Link to="/donations" className="underline text-blue-700">
+          donations
+        </Link>
+        .
       </p>
       <div className="paragraph">
         <h3 className="mb-3 underline text-xl text-center">Contact Us</h3>

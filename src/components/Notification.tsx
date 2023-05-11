@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { firestore } from "../firebase/firestore";
+import { firestoreUtils } from "../firebase/firestoreUtils";
 import { INotification } from "../helpers/types";
 import TrashIcon from "./Icons/TrashIcon";
 import { RootState } from "../redux/store";
@@ -17,7 +17,7 @@ const Notification: React.FC<PropType> = (props) => {
       "Are you sure you want to remove?\n- " + notification.title
     );
     if (response) {
-      await firestore.DeleteDocumentById("notifications", notification.id);
+      await firestoreUtils.DeleteDocumentById("notifications", notification.id);
     }
   };
 

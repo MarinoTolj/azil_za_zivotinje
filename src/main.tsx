@@ -19,7 +19,7 @@ import Animal from "./routes/Animal";
 
 import "react-toastify/dist/ReactToastify.css";
 
-import Layout from "./routes/Layout";
+import Layout from "./components/Layout";
 
 export type RouteType = RouteObject & {
   path:
@@ -49,6 +49,7 @@ export const routes: RouteType[] = [
         <AllAnimals />
       </Layout>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/all-animals/:id",
@@ -57,6 +58,7 @@ export const routes: RouteType[] = [
         <Animal />
       </Layout>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/donations",
@@ -65,6 +67,7 @@ export const routes: RouteType[] = [
         <Donations />
       </Layout>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/notifications",
@@ -73,6 +76,7 @@ export const routes: RouteType[] = [
         <Notifications />
       </Layout>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/animal-registration-form",
@@ -81,6 +85,7 @@ export const routes: RouteType[] = [
         <AnimalRegistrationForm />
       </Layout>
     ),
+    errorElement: <ErrorPage />,
   },
 ];
 

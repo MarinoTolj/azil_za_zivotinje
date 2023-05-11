@@ -9,7 +9,7 @@ interface InputPropType extends React.InputHTMLAttributes<HTMLInputElement> {
 export default function Input({
   label,
   onChange,
-  inputClassname,
+
   ...props
 }: InputPropType) {
   return (

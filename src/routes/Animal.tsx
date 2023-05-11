@@ -3,7 +3,7 @@ import { AdoptedStatus, IAnimal } from "../helpers/types";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
 import ErrorPage from "../components/ErrorPage";
-import { firestore } from "../firebase/firestore";
+import { firestoreUtils } from "../firebase/firestoreUtils";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Modal from "../components/Modal";
@@ -47,7 +47,7 @@ const Animal = () => {
   const [editMode, setEditMode] = useState(false);
 
   const handleAdoption = async (status: AdoptedStatus) => {
-    await firestore.UpdateDocumentById("animals", animal.id, {
+    await firestoreUtils.UpdateDocumentById("animals", animal.id, {
       adopted: status,
     });
     setAnimal({ ...animal, adopted: status });
@@ -56,7 +56,11 @@ const Animal = () => {
 
   const fetchAnimalById = async () => {
     if (params.id)
-      await firestore.GetDocumentById<IAnimal>("animals", params.id, setAnimal);
+      await firestoreUtils.GetDocumentById<IAnimal>(
+        "animals",
+        params.id,
+        setAnimal
+      );
   };
 
   const handleOpenCloseModal = () => {
@@ -72,7 +76,7 @@ const Animal = () => {
   if (animal.name === "") return <LoadingSpinner />;
   return (
     <>
-      <div className="w-fit max-w-2xl m-auto  px-3">
+      <div className="w-fit max-w-2xl m-auto px-3 mb-40">
         <div className="flex flex-col items-start w-fit gap-4 mt-5 md:flex-row md:flex-wrap md:justify-center">
           <AnimalImage animal={animal} />
           <div className="flex flex-col gap-1">
@@ -97,14 +101,14 @@ const Animal = () => {
             </AnimalInfo>
           </div>
 
-          <div className="flex flex-col min-w-fit basis-3/5">
+          <div className="flex flex-col w-full basis-3/5">
             <TextArea
               label="Description:"
               value={animal.description}
               readOnly
               disabled
             />
-            <div className="flex gap-4 justify-start mt-2 mb-5">
+            <div className="flex gap-4 justify-start mt-2">
               <Button
                 onClick={() => handleAdoption("adopted")}
                 hidden={animal.adopted !== "not adopted"}

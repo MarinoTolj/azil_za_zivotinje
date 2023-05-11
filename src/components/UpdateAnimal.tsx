@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Input from "./FormComponents/Input";
 import { FormType, IAnimal, InputType } from "../helpers/types";
-import { firestore } from "../firebase/firestore";
+import { firestoreUtils } from "../firebase/firestoreUtils";
 import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
 import CheckBox from "./FormComponents/CheckBox";
@@ -9,6 +9,7 @@ import AdoptedList from "./FormComponents/AdoptedList";
 import { SuccessMessage, todayInISOFormat } from "../helpers/functions";
 import Radio from "./FormComponents/Radio";
 import { useNavigate } from "react-router";
+import SpeciesList from "./SpeciesList";
 
 type PropType = {
   animal: IAnimal;
@@ -33,7 +34,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
 
   const updateAnimal = async (e: FormType) => {
     e.preventDefault();
-    await firestore.UpdateDocumentById(
+    await firestoreUtils.UpdateDocumentById(
       "animals",
       props.animal.id,
       updatedAnimal,
@@ -48,7 +49,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
       "Are you sure you want to remove?\n- " + props.animal.name
     );
     if (response) {
-      await firestore.DeleteDocumentById("animals", props.animal.id);
+      await firestoreUtils.DeleteDocumentById("animals", props.animal.id);
       navigate("/all-animals");
     }
   };
@@ -64,6 +65,15 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
         defaultValue={updatedAnimal.name}
         onChange={changeAnimal}
       />
+      <div className="flex gap-4">
+        {
+          <SpeciesList
+            type="form"
+            onChange={changeAnimal}
+            defaultChecked={updatedAnimal.species}
+          />
+        }
+      </div>
       <Input
         type="number"
         label="Animal age"
@@ -72,7 +82,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
         placeholder="Type animal age"
         onChange={changeAnimal}
       />
-      <div className="flex gap-3 m-auto">
+      <div className="flex gap-1 md:gap-3 m-auto">
         <label htmlFor="">Select Gender:</label>
         <div>
           <Radio

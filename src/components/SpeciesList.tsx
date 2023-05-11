@@ -1,16 +1,12 @@
 import { Capitalize } from "../helpers/functions";
-import { InputType, species } from "../helpers/types";
+import { InputType, Species, species } from "../helpers/types";
 import Radio from "./FormComponents/Radio";
 
-type PropType =
-  | {
-      type: "form";
-      onChange: (e: InputType) => void;
-    }
-  | {
-      type: "filter";
-      onChange: (e: InputType) => void;
-    };
+type PropType = {
+  type: "form" | "filter";
+  onChange: (e: InputType) => void;
+  defaultChecked?: Species;
+};
 
 const SpeciesList: React.FC<PropType> = (props) => {
   return (
@@ -24,6 +20,7 @@ const SpeciesList: React.FC<PropType> = (props) => {
               name="species"
               value={species}
               onChange={props.onChange}
+              checked={props.defaultChecked === species}
             />
           </div>
         );
@@ -31,11 +28,18 @@ const SpeciesList: React.FC<PropType> = (props) => {
       <div className="md:hidden">
         <select name="species" id="species" onChange={props.onChange} required>
           {props.type === "filter" ? (
-            <option value="All Species" selected>
+            <option
+              value="All Species"
+              selected={props.defaultChecked === undefined}
+            >
               All Species
             </option>
           ) : (
-            <option selected disabled>
+            <option
+              selected={props.defaultChecked === undefined}
+              disabled
+              value=""
+            >
               Select Species
             </option>
           )}
@@ -43,7 +47,11 @@ const SpeciesList: React.FC<PropType> = (props) => {
           {species.map((species) => {
             if (species === "") return null;
             return (
-              <option key={species} value={species}>
+              <option
+                key={species}
+                value={species}
+                selected={props.defaultChecked === species}
+              >
                 {Capitalize(species)}
               </option>
             );

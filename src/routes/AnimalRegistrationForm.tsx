@@ -7,7 +7,7 @@ import CheckBox from "../components/FormComponents/CheckBox";
 
 import { GenderType, IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
-import { firestore } from "../firebase/firestore";
+import { firestoreUtils } from "../firebase/firestoreUtils";
 import { useNavigate } from "react-router";
 import TextArea from "../components/FormComponents/TextArea";
 import Button from "../components/Button";
@@ -49,8 +49,8 @@ const AnimalRegistrationForm = () => {
       lastCheck,
     };
     if (image) {
-      await firestore.AddDocument("animals", data, image);
-      SuccessMessage("New Animal Successfuly Added");
+      await firestoreUtils.AddDocument("animals", data, image);
+      SuccessMessage("New Animal Successfully Added");
       navigate("/all-animals");
     } else ErrorMessage("ERROR: something went wrong. Try again");
   };
@@ -75,6 +75,7 @@ const AnimalRegistrationForm = () => {
             <SpeciesList
               type="form"
               onChange={(e) => setSpecies(e.target.value as Species)}
+              defaultChecked={species === "" ? undefined : species}
             />
           </div>
         </div>

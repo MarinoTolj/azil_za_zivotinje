@@ -9,7 +9,7 @@ import {
   query,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../firebase/db";
+import { db } from "./db";
 
 import {
   UploadMetadata,
@@ -77,13 +77,7 @@ class FiresStore {
         image,
         "data_url" as UploadMetadata
       );
-      //TODO: Snapshot
-      /*(snapshot) => {
-            const progress = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-            setProgress(progress);
-          },*/
+
       uploadTask.on(
         "state_changed",
         () => void 0,
@@ -116,13 +110,7 @@ class FiresStore {
         image,
         "data_url" as UploadMetadata
       );
-      //TODO: Snapshot
-      /*(snapshot) => {
-            const progress = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-            setProgress(progress);
-          },*/
+
       uploadTask.on(
         "state_changed",
         () => void 0,
@@ -147,6 +135,6 @@ class FiresStore {
   }
 }
 
-const firestore = new FiresStore();
+const firestoreUtils = new FiresStore();
 
-export { firestore };
+export { firestoreUtils };

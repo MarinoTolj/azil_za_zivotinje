@@ -4,11 +4,36 @@ import { DonationCategoryType, IDonation } from "../helpers/types";
 import Button from "./Button";
 import { RootState } from "../redux/store";
 import TrashIcon from "./Icons/TrashIcon";
-import { firestore } from "../firebase/firestore";
+import { firestoreUtils } from "../firebase/firestoreUtils";
 
 type PropType = {
   category: DonationCategoryType;
   donations: IDonation[];
+};
+
+const DonationCategory: React.FC<PropType> = (props) => {
+  return (
+    <div className="mb-9 m-auto">
+      <h2 className="text-3xl text-red-600">{Capitalize(props.category)}:</h2>
+      <table className="w-full">
+        <thead className="border-b-2 border-black">
+          <tr>
+            <th className="text-start">Type</th>
+            <th className="text-start">Amount</th>
+            <th className="text-start">Description</th>
+            <th className="text-start">Options</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {props.donations.map((donation) => {
+            if (donation.category === props.category)
+              return <CategoryElement key={donation.id} donation={donation} />;
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 const CategoryElement = ({ donation }: { donation: IDonation }) => {
@@ -20,12 +45,12 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         donation.description
     );
     if (response) {
-      await firestore.DeleteDocumentById("donations", donation.id);
+      await firestoreUtils.DeleteDocumentById("donations", donation.id);
     }
   };
 
   const updateDonation = async () => {
-    await firestore.UpdateDocumentById("donations", donation.id, {
+    await firestoreUtils.UpdateDocumentById("donations", donation.id, {
       category: "donated",
     });
   };
@@ -35,7 +60,7 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
       category: "looking",
     };
 
-    await firestore.AddDocument("donations", repeatedData);
+    await firestoreUtils.AddDocument("donations", repeatedData);
   };
 
   return (
@@ -73,31 +98,6 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         )}
       </td>
     </tr>
-  );
-};
-
-const DonationCategory: React.FC<PropType> = (props) => {
-  return (
-    <div className="mb-9 m-auto">
-      <h2 className="text-3xl text-red-600">{Capitalize(props.category)}:</h2>
-      <table className="w-full">
-        <thead className="border-b-2 border-black">
-          <tr>
-            <th className="text-start">Type</th>
-            <th className="text-start">Amount</th>
-            <th className="text-start">Description</th>
-            <th className="text-start">Options</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {props.donations.map((donation) => {
-            if (donation.category === props.category)
-              return <CategoryElement key={donation.id} donation={donation} />;
-          })}
-        </tbody>
-      </table>
-    </div>
   );
 };
 export default DonationCategory;

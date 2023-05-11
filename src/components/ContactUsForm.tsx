@@ -33,7 +33,7 @@ const ContactUsForm = () => {
           }
         );
       SuccessMessage(
-        `Email successfuly sent to: ${formRef.current.email.value}`
+        `Email successfully sent to: ${formRef.current.email.value}`
       );
       formRef.current.reset();
     }
@@ -60,7 +60,7 @@ const ContactUsForm = () => {
         name="email"
         required
       />
-      {/*TODO: pattern for phone number */}
+
       <Input
         label="Phone: "
         type="tel"

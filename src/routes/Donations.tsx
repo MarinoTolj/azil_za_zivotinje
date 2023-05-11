@@ -4,7 +4,7 @@ import Modal from "../components/Modal";
 import Input from "../components/FormComponents/Input";
 import { IDonation, InputType, donationType } from "../helpers/types";
 import Radio from "../components/FormComponents/Radio";
-import { firestore } from "../firebase/firestore";
+import { firestoreUtils } from "../firebase/firestoreUtils";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import DonationCategory from "../components/DonationCategory";
@@ -31,7 +31,7 @@ const Donations = () => {
   };
 
   const fetchDonations = async () => {
-    await firestore.GetCollectionByName("donations", setDonations);
+    await firestoreUtils.GetCollectionByName("donations", setDonations);
   };
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Donations = () => {
     if (isAdmin) donationData["category"] = "looking";
     else donationData["category"] = "offering";
 
-    await firestore.AddDocument("donations", donationData);
+    await firestoreUtils.AddDocument("donations", donationData);
     openCloseModal();
     SuccessMessage("New Donation Successfully Added");
     setDonation({

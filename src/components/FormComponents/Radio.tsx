@@ -12,7 +12,7 @@ export default function Radio({
   label,
   onChange,
   name,
-  inputClassname,
+
   ...props
 }: RadioPropType) {
   return (

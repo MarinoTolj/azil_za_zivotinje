@@ -1,7 +1,7 @@
 import React from "react";
-import { Header } from "../components/Header";
+import { Header } from "./Header";
 import { ToastContainer } from "react-toastify";
-import Footer from "../components/Footer";
+import Footer from "./Footer";
 import { routes } from "../main";
 
 type LayoutProps = {

@@ -11,11 +11,11 @@ export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   return (
     <header>
       <div className="flex items-center justify-between bg-main-orange p-5">
-        <h1 className="text-xl align-middle text-slate-300 font-bold md:text-5xl">
+        <h1 className="text-2xl align-middle text-orange-800 font-bold md:text-5xl">
           <Link to="/">ANIMAL SHELTER</Link>
         </h1>
         <div className="flex items-center">
-          <span className="mr-2 text-slate-800">Admin</span>
+          <span className="mr-2 text-lg text-orange-950">Admin</span>
           <ToggleSwitch />
         </div>
       </div>

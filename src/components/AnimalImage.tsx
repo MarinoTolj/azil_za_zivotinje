@@ -7,12 +7,12 @@ type PropType = {
 const AnimalImage: React.FC<PropType> = (props) => {
   const { animal } = props;
   return (
-    <div className={`relative h-52 min-w-80 max-w-sm`}>
+    <div className={`relative h-52 min-w-80 max-w-sm hover:scale-105`}>
       <a href={`/all-animals/${animal.id}`}>
         <img
           src={animal.imageUrl}
           alt="animal image"
-          className={`w-full h-full rounded-2xl `}
+          className={`w-full h-full rounded-2xl`}
         />
         <div
           className={`absolute bottom-0 z-10 ${

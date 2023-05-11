@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import { INotification } from "../helpers/types";
-import { firestore } from "../firebase/firestore";
+import { firestoreUtils } from "../firebase/firestoreUtils";
 import Input from "../components/FormComponents/Input";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -26,7 +26,7 @@ const Notifications = () => {
   const [showImportant, setShowImportant] = useState(false);
 
   const fetchAllNotifications = async () => {
-    await firestore.GetCollectionByName("notifications", setNotifications);
+    await firestoreUtils.GetCollectionByName("notifications", setNotifications);
   };
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const Notifications = () => {
       important,
       date: todayInISOFormat,
     };
-    await firestore.AddDocument("notifications", newNotification);
+    await firestoreUtils.AddDocument("notifications", newNotification);
     setTitle("");
     setBody("");
     setImportant(false);
@@ -87,7 +87,7 @@ const Notifications = () => {
           <Button className="mb-3 mt-4 w-3/4">Save</Button>
         </form>
       </Modal>
-      <div className="m-auto mt-5 w-full max-w-2xl">
+      <div className="m-auto mt-5 w-full max-w-2xl px-3">
         <Button onClick={openCloseModal} className="mb-5 max-w-xs">
           New Notification
         </Button>
