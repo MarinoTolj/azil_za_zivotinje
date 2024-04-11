@@ -28,6 +28,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
       return { ...curr, [propety]: value };
     });
   };
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setImage(e.target.files[0]);
   };
@@ -41,7 +42,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
       image
     );
     props.openCloseModal();
-    SuccessMessage(`${updatedAnimal.name} information successfully changed`);
+    SuccessMessage(`${updatedAnimal.name}'s information successfully changed`);
   };
 
   const deleteAnimal = async () => {

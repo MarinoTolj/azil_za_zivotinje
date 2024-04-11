@@ -5,7 +5,7 @@ import Input from "./FormComponents/Input";
 import Radio from "./FormComponents/Radio";
 import TextArea from "./FormComponents/TextArea";
 import emailjs from "@emailjs/browser";
-import { SuccessMessage } from "../helpers/functions";
+import { ErrorMessage, SuccessMessage } from "../helpers/functions";
 
 const ContactUsForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -25,16 +25,16 @@ const ContactUsForm = () => {
           "qjtVL2O-jUu9qnHzk"
         )
         .then(
-          (result) => {
-            console.log(result.text);
+          () => {
+            SuccessMessage(
+              `Email successfully sent to: ${formRef.current?.email.value}`
+            );
           },
-          (error) => {
-            console.log(error.text);
+          () => {
+            ErrorMessage(`Error: Try Again`);
           }
         );
-      SuccessMessage(
-        `Email successfully sent to: ${formRef.current.email.value}`
-      );
+
       formRef.current.reset();
     }
   };
