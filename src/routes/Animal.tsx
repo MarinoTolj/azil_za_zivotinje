@@ -13,6 +13,8 @@ import Button from "../components/Button";
 import CheckMark from "../components/Icons/CheckMark";
 import { Capitalize, SuccessMessage } from "../helpers/functions";
 import TextArea from "../components/FormComponents/TextArea";
+import axios from "axios";
+import { base_url } from "../main";
 
 const AnimalInfo = ({
   title,
@@ -56,11 +58,11 @@ const Animal = () => {
 
   const fetchAnimalById = async () => {
     if (params.id)
-      await firestoreUtils.GetDocumentById<IAnimal>(
-        "animals",
-        params.id,
-        setAnimal
-      );
+      axios
+        .get(`${base_url}/animals/${params.id}`)
+        .then((res) =>
+          setAnimal(res.data)
+        );
   };
 
   const handleOpenCloseModal = () => {

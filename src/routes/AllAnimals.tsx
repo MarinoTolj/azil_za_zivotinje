@@ -8,6 +8,8 @@ import { firestoreUtils } from "../firebase/firestoreUtils";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
 import Legend from "../components/Icons/Legend";
 import AdoptedList from "../components/FormComponents/AdoptedList";
+import axios from "axios";
+import { base_url } from "../main";
 
 type AdoptedType = AdoptedStatus | "All";
 
@@ -22,7 +24,11 @@ const AllAnimals = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const getAnimals = async () => {
-    await firestoreUtils.GetCollectionByName("animals", setAnimals);
+    axios
+        .get(`${base_url}/animals/`)
+        .then((res) =>
+          setAnimals(res.data)
+        );
   };
 
   useEffect(() => {

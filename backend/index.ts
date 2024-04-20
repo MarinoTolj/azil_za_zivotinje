@@ -1,15 +1,15 @@
-import express, { Express, Request, Response } from "express";
-
+import express, { Express } from "express";
+import { animalsRouter } from "./animals";
+import cors from "cors";
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
-});
-app.get("/test", (req: Request, res: Response) => {
-  res.send("Test");
-});
+app.use("/animals", animalsRouter);
+
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

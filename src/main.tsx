@@ -21,6 +21,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Layout from "./components/Layout";
 
+///Url for backend
+export const base_url="http://localhost:3000"
+
 export type RouteType = RouteObject & {
   path:
     | "/"
