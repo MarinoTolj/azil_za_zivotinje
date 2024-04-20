@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import { INotification } from "../helpers/types";
-import { firestoreUtils } from "../firebase/firestoreUtils";
 import Input from "../components/FormComponents/Input";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -15,6 +14,8 @@ import {
   SuccessMessage,
   todayInISOFormat,
 } from "../helpers/functions";
+import axios from "axios";
+import { base_url } from "../main";
 
 const Notifications = () => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
@@ -26,7 +27,8 @@ const Notifications = () => {
   const [showImportant, setShowImportant] = useState(false);
 
   const fetchAllNotifications = async () => {
-    await firestoreUtils.GetCollectionByName("notifications", setNotifications);
+    axios
+        .get(`${base_url}/notifications/`).then((res)=>setNotifications(res.data));
   };
 
   useEffect(() => {
@@ -41,7 +43,8 @@ const Notifications = () => {
       important,
       date: todayInISOFormat,
     };
-    await firestoreUtils.AddDocument("notifications", newNotification);
+    axios
+        .post(`${base_url}/notifications/`, newNotification);
     setTitle("");
     setBody("");
     setImportant(false);

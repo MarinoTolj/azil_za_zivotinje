@@ -41,7 +41,12 @@ class FiresStore {
     try {
       const docSnap = await getDocs(q);
       if (!docSnap.empty) {
-        return docSnap.docs.map((doc) => doc.data());
+        const data: any = [];
+
+        docSnap.forEach((doc) => {
+          data.push({ ...doc.data(), id: doc.id });
+        });
+        return data;
       } else {
         throw new Error(`No collection by name: ${collectionName}`);
       }
@@ -55,9 +60,12 @@ class FiresStore {
 
     try {
       const docSnap = await getDoc(documentRef);
-
+      let data = {};
       if (docSnap.exists()) {
-        return docSnap.data();
+        onSnapshot(documentRef, (doc) => {
+          data = { ...doc.data(), id: doc.id };
+        });
+        return data;
       } else {
         throw new Error(`No document by id: ${id}`);
       }

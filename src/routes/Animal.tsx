@@ -3,7 +3,6 @@ import { AdoptedStatus, IAnimal } from "../helpers/types";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
 import ErrorPage from "../components/ErrorPage";
-import { firestoreUtils } from "../firebase/firestoreUtils";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Modal from "../components/Modal";
@@ -49,10 +48,11 @@ const Animal = () => {
   const [editMode, setEditMode] = useState(false);
 
   const handleAdoption = async (status: AdoptedStatus) => {
-    await firestoreUtils.UpdateDocumentById("animals", animal.id, {
-      adopted: status,
-    });
-    setAnimal({ ...animal, adopted: status });
+    axios
+        .patch(`${base_url}/animals/${params.id}`, {adopted:status})
+        .then(() =>
+          fetchAnimalById()
+        );
     SuccessMessage("Adoption Status Successfully Changed");
   };
 

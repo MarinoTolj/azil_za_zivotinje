@@ -4,7 +4,8 @@ import { DonationCategoryType, IDonation } from "../helpers/types";
 import Button from "./Button";
 import { RootState } from "../redux/store";
 import TrashIcon from "./Icons/TrashIcon";
-import { firestoreUtils } from "../firebase/firestoreUtils";
+import { base_url } from "../main";
+import axios from "axios";
 
 type PropType = {
   category: DonationCategoryType;
@@ -45,22 +46,25 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         donation.description
     );
     if (response) {
-      await firestoreUtils.DeleteDocumentById("donations", donation.id);
+      axios
+        .delete(`${base_url}/donations/${donation.id}`);
     }
   };
 
   const updateDonation = async () => {
-    await firestoreUtils.UpdateDocumentById("donations", donation.id, {
-      category: "donated",
-    });
+    
+    axios
+        .post(`${base_url}/donations/${donation.id}`, {category:"donated"});
   };
+
   const repeatDonation = async () => {
     const repeatedData: Omit<IDonation, "id"> = {
       ...donation,
       category: "looking",
     };
 
-    await firestoreUtils.AddDocument("donations", repeatedData);
+    axios
+        .post(`${base_url}/donations/`, repeatedData);
   };
 
   return (

@@ -7,7 +7,6 @@ import CheckBox from "../components/FormComponents/CheckBox";
 
 import { GenderType, IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
-import { firestoreUtils } from "../firebase/firestoreUtils";
 import { useNavigate } from "react-router";
 import TextArea from "../components/FormComponents/TextArea";
 import Button from "../components/Button";
@@ -17,6 +16,8 @@ import {
   SuccessMessage,
   todayInISOFormat,
 } from "../helpers/functions";
+import axios from "axios";
+import { base_url } from "../main";
 
 const AnimalRegistrationForm = () => {
   const [animalName, setAnimalName] = useState("");
@@ -49,7 +50,8 @@ const AnimalRegistrationForm = () => {
       lastCheck,
     };
     if (image) {
-      await firestoreUtils.AddDocument("animals", data, image);
+      axios
+        .post(`${base_url}/animals`, data);
       SuccessMessage("New Animal Successfully Added");
       navigate("/all-animals");
     } else ErrorMessage("ERROR: something went wrong. Try again");
