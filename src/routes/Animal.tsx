@@ -49,20 +49,16 @@ const Animal = () => {
 
   const handleAdoption = async (status: AdoptedStatus) => {
     axios
-        .patch(`${base_url}/animals/${params.id}`, {adopted:status})
-        .then(() =>
-          fetchAnimalById()
-        );
+      .patch(`${base_url}/animals/${params.id}`, { adopted: status })
+      .then(() => fetchAnimalById());
     SuccessMessage("Adoption Status Successfully Changed");
   };
 
   const fetchAnimalById = async () => {
-    if (params.id)
-      axios
-        .get(`${base_url}/animals/${params.id}`)
-        .then((res) =>
-          setAnimal(res.data)
-        );
+    if (params.id) console.log({ res: params.id });
+    axios.get(`${base_url}/animals/${params.id}`).then((res) => {
+      setAnimal(res.data);
+    });
   };
 
   const handleOpenCloseModal = () => {

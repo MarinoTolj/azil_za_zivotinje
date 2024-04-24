@@ -6,7 +6,6 @@ import { RootState } from "../redux/store";
 import TrashIcon from "./Icons/TrashIcon";
 import { base_url } from "../main";
 import axios from "axios";
-
 type PropType = {
   category: DonationCategoryType;
   donations: IDonation[];
@@ -46,15 +45,14 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         donation.description
     );
     if (response) {
-      axios
-        .delete(`${base_url}/donations/${donation.id}`);
+      axios.delete(`${base_url}/donations/${donation.id}`, {
+        withCredentials: true,
+      });
     }
   };
 
   const updateDonation = async () => {
-    
-    axios
-        .post(`${base_url}/donations/${donation.id}`, {category:"donated"});
+    axios.post(`${base_url}/donations/${donation.id}`, { category: "donated" });
   };
 
   const repeatDonation = async () => {
@@ -63,8 +61,9 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
       category: "looking",
     };
 
-    axios
-        .post(`${base_url}/donations/`, repeatedData);
+    axios.post(`${base_url}/donations/`, repeatedData, {
+      withCredentials: true,
+    });
   };
 
   return (

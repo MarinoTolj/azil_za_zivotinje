@@ -1,5 +1,7 @@
 import express, { Request, Response } from "express";
 import { firestoreUtils } from "./firebase/firestoreUtils";
+import { verifyCookie, verifyRole } from "./middleware";
+import { cookieName } from ".";
 export const notificationsRouter = express.Router();
 
 notificationsRouter.get("/", async (req: Request, res: Response) => {
@@ -23,10 +25,15 @@ notificationsRouter.post("/", async (req: Request, res: Response) => {
     res.status(404).send(error);
   }
 });
-notificationsRouter.delete("/:id", async (req: Request, res: Response) => {
-  try {
-    await firestoreUtils.DeleteDocumentById("notifications", req.params.id);
-  } catch (error) {
-    res.status(404).send(error);
+notificationsRouter.delete(
+  "/:id",
+  verifyCookie(cookieName),
+  verifyRole("admin"),
+  async (req: Request, res: Response) => {
+    try {
+      await firestoreUtils.DeleteDocumentById("notifications", req.params.id);
+    } catch (error) {
+      res.status(404).send(error);
+    }
   }
-});
+);

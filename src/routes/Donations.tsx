@@ -32,11 +32,7 @@ const Donations = () => {
   };
 
   const fetchDonations = async () => {
-    axios
-        .get(`${base_url}/donations/`)
-        .then((res) =>
-          setDonations(res.data)
-        );
+    axios.get(`${base_url}/donations/`).then((res) => setDonations(res.data));
   };
 
   useEffect(() => {
@@ -53,8 +49,7 @@ const Donations = () => {
     if (isAdmin) donationData["category"] = "looking";
     else donationData["category"] = "offering";
 
-    axios
-        .post(`${base_url}/donations/`, donationData);
+    axios.post(`${base_url}/donations/`, donationData);
     openCloseModal();
     SuccessMessage("New Donation Successfully Added");
     /* setDonation({

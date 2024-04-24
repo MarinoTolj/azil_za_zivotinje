@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { firestoreUtils } from "./firebase/firestoreUtils";
+import { verifyCookie, verifyRole, verifyToken } from "./middleware";
 export const donationsRouter = express.Router();
 
 donationsRouter.get("/", async (req: Request, res: Response) => {
@@ -18,13 +19,19 @@ donationsRouter.post("/", async (req: Request, res: Response) => {
     res.status(404).send(error);
   }
 });
-donationsRouter.delete("/:id", async (req: Request, res: Response) => {
-  try {
-    await firestoreUtils.DeleteDocumentById("donations", req.params.id);
-  } catch (error) {
-    res.status(404).send(error);
+donationsRouter.delete(
+  "/:id",
+  verifyCookie("accessToken"),
+  verifyRole("admin"),
+  async (req: Request, res: Response) => {
+    try {
+      await firestoreUtils.DeleteDocumentById("donations", req.params.id);
+      res.sendStatus(200);
+    } catch (error) {
+      res.status(404).send(error);
+    }
   }
-});
+);
 
 donationsRouter.patch("/:id", async (req: Request, res: Response) => {
   try {

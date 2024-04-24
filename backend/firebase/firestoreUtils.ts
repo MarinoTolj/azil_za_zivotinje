@@ -9,6 +9,7 @@ import {
   getDocs,
   onSnapshot,
   query,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "./db";
@@ -20,18 +21,25 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { IAnimal, IDonation, INotification } from "../../src/helpers/types";
+import {
+  IAnimal,
+  IDonation,
+  INotification,
+  User,
+} from "../../src/helpers/types";
 
-type Collections = "animals" | "notifications" | "donations";
+type Collections = "animals" | "notifications" | "donations" | "users";
 type PossibleDataType =
   | Omit<IAnimal, "id" | "imageUrl">
   | Omit<INotification, "id">
-  | Omit<IDonation, "id">;
+  | Omit<IDonation, "id">
+  | User;
 class FiresStore {
   collections: { [key in Collections]: CollectionReference<DocumentData> } = {
     animals: collection(db, "animals"),
     notifications: collection(db, "notifications"),
     donations: collection(db, "donations"),
+    users: collection(db, "users"),
   };
   storage = getStorage();
 
@@ -60,12 +68,21 @@ class FiresStore {
 
     try {
       const docSnap = await getDoc(documentRef);
-      let data = {};
       if (docSnap.exists()) {
-        onSnapshot(documentRef, (doc) => {
-          data = { ...doc.data(), id: doc.id };
-        });
-        return data;
+        /* return new Promise<any>((resolve, reject) => {
+            let data: any = {};
+            onSnapshot(documentRef, (doc) => {
+              console.log({ inside: doc.data() });
+              data = { ...doc.data(), id: doc.id };
+              console.log({ data });
+              resolve(data);
+            });
+          }); */
+        if (collectionName === "users") {
+          return docSnap.data();
+        } else {
+          return { ...docSnap.data(), id: docSnap.id };
+        }
       } else {
         throw new Error(`No document by id: ${id}`);
       }
@@ -100,6 +117,15 @@ class FiresStore {
           });
         }
       );
+    } else if (collectionName == "users") {
+      const new_data = data as any;
+      const documentRef = doc(db, collectionName, new_data.email);
+      const docSnap = await getDoc(documentRef);
+      if (docSnap.exists()) {
+        throw new Error(`User with that email already exists`);
+      } else {
+        await setDoc(documentRef, data);
+      }
     } else {
       await addDoc(this.collections[collectionName], data);
     }

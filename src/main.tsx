@@ -20,6 +20,8 @@ import Animal from "./routes/Animal";
 import "react-toastify/dist/ReactToastify.css";
 
 import Layout from "./components/Layout";
+import Login from "./routes/Login";
+import Registration from "./routes/Registration";
 
 ///Url for backend
 export const base_url="http://localhost:3000"
@@ -31,7 +33,9 @@ export type RouteType = RouteObject & {
     | "/all-animals/:id"
     | "/animal-registration-form"
     | "/donations"
-    | "/notifications";
+    | "/notifications"
+    | "/login"
+    | "/registration";
 };
 
 export const routes: RouteType[] = [
@@ -86,6 +90,24 @@ export const routes: RouteType[] = [
     element: (
       <Layout>
         <AnimalRegistrationForm />
+      </Layout>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/login",
+    element: (
+      <Layout>
+        <Login />
+      </Layout>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/registration",
+    element: (
+      <Layout>
+        <Registration />
       </Layout>
     ),
     errorElement: <ErrorPage />,
