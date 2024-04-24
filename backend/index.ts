@@ -7,6 +7,9 @@ import cors, { CorsOptions } from "cors";
 import { firestoreUtils } from "./firebase/firestoreUtils";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
+import { log } from "./middleware";
+
 const app: Express = express();
 
 app.use(cookieParser());
@@ -26,6 +29,8 @@ app.use(function (req, res, next) {
 app.use("/animals", animalsRouter);
 app.use("/donations", donationsRouter);
 app.use("/notifications", notificationsRouter);
+app.use(log);
+
 export const cookieName = "accessToken";
 export const currCookie =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEzOTcxMDM2LCJleHAiOjE3MTM5ODE4MzZ9.uG9BdF5ZtgczVLYe2RdIMgC5jeD2xkTnFzSJ29MMeqs";
@@ -35,7 +40,9 @@ app.post("/login", async (req, res) => {
     if (user && (await bcrypt.compare(req.body.password, user.password))) {
       const token = jwt.sign(
         { userId: user.username, role: user.role },
-        "tajniKljuc",
+        //TODO: dont forget to update vercel settings to include .env variables.
+        //TODO: and also get new app key from firebase
+        process.env.SECRET_KEY as string,
         {
           expiresIn: "3h", //TODO
         }
@@ -43,7 +50,7 @@ app.post("/login", async (req, res) => {
       res.cookie(cookieName, token, {
         httpOnly: true,
         maxAge: 3600000,
-        secure: false, // TODO
+        secure: process.env.NODE_ENV === "dev" ? false : true,
       });
       res.status(200).send(token);
     } else {
@@ -69,7 +76,10 @@ app.post("/is_admin", (req: any, res: Response) => {
   req.cookies[cookieName] = currCookie;
   if (req.cookies && req.cookies[cookieName]) {
     try {
-      const user = jwt.verify(req.cookies[cookieName], "tajniKljuc") as any;
+      const user = jwt.verify(
+        req.cookies[cookieName],
+        process.env.SECRET_KEY as string
+      ) as any;
       res.send(user.role === "admin" ? true : false);
     } catch (error) {
       res.send(false);

@@ -12,7 +12,7 @@ export const verifyToken = (req: any, res: Response, next: NextFunction) => {
   if (!token) return res.status(403).send("Bearer token not found");
 
   try {
-    const user = jwt.verify(token, "tajniKljuc");
+    const user = jwt.verify(token, process.env.SECRET_KEY as string);
     req.user = user;
   } catch (err) {
     return res.status(401).send("Invalid Token");
@@ -25,7 +25,10 @@ export const verifyCookie =
     req.cookies[cookieName] = currCookie;
     if (req.cookies && req.cookies[cookieName]) {
       try {
-        const user = jwt.verify(req.cookies[cookieName], "tajniKljuc");
+        const user = jwt.verify(
+          req.cookies[cookieName],
+          process.env.SECRET_KEY as string
+        );
         req.user = user;
       } catch (error) {
         return res.status(401).send("Invalid Token");
@@ -44,3 +47,10 @@ export const verifyRole =
       return res.status(403).send(`Unauthorized access.`);
     }
   };
+export const log = (req: Request, res: Response, next: NextFunction) => {
+  if (process.env.NODE_ENV == "dev") {
+    //console.log(`request sent from ${req.protocol} with headers: {req.header}`);
+  }
+
+  next();
+};
