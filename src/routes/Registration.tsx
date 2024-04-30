@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { base_url } from "../main";
-import { SuccessMessage } from "../helpers/functions";
+import { ErrorMessage, SuccessMessage } from "../helpers/functions";
 import Input from "../components/FormComponents/Input";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import Radio from "../components/FormComponents/Radio";
 import { UserRole } from "../helpers/types";
 import axios from "../api/axios";
+import PasswordChecklist from "react-password-checklist";
 
 export default function Registration() {
   const [username, setUsername] = useState("");
@@ -14,6 +14,8 @@ export default function Registration() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<UserRole>("user");
   const [confirm_password, setConfirm_Password] = useState("");
+
+  const [validPassword, setValidPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
@@ -24,13 +26,19 @@ export default function Registration() {
       role,
       password,
     };
-    if (password == confirm_password) {
+
+    if (validPassword) {
       try {
-        axios.post(`/registration`, data);
-        SuccessMessage("Registration succesful");
-        navigate("/login");
-      } catch (error: any) {
-        console.log({ error: error.message });
+        const response = await axios.post(`/registration`, data);
+        if (response.status === 200) {
+          SuccessMessage("Registration successful");
+          navigate("/login");
+        } else {
+          ErrorMessage("An error happened");
+        }
+      } catch (error) {
+        ErrorMessage("User with that email already exists");
+        console.log("Error: ", error);
       }
     }
   };
@@ -53,7 +61,7 @@ export default function Registration() {
           required
           onChange={(e) => setEmail(e.target.value)}
         />
-        <p>testtest12</p>
+        <p>testtest12!A</p>
         <Input
           type="password"
           placeholder="password"
@@ -62,6 +70,7 @@ export default function Registration() {
           onChange={(e) => setPassword(e.target.value)}
           minLength={10}
         />
+
         <Input
           type="password"
           placeholder="password"
@@ -70,6 +79,17 @@ export default function Registration() {
           onChange={(e) => setConfirm_Password(e.target.value)}
           minLength={10}
         />
+        {password && (
+          <PasswordChecklist
+            rules={["minLength", "specialChar", "number", "capital", "match"]}
+            minLength={10}
+            value={password}
+            valueAgain={confirm_password}
+            onChange={(isValid) => {
+              setValidPassword(isValid);
+            }}
+          />
+        )}
         <div className="flex gap-3 m-auto">
           <label htmlFor="">Select Role:</label>
           <div>
