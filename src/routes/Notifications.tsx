@@ -14,8 +14,7 @@ import {
   SuccessMessage,
   todayInISOFormat,
 } from "../helpers/functions";
-import axios from "axios";
-import { base_url } from "../main";
+import axios from "../api/axios";
 
 const Notifications = () => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
@@ -28,7 +27,7 @@ const Notifications = () => {
 
   const fetchAllNotifications = async () => {
     axios
-        .get(`${base_url}/notifications/`).then((res)=>setNotifications(res.data));
+        .get(`/notifications/`).then((res)=>setNotifications(res.data));
   };
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const Notifications = () => {
       date: todayInISOFormat,
     };
     axios
-        .post(`${base_url}/notifications/`, newNotification);
+        .post(`/notifications/`, newNotification);
     setTitle("");
     setBody("");
     setImportant(false);

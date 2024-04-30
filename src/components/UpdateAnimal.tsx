@@ -5,12 +5,11 @@ import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
 import CheckBox from "./FormComponents/CheckBox";
 import AdoptedList from "./FormComponents/AdoptedList";
-import { SuccessMessage, todayInISOFormat } from "../helpers/functions";
+import { GetAccessToken, SuccessMessage, todayInISOFormat } from "../helpers/functions";
 import Radio from "./FormComponents/Radio";
 import { useNavigate, useParams } from "react-router";
 import SpeciesList from "./SpeciesList";
-import axios from "axios";
-import { base_url } from "../main";
+import axios from "../api/axios";
 
 type PropType = {
   animal: IAnimal;
@@ -42,7 +41,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
     const data={...updatedAnimal};
     console.log({data});
     axios
-        .patch(`${base_url}/animals/${params.id}`, data, /* {
+        .patch(`/animals/${params.id}`, data, /* {
           headers: {
             'Content-Type':"multipart/form-data"
           }} */)
@@ -57,7 +56,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
     );
     if (response) {
       axios
-        .delete(`${base_url}/animals/${params.id}`)
+        .delete(`/animals/${params.id}`, {data:{accessToken:GetAccessToken()}})
         .then();
       navigate("/all-animals");
     }

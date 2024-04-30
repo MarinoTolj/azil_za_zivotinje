@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { UserRole } from "../src/helpers/types";
-import { currCookie } from ".";
 
 export const verifyToken = (req: any, res: Response, next: NextFunction) => {
   const authHeader = req.headers["authorization"];
@@ -20,24 +19,20 @@ export const verifyToken = (req: any, res: Response, next: NextFunction) => {
   return next();
 };
 
-export const verifyCookie =
-  (cookieName: string) => (req: any, res: Response, next: NextFunction) => {
-    req.cookies[cookieName] = currCookie;
-    if (req.cookies && req.cookies[cookieName]) {
-      try {
-        const user = jwt.verify(
-          req.cookies[cookieName],
-          process.env.SECRET_KEY as string
-        );
-        req.user = user;
-      } catch (error) {
-        return res.status(401).send("Invalid Token");
-      }
-      next();
-    } else {
-      res.status(401).json({ error: "Unauthorized" });
+export const verifyCookie = (req: any, res: Response, next: NextFunction) => {
+  const token = req.body.accessToken;
+  if (token) {
+    try {
+      const user = jwt.verify(token, process.env.SECRET_KEY as string);
+      req.user = user;
+    } catch (error) {
+      return res.status(401).send("Invalid Token");
     }
-  };
+    next();
+  } else {
+    res.status(401).json({ error: "Unauthorized" });
+  }
+};
 
 export const verifyRole =
   (role: UserRole) => (req: any, res: Response, next: NextFunction) => {

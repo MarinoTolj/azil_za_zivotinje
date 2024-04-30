@@ -21,19 +21,16 @@ const corsOptions: CorsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-app.use(function (req, res, next) {
+/* app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", "true");
   next();
-});
+}); */
 
 app.use("/animals", animalsRouter);
 app.use("/donations", donationsRouter);
 app.use("/notifications", notificationsRouter);
 app.use(log);
 
-export const cookieName = "accessToken";
-export const currCookie =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEzOTcxMDM2LCJleHAiOjE3MTM5ODE4MzZ9.uG9BdF5ZtgczVLYe2RdIMgC5jeD2xkTnFzSJ29MMeqs";
 app.post("/login", async (req, res) => {
   try {
     const user = await firestoreUtils.GetDocumentById("users", req.body.email);
@@ -47,11 +44,11 @@ app.post("/login", async (req, res) => {
           expiresIn: "3h", //TODO
         }
       );
-      res.cookie(cookieName, token, {
+      /* res.cookie(cookieName, token, {
         httpOnly: true,
         maxAge: 3600000,
         secure: process.env.NODE_ENV === "dev" ? false : true,
-      });
+      }); */
       res.status(200).send(token);
     } else {
       res.status(401).send("Invalid data");
@@ -73,13 +70,10 @@ app.post("/registration", async (req, res) => {
 });
 
 app.post("/is_admin", (req: any, res: Response) => {
-  req.cookies[cookieName] = currCookie;
-  if (req.cookies && req.cookies[cookieName]) {
+  const token = req.body.accessToken;
+  if (token) {
     try {
-      const user = jwt.verify(
-        req.cookies[cookieName],
-        process.env.SECRET_KEY as string
-      ) as any;
+      const user = jwt.verify(token, process.env.SECRET_KEY as string) as any;
       res.send(user.role === "admin" ? true : false);
     } catch (error) {
       res.send(false);

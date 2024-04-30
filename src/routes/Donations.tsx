@@ -9,8 +9,7 @@ import { RootState } from "../redux/store";
 import DonationCategory from "../components/DonationCategory";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
 import { SuccessMessage } from "../helpers/functions";
-import axios from "axios";
-import { base_url } from "../main";
+import axios from "../api/axios";
 
 const Donations = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -32,7 +31,7 @@ const Donations = () => {
   };
 
   const fetchDonations = async () => {
-    axios.get(`${base_url}/donations/`).then((res) => setDonations(res.data));
+    axios.get(`/donations/`).then((res) => setDonations(res.data));
   };
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const Donations = () => {
     if (isAdmin) donationData["category"] = "looking";
     else donationData["category"] = "offering";
 
-    axios.post(`${base_url}/donations/`, donationData);
+    axios.post(`/donations/`, donationData);
     openCloseModal();
     SuccessMessage("New Donation Successfully Added");
     /* setDonation({

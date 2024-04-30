@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import { Capitalize } from "../helpers/functions";
+import { Capitalize, GetAccessToken } from "../helpers/functions";
 import { DonationCategoryType, IDonation } from "../helpers/types";
 import Button from "./Button";
 import { RootState } from "../redux/store";
 import TrashIcon from "./Icons/TrashIcon";
 import { base_url } from "../main";
-import axios from "axios";
+import axios, { axiosProtected } from "../api/axios";
 type PropType = {
   category: DonationCategoryType;
   donations: IDonation[];
@@ -45,14 +45,12 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         donation.description
     );
     if (response) {
-      axios.delete(`${base_url}/donations/${donation.id}`, {
-        withCredentials: true,
-      });
+      axios.delete(`/donations/${donation.id}`, {data:{accessToken:GetAccessToken()}});
     }
   };
 
   const updateDonation = async () => {
-    axios.post(`${base_url}/donations/${donation.id}`, { category: "donated" });
+    axios.post(`/donations/${donation.id}`, { category: "donated" });
   };
 
   const repeatDonation = async () => {

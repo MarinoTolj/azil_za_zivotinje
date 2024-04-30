@@ -7,8 +7,7 @@ import Radio from "../components/FormComponents/Radio";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
 import Legend from "../components/Icons/Legend";
 import AdoptedList from "../components/FormComponents/AdoptedList";
-import axios from "axios";
-import { base_url } from "../main";
+import axios from "../api/axios";
 
 type AdoptedType = AdoptedStatus | "All";
 
@@ -24,7 +23,7 @@ const AllAnimals = () => {
 
   const getAnimals = async () => {
     axios
-        .get(`${base_url}/animals/`)
+        .get(`/animals/`)
         .then((res) =>
           setAnimals(res.data)
         );

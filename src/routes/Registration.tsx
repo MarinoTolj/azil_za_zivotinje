@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { base_url } from "../main";
 import { SuccessMessage } from "../helpers/functions";
@@ -7,6 +6,7 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import Radio from "../components/FormComponents/Radio";
 import { UserRole } from "../helpers/types";
+import axios from "../api/axios";
 
 export default function Registration() {
   const [username, setUsername] = useState("");
@@ -26,7 +26,7 @@ export default function Registration() {
     };
     if (password == confirm_password) {
       try {
-        axios.post(`${base_url}/registration`, data);
+        axios.post(`/registration`, data);
         SuccessMessage("Registration succesful");
         navigate("/login");
       } catch (error: any) {

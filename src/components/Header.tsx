@@ -5,8 +5,9 @@ import { RootState } from "../redux/store";
 import ToggleSwitch from "./Icons/ToggleSwitch";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
 import { setIsAdmin } from "../redux/userSlice";
+import axios from "../api/axios";
+import { GetAccessToken } from "../helpers/functions";
 
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
@@ -14,14 +15,13 @@ export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   useEffect(
     () => {
       axios
-        .post(`${base_url}/is_admin`, {}, { withCredentials: true })
+        .post(`/is_admin`, {accessToken:GetAccessToken()})
         .then((res) => {
-          console.log({ isAdmin: res.data });
           dispatch(setIsAdmin(res.data));
         });
     },
     [
-      /* isAdmin */
+      isAdmin
     ]
   );
 

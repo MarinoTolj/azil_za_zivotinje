@@ -1,9 +1,8 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { base_url } from "../main";
 import { SuccessMessage } from "../helpers/functions";
 import Input from "../components/FormComponents/Input";
 import Button from "../components/Button";
+import axios, { axiosProtected } from "../api/axios";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -16,8 +15,10 @@ export default function Login() {
       password,
     };
     axios
-      .post(`${base_url}/login`, data, { withCredentials: true })
-      .then(() => {
+      .post(`/login`, data)
+      .then((res) => {
+        console.log({res});
+        sessionStorage.setItem("accessToken", res.data);
         SuccessMessage("Login successful");
 
         //navigate("/all-animals");

@@ -16,8 +16,7 @@ import {
   SuccessMessage,
   todayInISOFormat,
 } from "../helpers/functions";
-import axios from "axios";
-import { base_url } from "../main";
+import axios from "../api/axios";
 
 const AnimalRegistrationForm = () => {
   const [animalName, setAnimalName] = useState("");
@@ -51,7 +50,7 @@ const AnimalRegistrationForm = () => {
     };
     if (image) {
       axios
-        .post(`${base_url}/animals`, data);
+        .post(`/animals`, data);
       SuccessMessage("New Animal Successfully Added");
       navigate("/all-animals");
     } else ErrorMessage("ERROR: something went wrong. Try again");

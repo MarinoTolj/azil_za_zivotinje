@@ -12,8 +12,7 @@ import Button from "../components/Button";
 import CheckMark from "../components/Icons/CheckMark";
 import { Capitalize, SuccessMessage } from "../helpers/functions";
 import TextArea from "../components/FormComponents/TextArea";
-import axios from "axios";
-import { base_url } from "../main";
+import axios from "../api/axios";
 
 const AnimalInfo = ({
   title,
@@ -49,14 +48,14 @@ const Animal = () => {
 
   const handleAdoption = async (status: AdoptedStatus) => {
     axios
-      .patch(`${base_url}/animals/${params.id}`, { adopted: status })
+      .patch(`/animals/${params.id}`, { adopted: status })
       .then(() => fetchAnimalById());
     SuccessMessage("Adoption Status Successfully Changed");
   };
 
   const fetchAnimalById = async () => {
     if (params.id) console.log({ res: params.id });
-    axios.get(`${base_url}/animals/${params.id}`).then((res) => {
+    axios.get(`/animals/${params.id}`).then((res) => {
       setAnimal(res.data);
     });
   };

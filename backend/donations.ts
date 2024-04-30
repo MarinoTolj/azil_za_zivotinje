@@ -21,7 +21,7 @@ donationsRouter.post("/", async (req: Request, res: Response) => {
 });
 donationsRouter.delete(
   "/:id",
-  verifyCookie("accessToken"),
+  verifyCookie,
   verifyRole("admin"),
   async (req: Request, res: Response) => {
     try {
