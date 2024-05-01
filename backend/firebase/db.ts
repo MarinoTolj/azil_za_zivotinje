@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDcsznaO1ME1Q6lJ21v7QCLgSbkj--rGAI",
+  apiKey: process.env.apiKey,
 
   authDomain: "azil-za-zivotinje.firebaseapp.com",
 
@@ -10,9 +10,9 @@ const firebaseConfig = {
 
   storageBucket: "azil-za-zivotinje.appspot.com",
 
-  messagingSenderId: "1072721826162",
+  messagingSenderId: process.env.messagingSenderId,
 
-  appId: "1:1072721826162:web:c9261d52a27660337a8deb",
+  appId: process.env.appId,
 };
 
 const app = initializeApp(firebaseConfig);

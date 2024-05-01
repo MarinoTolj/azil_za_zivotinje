@@ -5,8 +5,11 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
+  getDocs,
   onSnapshot,
   query,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "./db";
@@ -18,57 +21,80 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { IAnimal, IDonation, INotification } from "../helpers/types";
+import {
+  IAnimal,
+  IDonation,
+  INotification,
+  User,
+} from "../../src/helpers/types";
 
-type Collections = "animals" | "notifications" | "donations";
+type Collections = "animals" | "notifications" | "donations" | "users";
 type PossibleDataType =
   | Omit<IAnimal, "id" | "imageUrl">
   | Omit<INotification, "id">
-  | Omit<IDonation, "id">;
+  | Omit<IDonation, "id">
+  | User;
 class FiresStore {
   collections: { [key in Collections]: CollectionReference<DocumentData> } = {
     animals: collection(db, "animals"),
     notifications: collection(db, "notifications"),
     donations: collection(db, "donations"),
+    users: collection(db, "users"),
   };
   storage = getStorage();
 
-  async GetCollectionByName<T>(
-    collectionName: Collections,
-    setterFunction: React.Dispatch<React.SetStateAction<T[] | undefined>>
-  ) {
+  async GetCollectionByName<T>(collectionName: Collections) {
     const q = query(this.collections[collectionName]);
 
-    let tempData: T[] = [];
+    try {
+      const docSnap = await getDocs(q);
+      if (!docSnap.empty) {
+        const data: any = [];
 
-    const unsub = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const data = { ...doc.data(), id: doc.id } as T;
-        tempData.push(data);
-      });
-      setterFunction(tempData);
-      tempData = [];
-    });
-    return unsub;
+        docSnap.forEach((doc) => {
+          data.push({ ...doc.data(), id: doc.id });
+        });
+        return data;
+      } else {
+        throw new Error(`No collection by name: ${collectionName}`);
+      }
+    } catch (error: any) {
+      return error.message;
+    }
   }
 
-  async GetDocumentById<T>(
-    collectionName: Collections,
-    id: string,
-    setterFunction: React.Dispatch<React.SetStateAction<T>>
-  ) {
+  async GetDocumentById<T>(collectionName: Collections, id: string) {
     const documentRef = doc(db, collectionName, id);
-    const unsub = onSnapshot(documentRef, (doc) => {
-      setterFunction({ ...doc.data(), id: doc.id } as T);
-    });
 
-    return unsub;
+    try {
+      const docSnap = await getDoc(documentRef);
+      if (docSnap.exists()) {
+        /* return new Promise<any>((resolve, reject) => {
+            let data: any = {};
+            onSnapshot(documentRef, (doc) => {
+              console.log({ inside: doc.data() });
+              data = { ...doc.data(), id: doc.id };
+              console.log({ data });
+              resolve(data);
+            });
+          }); */
+        if (collectionName === "users") {
+          return docSnap.data();
+        } else {
+          return { ...docSnap.data(), id: docSnap.id };
+        }
+      } else {
+        throw new Error(`No document by id: ${id}`);
+      }
+    } catch (error: any) {
+      return error.message;
+    }
   }
 
   async AddDocument(
     collectionName: Collections,
     data: PossibleDataType,
-    image?: Blob
+    image?: File
   ) {
     if (image) {
       const storageRef = ref(this.storage, `images/${image.name}`);
@@ -91,6 +117,15 @@ class FiresStore {
           });
         }
       );
+    } else if (collectionName == "users") {
+      const new_data = data as any;
+      const documentRef = doc(db, collectionName, new_data.email);
+      const docSnap = await getDoc(documentRef);
+      if (docSnap.exists()) {
+        throw new Error(`User with that email already exists`);
+      } else {
+        await setDoc(documentRef, data);
+      }
     } else {
       await addDoc(this.collections[collectionName], data);
     }
@@ -100,7 +135,7 @@ class FiresStore {
     collectionName: Collections,
     id: string,
     data: Partial<PossibleDataType>,
-    image?: Blob
+    image?: File
   ) {
     const documentRef = doc(db, collectionName, id);
     if (image) {

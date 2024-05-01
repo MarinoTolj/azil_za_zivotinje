@@ -7,6 +7,13 @@ export const species = [
   "other",
   "",
 ] as const;
+export type UserRole = "user" | "admin";
+export interface User {
+  username: string;
+  email: string;
+  password: string;
+  type: UserRole;
+}
 
 export type Species = (typeof species)[number];
 

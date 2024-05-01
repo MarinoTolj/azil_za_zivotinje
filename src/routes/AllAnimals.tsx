@@ -4,10 +4,10 @@ import Input from "../components/FormComponents/Input";
 import { AdoptedStatus, IAnimal, Species } from "../helpers/types";
 import SpeciesList from "../components/SpeciesList";
 import Radio from "../components/FormComponents/Radio";
-import { firestoreUtils } from "../firebase/firestoreUtils";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
 import Legend from "../components/Icons/Legend";
 import AdoptedList from "../components/FormComponents/AdoptedList";
+import axios from "../api/axios";
 
 type AdoptedType = AdoptedStatus | "All";
 
@@ -22,7 +22,11 @@ const AllAnimals = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const getAnimals = async () => {
-    await firestoreUtils.GetCollectionByName("animals", setAnimals);
+    axios
+        .get(`/animals/`)
+        .then((res) =>
+          setAnimals(res.data)
+        );
   };
 
   useEffect(() => {

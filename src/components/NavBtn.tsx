@@ -23,7 +23,13 @@ const getRouteName = (path: RouteType["path"]) => {
     case "/notifications":
       routeName = "Notifications";
       break;
-    default:
+      case "/login":
+        routeName="Login";
+        break;
+      case "/registration":
+        routeName="Registration";
+        break;
+      default:
       routeName = "";
   }
   return routeName;

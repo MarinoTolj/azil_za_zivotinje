@@ -3,7 +3,6 @@ import { AdoptedStatus, IAnimal } from "../helpers/types";
 import { useEffect, useState } from "react";
 import AnimalImage from "../components/AnimalImage";
 import ErrorPage from "../components/ErrorPage";
-import { firestoreUtils } from "../firebase/firestoreUtils";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Modal from "../components/Modal";
@@ -13,6 +12,7 @@ import Button from "../components/Button";
 import CheckMark from "../components/Icons/CheckMark";
 import { Capitalize, SuccessMessage } from "../helpers/functions";
 import TextArea from "../components/FormComponents/TextArea";
+import axios from "../api/axios";
 
 const AnimalInfo = ({
   title,
@@ -47,20 +47,17 @@ const Animal = () => {
   const [editMode, setEditMode] = useState(false);
 
   const handleAdoption = async (status: AdoptedStatus) => {
-    await firestoreUtils.UpdateDocumentById("animals", animal.id, {
-      adopted: status,
-    });
-    setAnimal({ ...animal, adopted: status });
+    axios
+      .patch(`/animals/${params.id}`, { adopted: status })
+      .then(() => fetchAnimalById());
     SuccessMessage("Adoption Status Successfully Changed");
   };
 
   const fetchAnimalById = async () => {
-    if (params.id)
-      await firestoreUtils.GetDocumentById<IAnimal>(
-        "animals",
-        params.id,
-        setAnimal
-      );
+    if (params.id) console.log({ res: params.id });
+    axios.get(`/animals/${params.id}`).then((res) => {
+      setAnimal(res.data);
+    });
   };
 
   const handleOpenCloseModal = () => {

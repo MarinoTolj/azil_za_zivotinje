@@ -1,12 +1,22 @@
 import { RouteType } from "../main";
 import NavBtn from "./NavBtn";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import ToggleSwitch from "./Icons/ToggleSwitch";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { setIsAdmin } from "../redux/userSlice";
+import axios from "../api/axios";
+import { GetAccessToken } from "../helpers/functions";
 
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    axios.post(`/is_admin`, { accessToken: GetAccessToken() }).then((res) => {
+      dispatch(setIsAdmin(res.data));
+    });
+  }, [isAdmin, dispatch]);
 
   return (
     <header>

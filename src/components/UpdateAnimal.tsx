@@ -1,15 +1,19 @@
 import { useState } from "react";
 import Input from "./FormComponents/Input";
 import { FormType, IAnimal, InputType } from "../helpers/types";
-import { firestoreUtils } from "../firebase/firestoreUtils";
 import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
 import CheckBox from "./FormComponents/CheckBox";
 import AdoptedList from "./FormComponents/AdoptedList";
-import { SuccessMessage, todayInISOFormat } from "../helpers/functions";
+import {
+  GetAccessToken,
+  SuccessMessage,
+  todayInISOFormat,
+} from "../helpers/functions";
 import Radio from "./FormComponents/Radio";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import SpeciesList from "./SpeciesList";
+import axios from "../api/axios";
 
 type PropType = {
   animal: IAnimal;
@@ -18,8 +22,9 @@ type PropType = {
 
 const UpdateAnimal: React.FC<PropType> = (props) => {
   const [updatedAnimal, setUpdatedAnimal] = useState({ ...props.animal });
-  const [image, setImage] = useState<Blob>();
+  const [image, setImage] = useState<File>();
   const navigate = useNavigate();
+  const params = useParams<"id">();
 
   const changeAnimal = (e: InputType) => {
     const propety = e.currentTarget.name;
@@ -35,22 +40,32 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
 
   const updateAnimal = async (e: FormType) => {
     e.preventDefault();
-    await firestoreUtils.UpdateDocumentById(
-      "animals",
-      props.animal.id,
-      updatedAnimal,
-      image
-    );
+    //TODO: handle sending image
+    const data = { ...updatedAnimal, ...image };
+    console.log({ data });
+    axios
+      .patch(
+        `/animals/${params.id}`,
+        data /* {
+          headers: {
+            'Content-Type':"multipart/form-data"
+          }} */
+      )
+      .then();
     props.openCloseModal();
     SuccessMessage(`${updatedAnimal.name}'s information successfully changed`);
   };
 
   const deleteAnimal = async () => {
     const response = confirm(
-      "Are you sure you want to remove?\n- " + props.animal.name
+      "Are you sure you want to remove?\n- " + updatedAnimal.name
     );
     if (response) {
-      await firestoreUtils.DeleteDocumentById("animals", props.animal.id);
+      axios
+        .delete(`/animals/${params.id}`, {
+          data: { accessToken: GetAccessToken() },
+        })
+        .then();
       navigate("/all-animals");
     }
   };

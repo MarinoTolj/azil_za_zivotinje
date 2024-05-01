@@ -39,3 +39,6 @@ export function SuccessMessage(msg: string) {
 export function ErrorMessage(msg: string) {
   toast.error(msg, { pauseOnHover: false, autoClose: 3000 });
 }
+export function GetAccessToken(): string | null {
+  return sessionStorage.getItem("accessToken");
+}

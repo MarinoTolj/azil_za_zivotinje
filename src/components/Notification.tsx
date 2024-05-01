@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
-import { firestoreUtils } from "../firebase/firestoreUtils";
 import { INotification } from "../helpers/types";
 import TrashIcon from "./Icons/TrashIcon";
 import { RootState } from "../redux/store";
+import axios from "../api/axios";
+import { GetAccessToken } from "../helpers/functions";
 
 type PropType = {
   notification: INotification;
@@ -17,7 +18,8 @@ const Notification: React.FC<PropType> = (props) => {
       "Are you sure you want to remove?\n- " + notification.title
     );
     if (response) {
-      await firestoreUtils.DeleteDocumentById("notifications", notification.id);
+      axios
+        .delete(`/notifications/${notification.id}`, {data:{accessToken:GetAccessToken()}});
     }
   };
 

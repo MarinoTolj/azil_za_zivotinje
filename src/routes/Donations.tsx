@@ -4,12 +4,12 @@ import Modal from "../components/Modal";
 import Input from "../components/FormComponents/Input";
 import { IDonation, InputType, donationType } from "../helpers/types";
 import Radio from "../components/FormComponents/Radio";
-import { firestoreUtils } from "../firebase/firestoreUtils";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import DonationCategory from "../components/DonationCategory";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
 import { SuccessMessage } from "../helpers/functions";
+import axios from "../api/axios";
 
 const Donations = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -31,7 +31,7 @@ const Donations = () => {
   };
 
   const fetchDonations = async () => {
-    await firestoreUtils.GetCollectionByName("donations", setDonations);
+    axios.get(`/donations/`).then((res) => setDonations(res.data));
   };
 
   useEffect(() => {
@@ -48,15 +48,15 @@ const Donations = () => {
     if (isAdmin) donationData["category"] = "looking";
     else donationData["category"] = "offering";
 
-    await firestoreUtils.AddDocument("donations", donationData);
+    axios.post(`/donations/`, donationData);
     openCloseModal();
     SuccessMessage("New Donation Successfully Added");
-    setDonation({
+    /* setDonation({
       amount: 0,
       category: "donated",
       description: "",
       type: "food",
-    });
+    }); */
   };
   if (donations === undefined) return <LoadingSpinner />;
 

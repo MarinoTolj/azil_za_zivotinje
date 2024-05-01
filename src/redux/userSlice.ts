@@ -15,9 +15,12 @@ export const userSlice = createSlice({
     toggleIsAdmin: (state) => {
       state.isAdmin = !state.isAdmin;
     },
+    setIsAdmin: (state, payload) => {
+      state.isAdmin = payload.payload;
+    },
   },
 });
 
-export const { toggleIsAdmin } = userSlice.actions;
+export const { toggleIsAdmin, setIsAdmin } = userSlice.actions;
 
 export default userSlice.reducer;
