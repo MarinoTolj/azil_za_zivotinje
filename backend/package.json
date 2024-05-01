@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "dev": "SET NODE_ENV=dev& nodemon index.ts",
-    "prod": "SET NODE_ENV=prod& nodemon index.ts"
+    "start": "SET NODE_ENV=prod& nodemon index.ts"
   },
   "author": "",
   "license": "ISC",
