@@ -16,7 +16,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const corsOptions: CorsOptions = {
-  origin: "http://127.0.0.1:5173",
+  origin:
+    process.env.NODE_ENV === "production"
+      ? "https://azil-za-zivotinje.vercel.app"
+      : "http://127.0.0.1:5173",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true,
 };
