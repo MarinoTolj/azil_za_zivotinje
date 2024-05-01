@@ -1,4 +1,4 @@
-import { RouteType, base_url } from "../main";
+import { RouteType } from "../main";
 import NavBtn from "./NavBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -12,18 +12,11 @@ import { GetAccessToken } from "../helpers/functions";
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
   const dispatch = useDispatch();
-  useEffect(
-    () => {
-      axios
-        .post(`/is_admin`, {accessToken:GetAccessToken()})
-        .then((res) => {
-          dispatch(setIsAdmin(res.data));
-        });
-    },
-    [
-      isAdmin
-    ]
-  );
+  useEffect(() => {
+    axios.post(`/is_admin`, { accessToken: GetAccessToken() }).then((res) => {
+      dispatch(setIsAdmin(res.data));
+    });
+  }, [isAdmin, dispatch]);
 
   return (
     <header>

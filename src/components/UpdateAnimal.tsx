@@ -5,7 +5,11 @@ import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
 import CheckBox from "./FormComponents/CheckBox";
 import AdoptedList from "./FormComponents/AdoptedList";
-import { GetAccessToken, SuccessMessage, todayInISOFormat } from "../helpers/functions";
+import {
+  GetAccessToken,
+  SuccessMessage,
+  todayInISOFormat,
+} from "../helpers/functions";
 import Radio from "./FormComponents/Radio";
 import { useNavigate, useParams } from "react-router";
 import SpeciesList from "./SpeciesList";
@@ -22,7 +26,6 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
   const navigate = useNavigate();
   const params = useParams<"id">();
 
-
   const changeAnimal = (e: InputType) => {
     const propety = e.currentTarget.name;
     const value = e.currentTarget.value;
@@ -38,14 +41,17 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
   const updateAnimal = async (e: FormType) => {
     e.preventDefault();
     //TODO: handle sending image
-    const data={...updatedAnimal};
-    console.log({data});
+    const data = { ...updatedAnimal, ...image };
+    console.log({ data });
     axios
-        .patch(`/animals/${params.id}`, data, /* {
+      .patch(
+        `/animals/${params.id}`,
+        data /* {
           headers: {
             'Content-Type':"multipart/form-data"
-          }} */)
-        .then();
+          }} */
+      )
+      .then();
     props.openCloseModal();
     SuccessMessage(`${updatedAnimal.name}'s information successfully changed`);
   };
@@ -56,7 +62,9 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
     );
     if (response) {
       axios
-        .delete(`/animals/${params.id}`, {data:{accessToken:GetAccessToken()}})
+        .delete(`/animals/${params.id}`, {
+          data: { accessToken: GetAccessToken() },
+        })
         .then();
       navigate("/all-animals");
     }

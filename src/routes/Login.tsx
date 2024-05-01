@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SuccessMessage } from "../helpers/functions";
 import Input from "../components/FormComponents/Input";
 import Button from "../components/Button";
-import axios, { axiosProtected } from "../api/axios";
+import axios from "../api/axios";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,15 +14,13 @@ export default function Login() {
       email,
       password,
     };
-    axios
-      .post(`/login`, data)
-      .then((res) => {
-        console.log({res});
-        sessionStorage.setItem("accessToken", res.data);
-        SuccessMessage("Login successful");
+    axios.post(`/login`, data).then((res) => {
+      console.log({ res });
+      sessionStorage.setItem("accessToken", res.data);
+      SuccessMessage("Login successful");
 
-        //navigate("/all-animals");
-      });
+      //navigate("/all-animals");
+    });
   };
   return (
     <div className="text-center w-full m-auto mt-3">

@@ -23,9 +23,6 @@ import Layout from "./components/Layout";
 import Login from "./routes/Login";
 import Registration from "./routes/Registration";
 
-///Url for backend
-export const base_url="http://localhost:3000"
-
 export type RouteType = RouteObject & {
   path:
     | "/"
