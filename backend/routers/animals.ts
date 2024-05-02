@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
-import { firestoreUtils } from "./firebase/firestoreUtils";
-import { IAnimal } from "../src/helpers/types";
-import { verifyCookie, verifyRole } from "./middleware";
+import { firestoreUtils } from "../firebase/firestoreUtils";
+import { IAnimal } from "../../src/helpers/types";
+import { verifyCookie, verifyRole } from "../middleware";
 export const animalsRouter = express.Router();
 
 animalsRouter.get("/", async (req: Request, res: Response) => {
@@ -17,11 +17,10 @@ animalsRouter.get("/", async (req: Request, res: Response) => {
 
 animalsRouter.post(
   "/",
-  verifyCookie,
+  verifyCookie("accessToken"),
   verifyRole("admin"),
   async (req: Request, res: Response) => {
     try {
-      console.log({ data: req.body });
       await firestoreUtils.AddDocument("animals", req.body);
       res.status(200);
     } catch (error) {
@@ -57,7 +56,7 @@ animalsRouter.patch("/:id", async (req: Request, res: Response) => {
 
 animalsRouter.delete(
   "/:id",
-  verifyCookie,
+  verifyCookie("accessToken"),
   verifyRole("admin"),
   async (req: Request, res: Response) => {
     try {

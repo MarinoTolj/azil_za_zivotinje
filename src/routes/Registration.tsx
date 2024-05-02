@@ -61,7 +61,6 @@ export default function Registration() {
           required
           onChange={(e) => setEmail(e.target.value)}
         />
-        <p>testtest12!A</p>
         <Input
           type="password"
           placeholder="password"

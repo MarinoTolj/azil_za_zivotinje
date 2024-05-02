@@ -51,12 +51,6 @@ const Donations = () => {
     axios.post(`/donations/`, donationData);
     openCloseModal();
     SuccessMessage("New Donation Successfully Added");
-    /* setDonation({
-      amount: 0,
-      category: "donated",
-      description: "",
-      type: "food",
-    }); */
   };
   if (donations === undefined) return <LoadingSpinner />;
 

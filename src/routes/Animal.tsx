@@ -54,7 +54,6 @@ const Animal = () => {
   };
 
   const fetchAnimalById = async () => {
-    if (params.id) console.log({ res: params.id });
     axios.get(`/animals/${params.id}`).then((res) => {
       setAnimal(res.data);
     });

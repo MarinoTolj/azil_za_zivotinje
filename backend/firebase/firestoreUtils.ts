@@ -69,15 +69,6 @@ class FiresStore {
     try {
       const docSnap = await getDoc(documentRef);
       if (docSnap.exists()) {
-        /* return new Promise<any>((resolve, reject) => {
-            let data: any = {};
-            onSnapshot(documentRef, (doc) => {
-              console.log({ inside: doc.data() });
-              data = { ...doc.data(), id: doc.id };
-              console.log({ data });
-              resolve(data);
-            });
-          }); */
         if (collectionName === "users") {
           return docSnap.data();
         } else {

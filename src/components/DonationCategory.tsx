@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { Capitalize, GetAccessToken } from "../helpers/functions";
+import { Capitalize } from "../helpers/functions";
 import { DonationCategoryType, IDonation } from "../helpers/types";
 import Button from "./Button";
 import { RootState } from "../redux/store";
 import TrashIcon from "./Icons/TrashIcon";
-import axios from "../api/axios";
+import axios, { axiosProtected } from "../api/axios";
 type PropType = {
   category: DonationCategoryType;
   donations: IDonation[];
@@ -44,9 +44,7 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         donation.description
     );
     if (response) {
-      axios.delete(`/donations/${donation.id}`, {
-        data: { accessToken: GetAccessToken() },
-      });
+      axiosProtected.delete(`/donations/${donation.id}`);
     }
   };
 
@@ -60,13 +58,7 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
       category: "looking",
     };
 
-    //TODO
-    axios.post(
-      `/donations/`,
-      repeatedData /* {
-      withCredentials: true,
-    } */
-    );
+    axiosProtected.post(`/donations/`, repeatedData);
   };
 
   return (

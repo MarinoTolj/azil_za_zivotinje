@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { SuccessMessage } from "../helpers/functions";
+import { ErrorMessage, SuccessMessage } from "../helpers/functions";
 import Input from "../components/FormComponents/Input";
 import Button from "../components/Button";
-import axios from "../api/axios";
+import { axiosProtected } from "../api/axios";
+import { useNavigate } from "react-router";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -14,13 +16,16 @@ export default function Login() {
       email,
       password,
     };
-    axios.post(`/login`, data).then((res) => {
-      console.log({ res });
-      sessionStorage.setItem("accessToken", res.data);
-      SuccessMessage("Login successful");
-
-      //navigate("/all-animals");
-    });
+    try {
+      const response = await axiosProtected.post(`/login`, data);
+      if (response.status == 200) {
+        SuccessMessage("Login successful");
+        navigate("/all-animals");
+      }
+    } catch (error) {
+      console.log({ error });
+      ErrorMessage("Your email or password is incorrect.");
+    }
   };
   return (
     <div className="text-center w-full m-auto mt-3">
@@ -35,7 +40,6 @@ export default function Login() {
           required
           onChange={(e) => setEmail(e.target.value)}
         />
-        <p>testtest12</p>
         <Input
           type="password"
           placeholder="password"

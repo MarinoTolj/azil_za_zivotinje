@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import { firestoreUtils } from "./firebase/firestoreUtils";
-import { verifyCookie, verifyRole } from "./middleware";
+import { firestoreUtils } from "../firebase/firestoreUtils";
+import { verifyCookie, verifyRole } from "../middleware";
 export const notificationsRouter = express.Router();
 
 notificationsRouter.get("/", async (req: Request, res: Response) => {
@@ -26,7 +26,7 @@ notificationsRouter.post("/", async (req: Request, res: Response) => {
 });
 notificationsRouter.delete(
   "/:id",
-  verifyCookie,
+  verifyCookie("accessToken"),
   verifyRole("admin"),
   async (req: Request, res: Response) => {
     try {

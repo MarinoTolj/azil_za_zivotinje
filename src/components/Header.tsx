@@ -3,20 +3,27 @@ import NavBtn from "./NavBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import ToggleSwitch from "./Icons/ToggleSwitch";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { setIsAdmin } from "../redux/userSlice";
-import axios from "../api/axios";
-import { GetAccessToken } from "../helpers/functions";
+import { axiosProtected } from "../api/axios";
 
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
   const dispatch = useDispatch();
+  const location = useLocation();
   useEffect(() => {
-    axios.post(`/is_admin`, { accessToken: GetAccessToken() }).then((res) => {
+    axiosProtected.post(`/is_admin`).then((res) => {
       dispatch(setIsAdmin(res.data));
     });
-  }, [isAdmin, dispatch]);
+  }, [isAdmin, dispatch, location.pathname]);
+
+  const logout = async () => {
+    await axiosProtected.get("/logout");
+    await axiosProtected.post(`/is_admin`).then((res) => {
+      dispatch(setIsAdmin(res.data));
+    });
+  };
 
   return (
     <header>
@@ -37,6 +44,13 @@ export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
           )
             return <NavBtn key={route.path} path={route.path} />;
         })}
+        <Link
+          to="/"
+          className="bg-slate-300 p-3 rounded-md hover:scale-105"
+          onClick={logout}
+        >
+          Logout
+        </Link>
       </nav>
     </header>
   );

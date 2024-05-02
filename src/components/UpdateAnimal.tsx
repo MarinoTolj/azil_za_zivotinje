@@ -5,15 +5,11 @@ import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
 import CheckBox from "./FormComponents/CheckBox";
 import AdoptedList from "./FormComponents/AdoptedList";
-import {
-  GetAccessToken,
-  SuccessMessage,
-  todayInISOFormat,
-} from "../helpers/functions";
+import { SuccessMessage, todayInISOFormat } from "../helpers/functions";
 import Radio from "./FormComponents/Radio";
 import { useNavigate, useParams } from "react-router";
 import SpeciesList from "./SpeciesList";
-import axios from "../api/axios";
+import axios, { axiosProtected } from "../api/axios";
 
 type PropType = {
   animal: IAnimal;
@@ -42,7 +38,6 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
     e.preventDefault();
     //TODO: handle sending image
     const data = { ...updatedAnimal, ...image };
-    console.log({ data });
     axios
       .patch(
         `/animals/${params.id}`,
@@ -61,11 +56,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
       "Are you sure you want to remove?\n- " + updatedAnimal.name
     );
     if (response) {
-      axios
-        .delete(`/animals/${params.id}`, {
-          data: { accessToken: GetAccessToken() },
-        })
-        .then();
+      axiosProtected.delete(`/animals/${params.id}`).then();
       navigate("/all-animals");
     }
   };

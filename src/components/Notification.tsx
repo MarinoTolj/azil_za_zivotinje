@@ -2,8 +2,7 @@ import { useSelector } from "react-redux";
 import { INotification } from "../helpers/types";
 import TrashIcon from "./Icons/TrashIcon";
 import { RootState } from "../redux/store";
-import axios from "../api/axios";
-import { GetAccessToken } from "../helpers/functions";
+import { axiosProtected } from "../api/axios";
 
 type PropType = {
   notification: INotification;
@@ -18,8 +17,7 @@ const Notification: React.FC<PropType> = (props) => {
       "Are you sure you want to remove?\n- " + notification.title
     );
     if (response) {
-      axios
-        .delete(`/notifications/${notification.id}`, {data:{accessToken:GetAccessToken()}});
+      axiosProtected.delete(`/notifications/${notification.id}`);
     }
   };
 
