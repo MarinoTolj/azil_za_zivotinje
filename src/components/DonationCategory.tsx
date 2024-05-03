@@ -49,7 +49,7 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
   };
 
   const updateDonation = async () => {
-    axios.post(`/donations/${donation.id}`, { category: "donated" });
+    axios.patch(`/donations/${donation.id}`, { category: "donated" });
   };
 
   const repeatDonation = async () => {

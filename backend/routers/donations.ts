@@ -40,6 +40,7 @@ donationsRouter.patch("/:id", async (req: Request, res: Response) => {
       req.params.id,
       req.body
     );
+    res.sendStatus(200);
   } catch (error) {
     res.status(404).send(error);
   }

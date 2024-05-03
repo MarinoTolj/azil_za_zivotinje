@@ -68,7 +68,7 @@ app.post("/registration", async (req, res) => {
     const hashPass = await bcrypt.hash(req.body.password, saltRounds);
     const data = { ...req.body, password: hashPass };
     await firestoreUtils.AddDocument("users", data);
-    res.status(200);
+    res.sendStatus(200);
   } catch (error: any) {
     res.status(500).send(error.message);
   }
