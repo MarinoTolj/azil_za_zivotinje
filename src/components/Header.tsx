@@ -2,7 +2,6 @@ import { RouteType } from "../main";
 import NavBtn from "./NavBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import ToggleSwitch from "./Icons/ToggleSwitch";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { setIsAdmin } from "../redux/userSlice";
@@ -31,10 +30,6 @@ export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
         <h1 className="text-2xl align-middle text-orange-800 font-bold md:text-5xl">
           <Link to="/">ANIMAL SHELTER</Link>
         </h1>
-        <div className="flex items-center">
-          <span className="mr-2 text-lg text-orange-950">Admin</span>
-          <ToggleSwitch />
-        </div>
       </div>
       <nav className="bg-main-orange p-5 flex flex-wrap gap-3">
         {props.routes.map((route) => {
