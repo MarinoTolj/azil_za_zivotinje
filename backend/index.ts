@@ -46,7 +46,7 @@ app.post("/login", async (req, res) => {
         httpOnly: true,
         maxAge: 3600000,
         secure: true,
-        sameSite: "strict",
+        sameSite: "lax",
       });
       res.sendStatus(200);
     } else {
