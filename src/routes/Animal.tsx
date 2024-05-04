@@ -47,6 +47,7 @@ const Animal = () => {
   const [editMode, setEditMode] = useState(false);
 
   const handleAdoption = async (status: AdoptedStatus) => {
+    //TODO: 2nd route
     axios
       .patch(`/animals/${params.id}`, { adopted: status })
       .then(() => fetchAnimalById());

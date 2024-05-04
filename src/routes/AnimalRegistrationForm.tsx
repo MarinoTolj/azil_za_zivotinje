@@ -38,7 +38,7 @@ const AnimalRegistrationForm = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data: Omit<IAnimal, "id" | "imageUrl"> = {
+    const newAnimal: Omit<IAnimal, "id" | "imageUrl"> = {
       name: animalName,
       species,
       age,
@@ -48,8 +48,13 @@ const AnimalRegistrationForm = () => {
       chipped,
       lastCheck,
     };
+    const data = { ...newAnimal, image };
     if (image) {
-      axiosProtected.post(`/animals`, data);
+      await axiosProtected.post(`/animals`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       SuccessMessage("New Animal Successfully Added");
       navigate("/all-animals");
     } else ErrorMessage("ERROR: something went wrong. Try again");

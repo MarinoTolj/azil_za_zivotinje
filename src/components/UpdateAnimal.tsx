@@ -36,17 +36,13 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
 
   const updateAnimal = async (e: FormType) => {
     e.preventDefault();
-    //TODO: handle sending image
-    const data = { ...updatedAnimal, ...image };
-    axios
-      .patch(
-        `/animals/${params.id}`,
-        data /* {
-          headers: {
-            'Content-Type':"multipart/form-data"
-          }} */
-      )
-      .then();
+
+    const data = { ...updatedAnimal, image };
+    await axios.patch(`/animals/${params.id}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     props.openCloseModal();
     SuccessMessage(`${updatedAnimal.name}'s information successfully changed`);
   };
@@ -56,7 +52,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
       "Are you sure you want to remove?\n- " + updatedAnimal.name
     );
     if (response) {
-      axiosProtected.delete(`/animals/${params.id}`).then();
+      await axiosProtected.delete(`/animals/${params.id}`);
       navigate("/all-animals");
     }
   };

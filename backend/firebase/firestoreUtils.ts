@@ -85,13 +85,14 @@ class FiresStore {
   async AddDocument(
     collectionName: Collections,
     data: PossibleDataType,
-    image?: File
+    image?: Express.Multer.File
   ) {
     if (image) {
-      const storageRef = ref(this.storage, `images/${image.name}`);
+      const storageRef = ref(this.storage, `images/${image.originalname}`);
+      const buffer = new Uint8Array(image.buffer);
       const uploadTask = uploadBytesResumable(
         storageRef,
-        image,
+        buffer,
         "data_url" as UploadMetadata
       );
 
@@ -126,14 +127,15 @@ class FiresStore {
     collectionName: Collections,
     id: string,
     data: Partial<PossibleDataType>,
-    image?: File
+    image?: Express.Multer.File
   ) {
     const documentRef = doc(db, collectionName, id);
     if (image) {
-      const storageRef = ref(this.storage, `images/${image.name}`);
+      const storageRef = ref(this.storage, `images/${image.originalname}`);
+      const buffer = new Uint8Array(image.buffer);
       const uploadTask = uploadBytesResumable(
         storageRef,
-        image,
+        buffer,
         "data_url" as UploadMetadata
       );
 

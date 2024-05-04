@@ -31,6 +31,7 @@ notificationsRouter.delete(
   async (req: Request, res: Response) => {
     try {
       await firestoreUtils.DeleteDocumentById("notifications", req.params.id);
+      res.sendStatus(200);
     } catch (error) {
       res.status(404).send(error);
     }
