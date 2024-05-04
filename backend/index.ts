@@ -46,7 +46,8 @@ app.post("/login", async (req, res) => {
         httpOnly: true,
         maxAge: 3600000,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
+        partitioned: true,
       });
       res.sendStatus(200);
     } else {
