@@ -47,7 +47,6 @@ const Animal = () => {
   const [editMode, setEditMode] = useState(false);
 
   const handleAdoption = async (status: AdoptedStatus) => {
-    //TODO: 2nd route
     axios
       .patch(`/animals/${params.id}`, { adopted: status })
       .then(() => fetchAnimalById());
@@ -136,7 +135,11 @@ const Animal = () => {
         </div>
       </div>
       <Modal isOpen={editMode} openCloseModal={handleOpenCloseModal}>
-        <UpdateAnimal animal={animal} openCloseModal={handleOpenCloseModal} />
+        <UpdateAnimal
+          animal={animal}
+          openCloseModal={handleOpenCloseModal}
+          fetchAnimal={fetchAnimalById}
+        />
       </Modal>
     </>
   );

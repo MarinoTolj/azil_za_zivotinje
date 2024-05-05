@@ -7,6 +7,7 @@ import { ErrorMessage } from "../helpers/functions";
 
 type PropType = {
   notification: INotification;
+  fetchAllNotifications: () => void;
 };
 
 const Notification: React.FC<PropType> = (props) => {
@@ -20,6 +21,7 @@ const Notification: React.FC<PropType> = (props) => {
     if (response) {
       try {
         await axiosProtected.delete(`/notifications/${notification.id}`);
+        props.fetchAllNotifications();
       } catch (error) {
         ErrorMessage("An error has occured");
       }

@@ -8,6 +8,7 @@ import axios, { axiosProtected } from "../api/axios";
 type PropType = {
   category: DonationCategoryType;
   donations: IDonation[];
+  fetchDonations: () => void;
 };
 
 const DonationCategory: React.FC<PropType> = (props) => {
@@ -27,7 +28,13 @@ const DonationCategory: React.FC<PropType> = (props) => {
         <tbody>
           {props.donations.map((donation) => {
             if (donation.category === props.category)
-              return <CategoryElement key={donation.id} donation={donation} />;
+              return (
+                <CategoryElement
+                  key={donation.id}
+                  donation={donation}
+                  fetchDonations={props.fetchDonations}
+                />
+              );
           })}
         </tbody>
       </table>
@@ -35,7 +42,13 @@ const DonationCategory: React.FC<PropType> = (props) => {
   );
 };
 
-const CategoryElement = ({ donation }: { donation: IDonation }) => {
+const CategoryElement = ({
+  donation,
+  fetchDonations,
+}: {
+  donation: IDonation;
+  fetchDonations: () => void;
+}) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
 
   const deleteDonation = async () => {
@@ -46,6 +59,7 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
     if (response) {
       try {
         await axiosProtected.delete(`/donations/${donation.id}`);
+        fetchDonations();
       } catch (error) {
         ErrorMessage("An error has occured");
       }
@@ -55,6 +69,7 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
   const updateDonation = async () => {
     try {
       await axios.patch(`/donations/${donation.id}`, { category: "donated" });
+      fetchDonations();
     } catch (error) {
       ErrorMessage("An error has occured");
     }
@@ -67,6 +82,7 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
     };
     try {
       await axiosProtected.post(`/donations/`, repeatedData);
+      fetchDonations();
     } catch (error) {
       ErrorMessage("An error has occured");
     }

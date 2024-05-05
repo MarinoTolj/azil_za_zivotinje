@@ -26,8 +26,7 @@ const Notifications = () => {
   const [showImportant, setShowImportant] = useState(false);
 
   const fetchAllNotifications = async () => {
-    axios
-        .get(`/notifications/`).then((res)=>setNotifications(res.data));
+    axios.get(`/notifications/`).then((res) => setNotifications(res.data));
   };
 
   useEffect(() => {
@@ -43,7 +42,8 @@ const Notifications = () => {
       date: todayInISOFormat,
     };
     axios
-        .post(`/notifications/`, newNotification);
+      .post(`/notifications/`, newNotification)
+      .then(() => fetchAllNotifications());
     setTitle("");
     setBody("");
     setImportant(false);
@@ -109,12 +109,14 @@ const Notifications = () => {
                   <Notification
                     key={notification.id}
                     notification={notification}
+                    fetchAllNotifications={fetchAllNotifications}
                   />
                 ))
             : SortByDates(notifications).map((notification) => (
                 <Notification
                   key={notification.id}
                   notification={notification}
+                  fetchAllNotifications={fetchAllNotifications}
                 />
               ))}
         </div>

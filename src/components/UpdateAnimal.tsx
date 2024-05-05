@@ -18,6 +18,7 @@ import axios, { axiosProtected } from "../api/axios";
 type PropType = {
   animal: IAnimal;
   openCloseModal: () => void;
+  fetchAnimal: () => void;
 };
 
 const UpdateAnimal: React.FC<PropType> = (props) => {
@@ -52,6 +53,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
       SuccessMessage(
         `${updatedAnimal.name}'s information successfully changed`
       );
+      props.fetchAnimal();
     } catch (error) {
       ErrorMessage("An error has occured");
     }

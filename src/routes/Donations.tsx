@@ -50,6 +50,7 @@ const Donations = () => {
 
     try {
       await axios.post(`/donations/`, donationData);
+      fetchDonations();
       openCloseModal();
       SuccessMessage("New Donation Successfully Added");
     } catch (error) {
@@ -65,9 +66,21 @@ const Donations = () => {
           <Button onClick={openCloseModal} className="my-3 self-start max-w-xs">
             New Donation
           </Button>
-          <DonationCategory category="looking" donations={donations} />
-          <DonationCategory category="offering" donations={donations} />
-          <DonationCategory category="donated" donations={donations} />
+          <DonationCategory
+            category="looking"
+            donations={donations}
+            fetchDonations={fetchDonations}
+          />
+          <DonationCategory
+            category="offering"
+            donations={donations}
+            fetchDonations={fetchDonations}
+          />
+          <DonationCategory
+            category="donated"
+            donations={donations}
+            fetchDonations={fetchDonations}
+          />
         </div>
       </div>
       <Modal isOpen={openModal} openCloseModal={openCloseModal}>
