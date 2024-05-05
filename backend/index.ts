@@ -1,4 +1,4 @@
-import express, { Express, Response } from "express";
+import express, { Express, NextFunction, Response } from "express";
 import { animalsRouter } from "./routers/animals";
 import { donationsRouter } from "./routers/donations";
 import { notificationsRouter } from "./routers/notifications";
@@ -25,12 +25,12 @@ const corsOptions: CorsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.use(log);
 app.use("/animals", animalsRouter);
 app.use("/donations", donationsRouter);
 app.use("/notifications", notificationsRouter);
-app.use(log);
 
-app.post("/login", async (req, res) => {
+app.post("/login", async (req, res, next) => {
   try {
     const user = await firestoreUtils.GetDocumentById("users", req.body.email);
     if (user && (await bcrypt.compare(req.body.password, user.password))) {
@@ -51,10 +51,10 @@ app.post("/login", async (req, res) => {
       });
       res.sendStatus(200);
     } else {
-      res.status(401).send("Invalid data");
+      next(new Error("Invalid data"));
     }
   } catch (error: any) {
-    res.status(500).send(error.message);
+    next(error);
   }
 });
 
@@ -70,14 +70,14 @@ app.get("/logout", (req, res) => {
 });
 
 const saltRounds = 10;
-app.post("/registration", async (req, res) => {
+app.post("/registration", async (req, res, next) => {
   try {
     const hashPass = await bcrypt.hash(req.body.password, saltRounds);
     const data = { ...req.body, password: hashPass };
     await firestoreUtils.AddDocument("users", data);
     res.sendStatus(200);
   } catch (error: any) {
-    res.status(500).send(error.message);
+    next(error);
   }
 });
 
@@ -96,7 +96,11 @@ app.post("/is_admin", (req: any, res: Response) => {
     res.send(false);
   }
 });
-
+//@ts-ignore
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send(err.message);
+});
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {

@@ -6,14 +6,14 @@ export const animalsRouter = express.Router();
 import multer from "multer";
 const upload = multer();
 
-animalsRouter.get("/", async (req: Request, res: Response) => {
+animalsRouter.get("/", async (req: Request, res: Response, next) => {
   try {
     const animals = await firestoreUtils.GetCollectionByName<IAnimal[]>(
       "animals"
     );
     res.status(200).json(animals);
   } catch (error) {
-    res.status(404).send(error);
+    next(error);
   }
 });
 
@@ -22,7 +22,7 @@ animalsRouter.post(
   verifyCookie("accessToken"),
   verifyRole("admin"),
   upload.single("image"),
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next) => {
     try {
       if (req.body.chipped === "true") {
         req.body = { ...req.body, chipped: true };
@@ -32,12 +32,12 @@ animalsRouter.post(
       await firestoreUtils.AddDocument("animals", req.body, req.file);
       res.sendStatus(200);
     } catch (error) {
-      res.status(404).send(error);
+      next(error);
     }
   }
 );
 
-animalsRouter.get("/:id", async (req: Request, res: Response) => {
+animalsRouter.get("/:id", async (req: Request, res: Response, next) => {
   try {
     const animals = await firestoreUtils.GetDocumentById<IAnimal>(
       "animals",
@@ -45,14 +45,14 @@ animalsRouter.get("/:id", async (req: Request, res: Response) => {
     );
     res.status(200).json(animals);
   } catch (error) {
-    res.status(404).send(error);
+    next(error);
   }
 });
 
 animalsRouter.patch(
   "/:id",
   upload.single("image"),
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next) => {
     try {
       if (req.body.chipped === "true") {
         req.body = { ...req.body, chipped: true };
@@ -68,7 +68,7 @@ animalsRouter.patch(
       );
       res.status(200).json(animals);
     } catch (error) {
-      res.status(404).send(error);
+      next(error);
     }
   }
 );
@@ -77,7 +77,7 @@ animalsRouter.delete(
   "/:id",
   verifyCookie("accessToken"),
   verifyRole("admin"),
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next) => {
     try {
       const animals = await firestoreUtils.DeleteDocumentById(
         "animals",
@@ -85,7 +85,7 @@ animalsRouter.delete(
       );
       res.status(200).json(animals);
     } catch (error) {
-      res.status(404).send(error);
+      next(error);
     }
   }
 );

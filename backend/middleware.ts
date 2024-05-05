@@ -13,11 +13,11 @@ export const verifyCookie =
         );
         req.user = user;
       } catch (error) {
-        return res.status(401).send("Invalid Token");
+        next(new Error("Invalid Token"));
       }
       next();
     } else {
-      res.status(401).json({ error: "Unauthorized" });
+      next(new Error("Unauthorized"));
     }
   };
 
@@ -26,13 +26,13 @@ export const verifyRole =
     if (req.user.role === role) {
       return next();
     } else {
-      return res.status(403).send(`Unauthorized access.`);
+      next(new Error("Unauthorized access."));
     }
   };
 export const log = (req: Request, res: Response, next: NextFunction) => {
-  if (process.env.NODE_ENV == "dev") {
-    //console.log(`request sent from ${req.protocol} with headers: {req.header}`);
+  if (process.env.NODE_ENV !== "production") {
+    const time = new Date(Date.now()).toString();
+    console.log(req.method, req.hostname, req.path, time);
   }
-
   next();
 };
