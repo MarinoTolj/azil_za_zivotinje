@@ -59,7 +59,7 @@ class FiresStore {
         throw new Error(`No collection by name: ${collectionName}`);
       }
     } catch (error: any) {
-      return error.message;
+      throw new Error(`No collection by name: ${collectionName}`);
     }
   }
 
@@ -78,7 +78,7 @@ class FiresStore {
         throw new Error(`No document by id: ${id}`);
       }
     } catch (error: any) {
-      return error.message;
+      throw new Error(`No document by id: ${id}`);
     }
   }
 

@@ -32,7 +32,7 @@ const AnimalInfo = ({
 const Animal = () => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
   const params = useParams<"id">();
-  const [animal, setAnimal] = useState<IAnimal>({
+  const [animal, setAnimal] = useState<IAnimal | undefined>({
     adopted: "not adopted",
     age: 0,
     chipped: false,
@@ -55,9 +55,12 @@ const Animal = () => {
   };
 
   const fetchAnimalById = async () => {
-    axios.get(`/animals/${params.id}`).then((res) => {
-      setAnimal(res.data);
-    });
+    axios
+      .get(`/animals/${params.id}`)
+      .then((res) => {
+        setAnimal(res.data);
+      })
+      .catch(() => setAnimal(undefined));
   };
 
   const handleOpenCloseModal = () => {

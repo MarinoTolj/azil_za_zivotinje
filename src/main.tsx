@@ -43,7 +43,11 @@ export const routes: RouteType[] = [
         <App />
       </Layout>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <Layout>
+        <ErrorPage />
+      </Layout>
+    ),
   },
 
   {
@@ -53,7 +57,11 @@ export const routes: RouteType[] = [
         <AllAnimals />
       </Layout>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <Layout>
+        <ErrorPage />
+      </Layout>
+    ),
   },
   {
     path: "/all-animals/:id",
@@ -62,7 +70,11 @@ export const routes: RouteType[] = [
         <Animal />
       </Layout>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <Layout>
+        <ErrorPage />
+      </Layout>
+    ),
   },
   {
     path: "/donations",
@@ -71,7 +83,11 @@ export const routes: RouteType[] = [
         <Donations />
       </Layout>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <Layout>
+        <ErrorPage />
+      </Layout>
+    ),
   },
   {
     path: "/notifications",
@@ -80,7 +96,11 @@ export const routes: RouteType[] = [
         <Notifications />
       </Layout>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <Layout>
+        <ErrorPage />
+      </Layout>
+    ),
   },
   {
     path: "/animal-registration-form",
@@ -89,7 +109,11 @@ export const routes: RouteType[] = [
         <AnimalRegistrationForm />
       </Layout>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <Layout>
+        <ErrorPage />
+      </Layout>
+    ),
   },
   {
     path: "/login",
@@ -98,7 +122,11 @@ export const routes: RouteType[] = [
         <Login />
       </Layout>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <Layout>
+        <ErrorPage />
+      </Layout>
+    ),
   },
   {
     path: "/registration",
@@ -107,7 +135,11 @@ export const routes: RouteType[] = [
         <Registration />
       </Layout>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: (
+      <Layout>
+        <ErrorPage />
+      </Layout>
+    ),
   },
 ];
 
