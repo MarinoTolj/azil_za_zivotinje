@@ -5,7 +5,7 @@ import { RootState } from "../redux/store";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { setIsAdmin } from "../redux/userSlice";
-import axios, { axiosProtected } from "../api/axios";
+import { axiosProtected } from "../api/axios";
 import { ErrorMessage } from "../helpers/functions";
 
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
