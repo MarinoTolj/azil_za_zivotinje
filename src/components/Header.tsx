@@ -20,7 +20,7 @@ export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
 
   const logout = async () => {
     try {
-      await axios.get("/logout");
+      await axiosProtected.get("/logout");
       await axiosProtected.post(`/is_admin`).then((res) => {
         dispatch(setIsAdmin(res.data));
       });

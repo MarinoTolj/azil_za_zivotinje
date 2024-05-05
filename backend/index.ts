@@ -59,7 +59,13 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  res.clearCookie("accessToken");
+  res.clearCookie("accessToken", {
+    partitioned: true,
+    httpOnly: true,
+    secure: true,
+    maxAge: 3600000,
+    sameSite: "none",
+  });
   res.sendStatus(200);
 });
 
