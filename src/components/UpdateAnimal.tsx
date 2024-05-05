@@ -5,7 +5,11 @@ import TextArea from "./FormComponents/TextArea";
 import Button from "./Button";
 import CheckBox from "./FormComponents/CheckBox";
 import AdoptedList from "./FormComponents/AdoptedList";
-import { SuccessMessage, todayInISOFormat } from "../helpers/functions";
+import {
+  ErrorMessage,
+  SuccessMessage,
+  todayInISOFormat,
+} from "../helpers/functions";
 import Radio from "./FormComponents/Radio";
 import { useNavigate, useParams } from "react-router";
 import SpeciesList from "./SpeciesList";
@@ -38,13 +42,19 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
     e.preventDefault();
 
     const data = { ...updatedAnimal, image };
-    await axios.patch(`/animals/${params.id}`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    props.openCloseModal();
-    SuccessMessage(`${updatedAnimal.name}'s information successfully changed`);
+    try {
+      await axios.patch(`/animals/${params.id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      props.openCloseModal();
+      SuccessMessage(
+        `${updatedAnimal.name}'s information successfully changed`
+      );
+    } catch (error) {
+      ErrorMessage("An error has occured");
+    }
   };
 
   const deleteAnimal = async () => {
@@ -52,8 +62,12 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
       "Are you sure you want to remove?\n- " + updatedAnimal.name
     );
     if (response) {
-      await axiosProtected.delete(`/animals/${params.id}`);
-      navigate("/all-animals");
+      try {
+        await axiosProtected.delete(`/animals/${params.id}`);
+        navigate("/all-animals");
+      } catch (error) {
+        ErrorMessage("An error has occured");
+      }
     }
   };
 
@@ -142,6 +156,7 @@ const UpdateAnimal: React.FC<PropType> = (props) => {
       <Input
         label="Upload Image"
         type="file"
+        accept="image/*"
         name="image"
         className=" "
         onChange={handleImageUpload}

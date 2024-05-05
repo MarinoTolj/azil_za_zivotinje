@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import DonationCategory from "../components/DonationCategory";
 import LoadingSpinner from "../components/Icons/LoadingSpinner";
-import { SuccessMessage } from "../helpers/functions";
+import { ErrorMessage, SuccessMessage } from "../helpers/functions";
 import axios from "../api/axios";
 
 const Donations = () => {
@@ -48,9 +48,13 @@ const Donations = () => {
     if (isAdmin) donationData["category"] = "looking";
     else donationData["category"] = "offering";
 
-    axios.post(`/donations/`, donationData);
-    openCloseModal();
-    SuccessMessage("New Donation Successfully Added");
+    try {
+      await axios.post(`/donations/`, donationData);
+      openCloseModal();
+      SuccessMessage("New Donation Successfully Added");
+    } catch (error) {
+      ErrorMessage("An error has occured");
+    }
   };
   if (donations === undefined) return <LoadingSpinner />;
 

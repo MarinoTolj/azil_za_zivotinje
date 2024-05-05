@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Capitalize } from "../helpers/functions";
+import { Capitalize, ErrorMessage } from "../helpers/functions";
 import { DonationCategoryType, IDonation } from "../helpers/types";
 import Button from "./Button";
 import { RootState } from "../redux/store";
@@ -44,12 +44,20 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
         donation.description
     );
     if (response) {
-      axiosProtected.delete(`/donations/${donation.id}`);
+      try {
+        await axiosProtected.delete(`/donations/${donation.id}`);
+      } catch (error) {
+        ErrorMessage("An error has occured");
+      }
     }
   };
 
   const updateDonation = async () => {
-    axios.patch(`/donations/${donation.id}`, { category: "donated" });
+    try {
+      await axios.patch(`/donations/${donation.id}`, { category: "donated" });
+    } catch (error) {
+      ErrorMessage("An error has occured");
+    }
   };
 
   const repeatDonation = async () => {
@@ -57,8 +65,11 @@ const CategoryElement = ({ donation }: { donation: IDonation }) => {
       ...donation,
       category: "looking",
     };
-
-    axiosProtected.post(`/donations/`, repeatedData);
+    try {
+      await axiosProtected.post(`/donations/`, repeatedData);
+    } catch (error) {
+      ErrorMessage("An error has occured");
+    }
   };
 
   return (

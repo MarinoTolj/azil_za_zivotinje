@@ -3,6 +3,7 @@ import { INotification } from "../helpers/types";
 import TrashIcon from "./Icons/TrashIcon";
 import { RootState } from "../redux/store";
 import { axiosProtected } from "../api/axios";
+import { ErrorMessage } from "../helpers/functions";
 
 type PropType = {
   notification: INotification;
@@ -17,7 +18,11 @@ const Notification: React.FC<PropType> = (props) => {
       "Are you sure you want to remove?\n- " + notification.title
     );
     if (response) {
-      axiosProtected.delete(`/notifications/${notification.id}`);
+      try {
+        await axiosProtected.delete(`/notifications/${notification.id}`);
+      } catch (error) {
+        ErrorMessage("An error has occured");
+      }
     }
   };
 

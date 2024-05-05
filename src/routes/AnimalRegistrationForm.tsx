@@ -50,14 +50,19 @@ const AnimalRegistrationForm = () => {
     };
     const data = { ...newAnimal, image };
     if (image) {
-      await axiosProtected.post(`/animals`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      SuccessMessage("New Animal Successfully Added");
-      navigate("/all-animals");
-    } else ErrorMessage("ERROR: something went wrong. Try again");
+      try {
+        await axiosProtected.post(`/animals`, data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        SuccessMessage("New Animal Successfully Added");
+        navigate("/all-animals");
+      } catch (error) {
+        ErrorMessage("An error has occured");
+      }
+    } else ErrorMessage("ERROR: something went wrong. Try again.");
   };
 
   return (
@@ -135,6 +140,7 @@ const AnimalRegistrationForm = () => {
         <Input
           label="Upload Image"
           type="file"
+          accept="image/*"
           required
           onChange={handleImageUpload}
           className=""

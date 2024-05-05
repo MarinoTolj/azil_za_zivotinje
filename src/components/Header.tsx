@@ -5,7 +5,8 @@ import { RootState } from "../redux/store";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { setIsAdmin } from "../redux/userSlice";
-import { axiosProtected } from "../api/axios";
+import axios, { axiosProtected } from "../api/axios";
+import { ErrorMessage } from "../helpers/functions";
 
 export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   const isAdmin = useSelector((state: RootState) => state.user.isAdmin);
@@ -18,10 +19,14 @@ export const Header: React.FC<{ routes: RouteType[] }> = (props) => {
   }, [isAdmin, dispatch, location.pathname]);
 
   const logout = async () => {
-    await axiosProtected.get("/logout");
-    await axiosProtected.post(`/is_admin`).then((res) => {
-      dispatch(setIsAdmin(res.data));
-    });
+    try {
+      await axios.get("/logout");
+      await axiosProtected.post(`/is_admin`).then((res) => {
+        dispatch(setIsAdmin(res.data));
+      });
+    } catch (error) {
+      ErrorMessage("An error has occured");
+    }
   };
 
   return (
