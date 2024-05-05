@@ -4,11 +4,11 @@ import { mdiCheckCircleOutline, mdiCloseCircleOutline } from "@mdi/js";
 const checkSize = 1.5;
 
 const CheckMark = ({ check }: { check: boolean }) => {
-  if (check)
+  if (check) {
     return (
       <Icon path={mdiCheckCircleOutline} size={checkSize} color={"green"} />
     );
-  else
+  } else
     return <Icon path={mdiCloseCircleOutline} size={checkSize} color={"red"} />;
 };
 

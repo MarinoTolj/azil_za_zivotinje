@@ -24,6 +24,11 @@ animalsRouter.post(
   upload.single("image"),
   async (req: Request, res: Response) => {
     try {
+      if (req.body.chipped === "true") {
+        req.body = { ...req.body, chipped: true };
+      } else {
+        req.body = { ...req.body, chipped: false };
+      }
       await firestoreUtils.AddDocument("animals", req.body, req.file);
       res.sendStatus(200);
     } catch (error) {
@@ -49,6 +54,12 @@ animalsRouter.patch(
   upload.single("image"),
   async (req: Request, res: Response) => {
     try {
+      if (req.body.chipped === "true") {
+        req.body = { ...req.body, chipped: true };
+      } else {
+        req.body = { ...req.body, chipped: false };
+      }
+
       const animals = await firestoreUtils.UpdateDocumentById(
         "animals",
         req.params.id,
