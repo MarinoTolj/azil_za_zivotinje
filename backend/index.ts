@@ -36,7 +36,6 @@ app.post("/login", async (req, res, next) => {
     if (user && (await bcrypt.compare(req.body.password, user.password))) {
       const token = jwt.sign(
         { userId: user.username, role: user.role },
-        //TODO: and also get new app key from firebase
         process.env.SECRET_KEY as string,
         {
           expiresIn: "1h",

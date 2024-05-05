@@ -54,10 +54,12 @@ animalsRouter.patch(
   upload.single("image"),
   async (req: Request, res: Response, next) => {
     try {
-      if (req.body.chipped === "true") {
-        req.body = { ...req.body, chipped: true };
-      } else {
-        req.body = { ...req.body, chipped: false };
+      if (req.body.chipped) {
+        if (req.body.chipped === "true") {
+          req.body = { ...req.body, chipped: true };
+        } else {
+          req.body = { ...req.body, chipped: false };
+        }
       }
 
       const animals = await firestoreUtils.UpdateDocumentById(
